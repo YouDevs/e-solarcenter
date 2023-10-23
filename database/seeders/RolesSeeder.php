@@ -20,7 +20,7 @@ class RolesSeeder extends Seeder
         DB::table('model_has_roles')->truncate();
         DB::table('roles')->truncate();
 
-        $roles = ['admin', 'customer_support', 'customer'];
+        $roles = ['super_admin','administration', 'customer_support', 'marketing', 'warehouse', 'customer'];
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }

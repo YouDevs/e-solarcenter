@@ -17,7 +17,7 @@ Route::post('/pre-registro', [CustomerRegistrationController::class, 'store'])->
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
 
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['role:administration'])->group(function () {
         // Rutas específicas para admin
     });
 

@@ -15,8 +15,21 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = [
-            'name' =>'Admin',
+        $super = [
+            'name' =>'Super',
+            'email' =>'super@super.com',
+            'password' => \bcrypt('1234abcd'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ];
+
+        $user = new User();
+        $user->fill($super);
+        $user->save();
+        $user->assignRole(RolesEnums::SUPER_ADMIN);
+
+        $administration_user = [
+            'name' =>'Administración',
             'email' =>'admin@admin.com',
             'password' => \bcrypt('1234abcd'),
             'created_at' => Carbon::now(),
@@ -24,13 +37,13 @@ class UsersSeeder extends Seeder
         ];
 
         $user = new User();
-        $user->fill($admin);
+        $user->fill($administration_user);
         $user->save();
-        $user->assignRole(RolesEnums::ADMIN);
+        $user->assignRole(RolesEnums::ADMINISTRATION);
 
         $customer_support = [
             'name' =>'Atención al Cliente',
-            'email' =>'customer@support.com',
+            'email' =>'support@support.com',
             'password' => \bcrypt('1234abcd'),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
