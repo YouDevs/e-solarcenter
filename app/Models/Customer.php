@@ -12,6 +12,7 @@ class Customer extends Model
 
     protected $fillable = [
         'user_id',
+        'company_name',
         'netsuite_key',
         'rfc',
         'delivery_address',

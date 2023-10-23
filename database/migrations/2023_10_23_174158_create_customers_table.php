@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('company_name')->nullable();
             $table->string('netsuite_key')->nullable();
             $table->string('rfc');
             $table->string('delivery_address');

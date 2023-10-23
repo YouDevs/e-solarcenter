@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/pre-registro', [CustomerRegistrationController::class, 'index'])->name('customer-registration.index');
+Route::post('/pre-registro', [CustomerRegistrationController::class, 'store'])->name('customer-registration.store');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route::get('/pre-registro', [CustomerRegistrationController::class, 'store'])->name('customer-registration');
