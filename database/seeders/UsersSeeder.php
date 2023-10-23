@@ -36,9 +36,9 @@ class UsersSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ];
 
-        $user = new User();
-        $user->fill($admin);
-        $user->save();
-        $user->assignRole(RolesEnums::CUSTOMER_SUPPORT);
+        $user_customer = new User();
+        $user_customer->fill($customer_support);
+        $user_customer->save();
+        $user_customer->assignRole(RolesEnums::CUSTOMER_SUPPORT);
     }
 }
