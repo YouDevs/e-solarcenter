@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CustomerSupport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -44,17 +45,25 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Customer $customer)
     {
-        //
+        return view('customer_support.customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Customer $customer)
     {
-        //
+        $customer->netsuite_key = $request->netsuite_key;
+        $customer->user->password = Hash::make($request->password);
+        $customer->status = 'active';
+        $customer->save();
+        $customer->user->save();
+
+        //TODO: send email.
+
+        return redirect()->route('admin.customers.index');
     }
 
     /**

@@ -40,7 +40,7 @@
                         @endrole
                         @role('customer_support')
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Clientes</a>
+                                <a class="nav-link" href="{{route('admin.customers.index')}}">Clientes</a>
                             </li>
                         @endrole
                     </ul>
