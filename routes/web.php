@@ -25,6 +25,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::resource('customers', CustomerController::class)->except(['create', 'store']);
     });
 
+    Route::middleware(['role:products'])->group(function () {
+        Route::resource('products', CustomerController::class)->except(['create', 'store']);
+    });
+
 });
 
 
