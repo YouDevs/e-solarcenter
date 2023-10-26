@@ -8,6 +8,10 @@ use App\Http\Controllers\CustomerSupport\CustomerController;
 * TODO: Eliminar la opción de register que solo quede el pre-registro.
 */
 
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
 Route::get('/', function () {
     return view('index');
     // return view('auth.login');
