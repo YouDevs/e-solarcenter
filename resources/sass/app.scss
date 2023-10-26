@@ -6,3 +6,18 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+
+.btn-primary {
+    color: #ffffff;
+    &:hover {
+        color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
+    }
+
+    &:hover,
+    &:active,
+    &.active,
+    &:focus {
+        color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
+    }
+}

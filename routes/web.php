@@ -9,7 +9,8 @@ use App\Http\Controllers\CustomerSupport\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+    // return view('auth.login');
 });
 
 Route::get('/pre-registro', [CustomerRegistrationController::class, 'index'])->name('customer-registration.index');
