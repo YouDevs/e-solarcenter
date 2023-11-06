@@ -1,12 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="container vh-100">
+    <div class="row h-100 justify-content-center align-items-md-center">
+        <div class="col-md-6">
             <div class="card border border-0 shadow-sm">
 
                 <div class="card-body bg-white">
+                    <div class="row mb-3">
+                        <div class="col text-center">
+                            <img src="{{asset('images/logo.webp')}}" class="img-fluid text-center" alt="Solar Center" width="180">
+                        </div>
+                    </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -51,13 +56,13 @@
                         </div> --}}
 
                         <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-8 offset-md-3">
                                 <button type="submit" class="btn btn-primary">
                                     Iniciar Sesión
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link text-decoration-none" href="{{ route('password.request') }}">
                                         {{ __('¿Olvidaste tu contraseña?') }}
                                     </a>
                                 @endif
@@ -66,6 +71,9 @@
                     </form>
                 </div>
             </div>
+            {{-- TODO: definir bien cómo sería este flujo --}}
+            {{-- <a href="" class="text-decoration-none mt-2">¿Eres cliente de Solar Center y no tienes acceso al e-commerce?</a><br>
+            <a href="" class="text-decoration-none mt-2">¿Aun no eres cliente de Solar Center y quieres acceso al e-commerce?</a> --}}
         </div>
     </div>
 </div>

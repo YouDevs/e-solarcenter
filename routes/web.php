@@ -12,10 +12,13 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('index');
-    // return view('auth.login');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('index');
+        // return view('auth.login');
+    });
 });
+
 
 Route::get('/pre-registro', [CustomerRegistrationController::class, 'index'])->name('customer-registration.index');
 Route::post('/pre-registro', [CustomerRegistrationController::class, 'store'])->name('customer-registration.store');

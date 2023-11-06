@@ -60,6 +60,6 @@ class LoginController extends Controller
             return 'home';
         }
 
-        return '/welcome';
+        return '/login';
     }
 }
