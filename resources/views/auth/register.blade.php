@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border border-0 shadow-sm">
-                {{-- <div class="card-header">Pre Registro</div> --}}
+                <div class="card-header bg-white border-0">
+                    <h4>Rellene los campos para solicitar registro</h4>
+                </div>
 
                 <div class="card-body bg-white">
                     <form method="POST" action="{{ route('customer-registration.store') }}">
@@ -40,7 +42,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="company-name" class="col-md-4 col-form-label text-md-end">Nombre de la empresa</label>
+                            <label for="company-name" class="col-md-4 col-form-label text-md-end">Razón Social</label>
 
                             <div class="col-md-6">
                                 <input id="company-name" type="text" class="form-control bg-white @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name">

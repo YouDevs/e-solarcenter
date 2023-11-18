@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customer;
+use  App\Http\Requests\StoreCustomerRegistrationRequest;
 
 class CustomerRegistrationController extends Controller
 {
@@ -14,10 +15,8 @@ class CustomerRegistrationController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function store(StoreCustomerRegistrationRequest $request)
     {
-        //TODO: crear Request Forms
-
         // Crear el usuario y el cliente
         $user = User::create([
             'name' => $request->get('name'),
