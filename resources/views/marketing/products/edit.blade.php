@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card border border-0 shadow-sm">
                 <div class="card-header border-0 bg-white">
-                    <h5 class="fw-bold mt-2">Editar Producto</h5>
+                    <h4 class="fw-bold mt-2">Editar Producto</h4>
                 </div>
                 <div class="card-body bg-white">
                     <form action="{{route('admin.products.update', $product)}}" method="POST" enctype="multipart/form-data">

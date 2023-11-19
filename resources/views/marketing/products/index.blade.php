@@ -6,8 +6,16 @@
         <div class="col-md-8">
             <div class="card border border-0 shadow-sm">
                 <div class="card-header bg-white border-0">
-                    <a href="{{route('admin.products.create')}}" class="btn btn-primary">Crear</a>
-                    <a href="{{route('admin.products.create')}}" class="btn btn-primary">Importar</a>
+                    <!-- Contenedor Flex -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        <!-- Texto a la izquierda -->
+                        <h4 class="fw-bold mt-2">Listado de productos</h4>
+                        <!-- Botones a la derecha -->
+                        <div>
+                            <a href="{{route('admin.products.create')}}" class="btn btn-primary me-2">Crear</a>
+                            <a href="{{route('admin.products.create')}}" class="btn btn-primary">Importar</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body bg-white">
                     <div class="table-responsive">
