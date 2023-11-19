@@ -8,16 +8,41 @@
 @import 'bootstrap/scss/bootstrap';
 
 
-.btn-primary {
+// .btn-primary {
+//     color: #ffffff;
+//     &:hover {
+//         color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
+//     }
+
+//     &:hover,
+//     &:active,
+//     &.active,
+//     &:focus {
+//         color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
+//     }
+// }
+
+.btn-primary-solar {
+    @extend .btn;
+
+    background-color: $primary;
+    border-color: $primary;
     color: #ffffff;
-    &:hover {
-        color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
-    }
 
     &:hover,
     &:active,
     &.active,
     &:focus {
-        color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
+        color: #ffffff;
+        background-color: darken(#FFBE10, 10%);
+        border-color: darken(#FFBE10, 10%);
     }
+
+    &:disabled,
+    &.disabled {
+        background-color: lighten(#FFBE10, 20%);
+        border-color: lighten(#FFBE10, 20%);
+    }
+
 }
+

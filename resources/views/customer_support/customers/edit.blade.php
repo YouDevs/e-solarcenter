@@ -5,6 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border border-0 shadow-sm">
+                <div class="card-header border-0 bg-white">
+                    <h5>Actualizar Cliente</h5>
+                </div>
                 <div class="card-body bg-white">
                     <form action="{{route('admin.customers.update', $customer)}}" method="POST">
                         @csrf

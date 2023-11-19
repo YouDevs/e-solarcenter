@@ -53,5 +53,18 @@ class UsersSeeder extends Seeder
         $user_customer->fill($customer_support);
         $user_customer->save();
         $user_customer->assignRole(RolesEnums::CUSTOMER_SUPPORT);
+
+        $customer_support = [
+            'name' =>'Marketing',
+            'email' =>'mkt@mkt.com',
+            'password' => \bcrypt('1234abcd'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ];
+
+        $user_customer = new User();
+        $user_customer->fill($customer_support);
+        $user_customer->save();
+        $user_customer->assignRole(RolesEnums::MARKETING);
     }
 }

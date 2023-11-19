@@ -45,19 +45,23 @@ class LoginController extends Controller
         $user = Auth::user();  // Obtén el usuario autenticado
 
         if ($user->hasRole('customer')) {
-            return '/welcome';
+            return redirect('welcome');
         }
 
         if ($user->hasRole('customer_support')) {
-            return 'admin/customers';
+            return redirect('admin/customers');
         }
 
         if ($user->hasRole('administration')) {
-            return 'home';
+            return redirect('home');
+        }
+
+        if ($user->hasRole('marketing')) {
+            return redirect('admin/products');
         }
 
         if ($user->hasRole('super_admin')) {
-            return 'home';
+            return redirect('home');
         }
 
         return '/login';

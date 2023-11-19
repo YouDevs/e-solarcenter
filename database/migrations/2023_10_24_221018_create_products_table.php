@@ -16,14 +16,13 @@ return new class extends Migration
             $table->string('name', 120);
             $table->string('brand', 40);
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('product_type_id')->nullable();
             $table->string('sku')->nullable();
-            $table->integer('stock')->default(0);
-            $table->string('featured', 50)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
+            $table->integer('stock')->nullable();
+            $table->string('data_sheet', 100)->nullable();
+            $table->string('featured', 100)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('product_type_id')->references('id')->on('product_types');
         });
     }
 

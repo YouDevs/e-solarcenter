@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerRegistrationController;
 use App\Http\Controllers\CustomerSupport\CustomerController;
+use App\Http\Controllers\Marketing\ProductController;
 
 /*
 * TODO: Eliminar la opción de register que solo quede el pre-registro.
@@ -33,8 +34,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::resource('customers', CustomerController::class)->except(['create', 'store']);
     });
 
-    Route::middleware(['role:products'])->group(function () {
-        Route::resource('products', CustomerController::class)->except(['create', 'store']);
+    Route::middleware(['role:marketing'])->group(function () {
+        Route::resource('products', ProductController::class)->except(['show']);
     });
 
 });
