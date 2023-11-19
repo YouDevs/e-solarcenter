@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\View\View;
+use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
@@ -33,26 +34,14 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        // dd($request->all());
-
-        // Validación de datos
-        $request->validate([
-            'name' => 'required',
-            'brand' => 'required',
-            'category_id' => 'required',
-            // otras validaciones...
-            'data_sheet' => 'required|file|mimes:pdf', // Asegúrate de validar el archivo PDF
-            'featured' => 'required|image', // Valida que sea una imagen
-        ]);
-
+        
         $product = new Product;
 
         // Subir la ficha técnica (PDF)
         if ($request->hasFile('data_sheet')) {
             $product->data_sheet = $request->file('data_sheet')->store('data_sheets', 'public');
-            // dd($product->data_sheet);
         }
 
         // Subir la imagen destacada

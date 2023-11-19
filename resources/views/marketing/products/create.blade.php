@@ -6,53 +6,117 @@
         <div class="col-md-8">
             <div class="card border border-0 shadow-sm">
                 <div class="card-header border-0 bg-white">
-                    <h5>Crear Producto</h5>
+                    <h5 class="fw-bold mt-2">Crear Producto</h5>
                 </div>
                 <div class="card-body bg-white">
                     <form action="{{route('admin.products.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating @error('name') is-invalid @enderror">
+                                        <input
+                                            type="text"
+                                            class="form-control @error('name') is-invalid @enderror"
+                                            id="name"
+                                            name="name"
+                                            placeholder=""
+                                            value="{{ old('name') }}"
+                                        >
                                         <label for="name">Nombre del producto</label>
                                     </div>
-                                    {{--
-                                    <div class="mb-3"><button type="submit" class="btn btn-primary text-center">Guardar</button></div> --}}
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="brand" name="brand" placeholder="">
-                                        <label for="name">Marca</label>
+                                    <div class="invalid-feedback">
+                                        @error('name')
+                                            <strong>{{$message}}</strong>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <select class="form-select" id="category_id" name="category_id">
-                                          <option>Selecciona categoría</option>
-                                          @foreach ($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
-                                          @endforeach
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating @error('brand') is-invalid @enderror">
+                                        <input
+                                            type="text"
+                                            class="form-control @error('brand') is-invalid @enderror"
+                                            id="brand"
+                                            name="brand"
+                                            placeholder=""
+                                            value="{{ old('brand') }}"
+                                        >
+                                        <label for="brand">Marca</label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        @error('brand')
+                                            <strong>{{$message}}</strong>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating @error('name') is-invalid @enderror">
+                                        <select
+                                            class="form-select @error('category_id') is-invalid @enderror"
+                                            id="category_id"
+                                            name="category_id"
+                                        >
+                                            <option value="">Selecciona categoría</option>
+                                            @foreach ($categories as $category)
+                                                <option
+                                                    value="{{$category->id}}"
+                                                    @selected(old('category_id') == $category->id)
+                                                >
+                                                {{$category->name}}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <label for="category_id">Categoría del producto</label>
-                                      </div>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        @error('category_id')
+                                            <strong>{{$message}}</strong>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="file" id="data_sheet" name="data_sheet">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating @error('data_sheet') is-invalid @enderror">
+                                        <input
+                                            class="form-control @error('data_sheet') is-invalid @enderror"
+                                            type="file"
+                                            id="data_sheet"
+                                            name="data_sheet"
+                                            value="{{ old('data_sheet') }}"
+                                        >
                                         <label for="name">Ficha técnica</label>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" type="file" id="featured" name="featured">
-                                        <label for="name">Imagen</label>
+                                    <div class="invalid-feedback">
+                                        @error('data_sheet')
+                                            <strong>{{$message}}</strong>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="sku" name="sku" placeholder="">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating @error('featured') is-invalid @enderror">
+                                        <input
+                                            class="form-control @error('featured') is-invalid @enderror"
+                                            type="file"
+                                            id="featured"
+                                            name="featured"
+                                        >
+                                        <label for="featured">Imagen</label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        @error('featured')
+                                            <strong>{{$message}}</strong>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="sku"
+                                            name="sku"
+                                            placeholder=""
+                                            value="{{ old('sku') }}"
+                                        >
                                         <label for="name">SKU</label>
                                     </div>
                                 </div>
