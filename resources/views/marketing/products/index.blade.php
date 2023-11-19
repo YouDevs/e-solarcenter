@@ -40,7 +40,7 @@
                                             >
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">
+                                                <button type="button" onclick="confirmDelete(this)" class="btn btn-danger">
                                                     Eliminar
                                                 </button>
                                             </form>
@@ -56,4 +56,39 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function confirmDelete(button) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, envía el formulario
+            button.closest('form').submit();
+        }
+    });
+}
+</script>
+
+@if (session('message'))
+    <script>
+        Swal.fire({
+            position: "top-end",
+            icon: "{{ session('icon') }}",
+            title: "{{ session('message') }}",
+            showConfirmButton: false,
+            timer: 2000,
+        });
+    </script>
+@endif
+
 @endsection

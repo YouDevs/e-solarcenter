@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\View\View;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+// use Session;
 
 class ProductController extends Controller
 {
@@ -100,14 +101,22 @@ class ProductController extends Controller
         $product->sku = $request->sku;
         $product->save();
 
+        session()->flash('message', 'Producto actualizado exitosamente');
+        session()->flash('icon', 'success');
+
         return redirect()->route('admin.products.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        session()->flash('message', 'Producto eliminado exitosamente');
+        session()->flash('icon', 'success');
+
+        return redirect()->route('admin.products.index');
     }
 }
