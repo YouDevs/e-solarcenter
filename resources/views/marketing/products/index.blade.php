@@ -32,8 +32,12 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <a href="{{ route('admin.customers.edit', $product) }}" class="btn btn-warning me-2">Actualizar</a>
-                                            <form action="{{ route('admin.customers.destroy', $product) }}" method="POST" class="inline ml-2">
+                                            <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning me-2">Actualizar</a>
+                                            <form
+                                                action="{{ route('admin.products.destroy', $product) }}"
+                                                method="POST"
+                                                class="inline ml-2"
+                                            >
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">
