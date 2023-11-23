@@ -50,6 +50,24 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
+                                    <div class="form-floating @error('price') is-invalid @enderror">
+                                        <input
+                                            type="text"
+                                            class="form-control @error('price') is-invalid @enderror"
+                                            id="price"
+                                            name="price"
+                                            placeholder=""
+                                            value="{{ old('price') }}"
+                                        >
+                                        <label for="price">Precio</label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        @error('price')
+                                            <strong>{{$message}}</strong>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
                                     <div class="form-floating @error('name') is-invalid @enderror">
                                         <select
                                             class="form-select @error('category_id') is-invalid @enderror"
@@ -66,7 +84,7 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <label for="category_id">Categoría del producto</label>
+                                        {{-- <label for="category_id">Categoría del producto</label> --}}
                                     </div>
                                     <div class="invalid-feedback">
                                         @error('category_id')
