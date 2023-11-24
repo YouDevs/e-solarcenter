@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite([
         'resources/sass/app.scss',
-        'resources/sass/product-card.scss',
+        // 'resources/sass/product-card.scss',
         'resources/js/app.js'
     ])
 </head>

@@ -9,9 +9,10 @@ $line-height-base: 1.6;
 
 $btn-border-radius: 8px;
 
-$primary-solar: #FFBE10;
-// $btn-primary-bg: $primary;
-// $btn-primary-border: $primary;
+// Btn Solar-Center
+$solar: #FFBE10;
+$btn-primary-bg: $solar;
+$btn-primary-border: $solar;
 
 $font-size-sm:                ($font-size-base * .875) !default;
 
@@ -47,8 +48,8 @@ $gray-900:              #2b3445 !default;
 $black:                 #000 !default;
 
 // Brand colors
-// $primary:               #fe696a !default;
-$primary:               #FFBE10 !default;
+$primary:               #fe696a !default;
+// $primary:               #FFBE10 !default;
 $accent:                #4e54c8 !default;
 $secondary:             $gray-200 !default;
 $info:		              #69b3fe !default;

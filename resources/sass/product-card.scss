@@ -1,8 +1,15 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
 
 //
 // Shop module styles
@@ -11,155 +18,155 @@
 // Product card
 
 .product-card {
-    padding-bottom: $card-spacer-y;
-    border: 0;
+  padding-bottom: $card-spacer-y;
+  border: 0;
+  transition: $product-card-transition;
+
+  .product-card-actions,
+  > .btn-wishlist,
+  .badge {
+    position: absolute;
+    top: $spacer * .75;
+    right: $spacer * .75;
+    z-index: 5;
+  }
+
+  .product-card-actions .btn-action {
+    padding: .5rem;
     transition: $product-card-transition;
+    @include border-radius($border-radius-sm);
+    background-color: $white;
+    font-size: $font-size-ms;
+    visibility: hidden;
+    opacity: 0;
+  }
 
-    .product-card-actions,
-    > .btn-wishlist,
-    .badge {
-      position: absolute;
-      top: $spacer * .75;
+  .badge {
+    right: auto;
+    left: $spacer * .75;
+    &.badge-end {
       right: $spacer * .75;
-      z-index: 5;
+      left: auto;
     }
+  }
 
-    .product-card-actions .btn-action {
-      padding: .5rem;
-      transition: $product-card-transition;
-      @include border-radius($border-radius-sm);
-      background-color: $white;
-      font-size: $font-size-ms;
-      visibility: hidden;
-      opacity: 0;
-    }
+  .card-body {
+    position: relative;
+    background-color: $card-bg;
+    z-index: 2;
+  }
 
-    .badge {
-      right: auto;
-      left: $spacer * .75;
-      &.badge-end {
-        right: $spacer * .75;
-        left: auto;
+  .card-body-hidden {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    margin-top: -$card-spacer-y;
+    transition: $product-card-transition;
+    @include border-radius($card-border-radius);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: $card-bg;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+  }
+
+  @include media-breakpoint-up(sm) {
+    padding-bottom: 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    &:hover:not(.card-static) {
+      border-color: $card-bg !important;
+      box-shadow: $product-card-hover-box-shadow;
+      z-index: 10;
+      .product-card-actions .btn-action {
+        opacity: 1;
+        visibility: visible;
       }
-    }
-
-    .card-body {
-      position: relative;
-      background-color: $card-bg;
-      z-index: 2;
-    }
-
-    .card-body-hidden {
-      position: absolute;
-      left: 0;
-      top: 100%;
-      width: 100%;
-      margin-top: -$card-spacer-y;
-      transition: $product-card-transition;
-      @include border-radius($card-border-radius);
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      background-color: $card-bg;
-      opacity: 0;
-      visibility: hidden;
-      z-index: 1;
-    }
-
-    @include media-breakpoint-up(sm) {
-      padding-bottom: 0;
-    }
-
-    @include media-breakpoint-up(lg) {
-      &:hover:not(.card-static) {
-        border-color: $card-bg !important;
+      .card-body-hidden {
+        opacity: 1;
+        visibility: visible;
         box-shadow: $product-card-hover-box-shadow;
-        z-index: 10;
-        .product-card-actions .btn-action {
-          opacity: 1;
-          visibility: visible;
-        }
-        .card-body-hidden {
-          opacity: 1;
-          visibility: visible;
-          box-shadow: $product-card-hover-box-shadow;
-        }
       }
     }
+  }
 }
 
 
-  // Product title
+// Product title
 
-  .product-title > a {
-    transition: $product-title-link-transition;
-    color: $product-title-link-color;
-    text-decoration: none !important;
-    &:hover {
-      color: $product-title-link-hover-color;
-    }
+.product-title > a {
+  transition: $product-title-link-transition;
+  color: $product-title-link-color;
+  text-decoration: none !important;
+  &:hover {
+    color: $product-title-link-hover-color;
   }
+}
 
 
-  // Product meta
+// Product meta
 
-  .product-meta {
-    transition: $product-meta-transition;
-    color: $product-meta-color;
-    text-decoration: none !important;
-    &:hover {
-      color: $product-meta-hover-color;
-    }
+.product-meta {
+  transition: $product-meta-transition;
+  color: $product-meta-color;
+  text-decoration: none !important;
+  &:hover {
+    color: $product-meta-hover-color;
   }
+}
 
 
-  // Star rating
+// Star rating
 
 .star-rating {
-    display: inline-block;
-    white-space: nowrap;
-    line-height: 1;
-    vertical-align: middle;
-    .star-rating-icon {
-        display: inline-block;
-        margin-right: .1875rem;
-        color: $star-color;
-        font-size: $star-size;
-        vertical-align: middle;
-        &.active {
-        color: $star-active-color;
-        }
-    }
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1;
+  vertical-align: middle;
+  .star-rating-icon {
+      display: inline-block;
+      margin-right: .1875rem;
+      color: $star-color;
+      font-size: $star-size;
+      vertical-align: middle;
+      &.active {
+      color: $star-active-color;
+      }
+  }
 }
 
 // Interactive credit card
 
 .credit-card-wrapper {
-    margin: 1.875rem -.9375rem;
-    @include media-breakpoint-down(sm) {
-        .jp-card-container { width: 16.25rem !important; }
-        .jp-card { min-width: 15.625rem !important; }
-    }
+  margin: 1.875rem -.9375rem;
+  @include media-breakpoint-down(sm) {
+      .jp-card-container { width: 16.25rem !important; }
+      .jp-card { min-width: 15.625rem !important; }
+  }
 }
 
 // Product details (Single product)
 @include media-breakpoint-up(lg) {
-    .product-details {
-        width: 100%;
-        max-width: 26rem;
-        padding-top: 0.25rem;
-    }
+  .product-details {
+      width: 100%;
+      max-width: 26rem;
+      padding-top: 0.25rem;
+  }
 }
 
 .product-card {
-    img, figure {
-        max-width: 100%;
-        height: auto;
-        vertical-align: middle;
-    }
+  img, figure {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+  }
 }
 
 .product-title > a {
-    transition: color .25s ease-in-out;
-    color: #373f50;
-    text-decoration: none !important;
+  transition: color .25s ease-in-out;
+  color: #373f50;
+  text-decoration: none !important;
 }

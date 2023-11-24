@@ -10,34 +10,20 @@
 // iconos
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
+@import 'product-card.scss';
 
-
-// .btn-primary {
-//     color: #ffffff;
-//     &:hover {
-//         color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
-//     }
-
-//     &:hover,
-//     &:active,
-//     &.active,
-//     &:focus {
-//         color: #ffffff;  // Esto mantendrá el color del texto blanco en hover
-//     }
-// }
-
-.btn-primary-solar {
+.btn-solar {
     @extend .btn;
 
-    background-color: $primary;
-    border-color: $primary;
-    color: #ffffff;
+    background-color: $solar;
+    border-color: $solar;
+    // color: #ffffff;
 
     &:hover,
     &:active,
     &.active,
     &:focus {
-        color: #ffffff;
+        // color: #ffffff;
         background-color: darken(#FFBE10, 10%);
         border-color: darken(#FFBE10, 10%);
     }
