@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card border border-0 shadow-sm">
                 <div class="card-header bg-white border-0">
                     <!-- Contenedor Flex -->
@@ -12,8 +12,8 @@
                         <h4 class="fw-bold mt-2">Listado de productos</h4>
                         <!-- Botones a la derecha -->
                         <div>
-                            <a href="{{route('admin.products.create')}}" class="btn btn-primary me-2">Crear</a>
-                            <a href="{{route('admin.products.create')}}" class="btn btn-primary">Importar</a>
+                            <a href="{{route('admin.products.create')}}" class="btn btn-outline-accent me-2">Crear</a>
+                            <a href="{{route('admin.products.create')}}" class="btn btn-outline-accent">Importar</a>
                         </div>
                     </div>
                 </div>
@@ -21,9 +21,11 @@
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead class="table-light">
-                                <tr>
+                                <tr class="text-center">
                                     <th scope="col">Imagen</th>
                                     <th scope="col">Nombre</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Precio</th>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -35,6 +37,8 @@
                                         <img src="{{ Storage::url($product->featured) }}" alt="Imagen Destacada" width="100">
                                     </td>
                                     <th scope="row">{{$product->name}}</th>
+                                    <th scope="row">{{$product->brand}}</th>
+                                    <th scope="row">${{number_format($product->price, 2, '.', ',')}}</th>
                                     <td>
                                         {{$product->category->name}}
                                     </td>
