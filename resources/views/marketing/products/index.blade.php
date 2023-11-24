@@ -32,18 +32,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
-                                <tr>
+                                <tr class="text-center">
                                     <td>
                                         <img src="{{ Storage::url($product->featured) }}" alt="Imagen Destacada" width="100">
                                     </td>
-                                    <th scope="row">{{$product->name}}</th>
+                                    <th scope="row" class="fw-bold">{{$product->name}}</th>
                                     <th scope="row">{{$product->brand}}</th>
-                                    <th scope="row">${{number_format($product->price, 2, '.', ',')}}</th>
+                                    <th scope="row" class="text-accent">${{number_format($product->price, 2, '.', ',')}}</th>
                                     <td>
                                         {{$product->category->name}}
                                     </td>
                                     <td>
-                                        <div class="d-flex align-items-center">
+                                        <div class="d-flex align-items-center justify-content-center">
                                             <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-warning me-2">Actualizar</a>
                                             <form
                                                 action="{{ route('admin.products.destroy', $product) }}"
