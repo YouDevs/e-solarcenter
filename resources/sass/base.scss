@@ -3,12 +3,16 @@
 
 // Variables
 @import 'variables';
+@import 'variables-navbar';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
 // iconos
 @import 'bootstrap-icons/font/bootstrap-icons.css';
+
+@import 'product-card.scss';
+@import 'navbar.scss';
 
 .btn-solar {
     @extend .btn;
