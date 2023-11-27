@@ -29,10 +29,10 @@
         <div class="navbar-sticky bg-light">
             <div class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
-                    <a class="navbar-brand d-none d-sm-block flex-shrink-0" href="index.html" previewlistener="true">
+                    <a class="navbar-brand d-none d-sm-block flex-shrink-0" href="/" previewlistener="true">
                         <img src="{{asset('images/logo.webp')}}" width="142" alt="Solar Center">
                     </a>
-                    <a class="navbar-brand d-sm-none flex-shrink-0 me-2" href="index.html" previewlistener="true">
+                    <a class="navbar-brand d-sm-none flex-shrink-0 me-2" href="/" previewlistener="true">
                         <img src="{{asset('images/logo.webp')}}" width="74" alt="Solar Center">
                     </a>
                     <div class="input-group d-none d-lg-flex mx-4">
