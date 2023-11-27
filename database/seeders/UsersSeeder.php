@@ -27,8 +27,23 @@ class UsersSeeder extends Seeder
         $user = new User();
         $user->fill($super);
         $user->save();
-        $user->assignRole(RolesEnums::SUPER_ADMIN);
+        $user->assignRole(RolesEnums::ADMINISTRATION);
 
+        // OPERADOR
+        $operator_user = [
+            'name' =>'Operador',
+            'email' =>'operador@operador.com',
+            'password' => \bcrypt('12345'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ];
+
+        $user_operator = new User();
+        $user_operator->fill($operator_user);
+        $user_operator->save();
+        $user_operator->assignRole(RolesEnums::OPERATOR);
+
+        // ADMINISTRADOR
         $administration_user = [
             'name' =>'Administración',
             'email' =>'admin@admin.com',
