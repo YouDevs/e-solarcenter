@@ -70,7 +70,7 @@
                     <i class="bi bi-heart"></i>
                 </button> --}}
                 <a class="card-img-top d-block overflow-hidden" href="#" previewlistener="true">
-                    <img src="{{asset('images/panel.webp')}}" alt="Product">
+                    <img src="{{Storage::url($product->featured)}}" alt="Product">
                 </a>
                 <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Paneles</a>
                     <h3 class="product-title fs-sm fw-bold">
@@ -131,7 +131,7 @@
                             <input type="hidden" value="{{ $product->brand }}" name="brand">
                             <input type="hidden" value="{{ $product->price }}" name="price">
                             <input type="hidden" value="{{ $product->sku }}" name="sku">
-                            <input type="hidden" value="{{ $product->featured }}"  name="image">
+                            <input type="hidden" value="{{ $product->featured }}"  name="featured">
                             {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
                             <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
                         </form>

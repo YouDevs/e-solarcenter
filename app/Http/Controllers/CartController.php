@@ -24,7 +24,7 @@ class CartController extends Controller
             'brand' => $request->brand,
             'quantity' => $request->quantity,
             'attributes' => array(
-                'image' => $request->featuted,
+                'featured' => $request->featured,
                 'brand' => $request->brand,
                 'sku' => $request->sku,
             )
