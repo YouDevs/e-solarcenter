@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('company_name')->nullable();
-            $table->string('netsuite_key')->nullable();
-            $table->string('rfc');
-            $table->string('delivery_address');
-            $table->enum('status', ['active', 'pending', 'inactive'])->default('pending');
+            $table->decimal('total', 10, 2);
+            $table->string('delivery_status', 50)->nullable(); //NOTA: almcena el status obtenido de la paquetería.
+            $table->date('estimated_delivery_date')->nullable();
+            $table->string('method', 50)->nullable(); //Transferencia Bancaria, PayPal, Stripe, Etc.
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('orders');
     }
 };

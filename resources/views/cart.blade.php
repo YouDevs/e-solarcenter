@@ -26,7 +26,7 @@
                 <section class="col-lg-8">
                 <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
                     <h2 class="h6 text-light mb-0">Productos</h2>
-                    <a class="btn btn-outline-primary btn-sm ps-2" href="/" previewlistener="true">
+                    <a class="btn btn-outline-warning btn-sm ps-2" href="/" previewlistener="true">
                         <i class="ci-arrow-left me-2"></i>
                         Continuar comprando
                     </a>
@@ -127,15 +127,33 @@
                         <h2 class="h6 mb-3 pb-1">Subtotal</h2>
                         <h3 class="fw-normal">$265.<small>00</small></h3>
                     </div>
-                    <div class="mb-3 mb-4">
+                    <ul class="list-unstyled fs-sm pb-2 border-bottom">
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span class="me-2 h6">Cuenta Bancaria:</span>
+                            <span class="text-end h6">4242 4242 4242 4242</span>
+                        </li>
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span class="me-2 h6">Banco: </span>
+                            <span class="text-end h6">Santander</span>
+                        </li>
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span class="me-2 h6">Nombre:</span>
+                            <span class="text-end h6">SOLAR CENTER</span>
+                        </li>
+                        <li class="d-flex justify-content-between align-items-center">
+                            <span class="me-2 h6 fw-bold">Concepto:</span>
+                            <span class="text-end h6 fw-bold">01010101010101</span>
+                        </li>
+                      </ul>
+                    {{-- <div class="mb-3 mb-4">
                         <label class="form-label mb-3" for="order-comments">
-                            {{-- <span class="badge bg-info fs-xs me-2">Nota</span> --}}
+                            <span class="badge bg-info fs-xs me-2">Nota</span>
                             <span class="fw-medium">Concepto de pago</span>
                         </label>
                         <input type="text" class="form-control" readonly value="Introduzca este concepto en su aplicación de banco.">
-                        {{-- <textarea class="form-control" rows="6" id="order-comments"></textarea> --}}
-                        {{-- <textarea class="form-control" rows="6" id="order-comments"></textarea> --}}
-                    </div>
+                        <textarea class="form-control" rows="6" id="order-comments"></textarea>
+                        <textarea class="form-control" rows="6" id="order-comments"></textarea>
+                    </div> --}}
 
                     {{-- <div class="accordion" id="order-options">
                         <div class="accordion-item">
@@ -198,9 +216,13 @@
                         </div>
                     </div> --}}
 
-                    <a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="checkout-details.html" previewlistener="true">
+                    <a class="btn btn-info btn-shadow d-block w-100 mt-4" href="checkout-details.html" previewlistener="true">
                         <i class="bi bi-credit-card"></i>
                         Pagar Ahora
+                    </a>
+                    <a class="btn btn-warning btn-shadow d-block w-100 mt-4" href="checkout-details.html" previewlistener="true">
+                        <i class="bi bi-credit-card"></i>
+                        Pagar Después
                     </a>
                     </div>
                 </div>

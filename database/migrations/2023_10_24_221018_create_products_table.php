@@ -21,7 +21,14 @@ return new class extends Migration
             $table->integer('stock')->nullable();
             $table->string('data_sheet', 100)->nullable();
             $table->string('featured', 100)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
+
+            $table->boolean('status')->default(1); // 1 Activo, 0 Inactivo
+
+            $table->string('slug', 100)->nullable();
+
             $table->timestamps();
+
+            $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories');
         });

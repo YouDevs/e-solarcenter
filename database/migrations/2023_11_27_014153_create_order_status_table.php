@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('order_status', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->string('company_name')->nullable();
-            $table->string('netsuite_key')->nullable();
-            $table->string('rfc');
-            $table->string('delivery_address');
-            $table->enum('status', ['active', 'pending', 'inactive'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'cancelled'])->default('pending');
+            $table->string('cancellation_reason', 100)->nullable(); // ¿Por qué razón se cancela el pedido.?
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('order_status');
     }
 };

@@ -68,7 +68,7 @@
                                 <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
                                 <i class="navbar-tool-icon bi bi-cart3"></i>
                             </a>
-                            <a class="navbar-tool-text" href="shop-cart.html" previewlistener="true">
+                            <a class="navbar-tool-text" href="{{route('cart.list')}}" previewlistener="true">
                                 <small>Carrito</small>${{ Cart::getTotal() }}
                             </a>
                             <!-- Cart dropdown-->
