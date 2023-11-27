@@ -35,7 +35,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        @role('administration')
+                        @role('administration|operator')
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Dashboard</a>
                             </li>
@@ -43,12 +43,12 @@
                                 <a class="nav-link" href="#">Usuarios</a>
                             </li>
                         @endrole
-                        @role('customer_support')
+                        @role('customer_support|operator')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin.customers.index')}}">Clientes</a>
                             </li>
                         @endrole
-                        @role('marketing')
+                        @role('marketing|operator')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('admin.products.index')}}">Productos</a>
                             </li>

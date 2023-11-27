@@ -32,15 +32,15 @@ Route::post('/pre-registro', [CustomerRegistrationController::class, 'store'])->
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
 
-    Route::middleware(['role:administration'])->group(function () {
+    Route::middleware(['role:administration|operator'])->group(function () {
         // Rutas específicas para admin
     });
 
-    Route::middleware(['role:customer_support'])->group(function () {
+    Route::middleware(['role:customer_support|operator'])->group(function () {
         Route::resource('customers', CustomerController::class)->except(['create', 'store']);
     });
 
-    Route::middleware(['role:marketing'])->group(function () {
+    Route::middleware(['role:marketing|operator'])->group(function () {
         Route::resource('products', ProductController::class)->except(['show']);
     });
 
