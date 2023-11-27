@@ -8,6 +8,7 @@ class CartController extends Controller
 {
     public function cartList()
     {
+        // \Cart::clear();
         $cart_items = \Cart::getContent();
         // dd($cart_items);
         return view('cart', compact('cart_items'));
@@ -20,11 +21,15 @@ class CartController extends Controller
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
+            'brand' => $request->brand,
             'quantity' => $request->quantity,
             'attributes' => array(
-                'image' => $request->image,
+                'image' => $request->featuted,
+                'brand' => $request->brand,
+                'sku' => $request->sku,
             )
         ]);
+
         session()->flash('success', 'Product is Added to Cart Successfully !');
 
         // return redirect()->route('cart.list');

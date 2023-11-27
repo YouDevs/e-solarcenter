@@ -125,12 +125,13 @@
                         </select> --}}
                         <form action="{{ route('cart.store') }}" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="number" class="form-control me-2" placeholder="cantidad" value="1">
+                            <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
                             <input type="hidden" value="{{ $product->id }}" name="id">
                             <input type="hidden" value="{{ $product->name }}" name="name">
+                            <input type="hidden" value="{{ $product->brand }}" name="brand">
                             <input type="hidden" value="{{ $product->price }}" name="price">
-                            <input type="hidden" value="{{ $product->image }}"  name="image">
-                            <input type="hidden" value="1" name="quantity">
+                            <input type="hidden" value="{{ $product->sku }}" name="sku">
+                            <input type="hidden" value="{{ $product->featured }}"  name="image">
                             {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
                             <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
                         </form>

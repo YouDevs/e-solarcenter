@@ -24,99 +24,46 @@
             <div class="row">
                 <!-- List of items-->
                 <section class="col-lg-8">
-                <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
-                    <h2 class="h6 text-light mb-0">Productos</h2>
-                    <a class="btn btn-outline-warning btn-sm ps-2" href="/" previewlistener="true">
-                        <i class="ci-arrow-left me-2"></i>
-                        Continuar comprando
-                    </a>
-                </div>
-                <!-- Item-->
-                <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
-                    <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
-                        <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
-                            <img src="{{asset('images/01.jpg')}}" width="160" alt="Product">
+                    <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
+                        <h2 class="h6 text-light mb-0">Productos</h2>
+                        <a class="btn btn-outline-warning btn-sm ps-2" href="/" previewlistener="true">
+                            <i class="ci-arrow-left me-2"></i>
+                            Continuar comprando
                         </a>
-                    <div class="pt-2">
-                        <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">Women Colorblock Sneakers</a></h3>
-                        <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div>
-                        <div class="fs-sm"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
-                        <div class="fs-lg text-accent pt-2">$154.<small>00</small></div>
                     </div>
-                    </div>
-                    <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                    <label class="form-label" for="quantity1">Cantidad</label>
-                    <input class="form-control" type="number" id="Cantidad1" min="1" value="1">
-                    <button class="btn btn-link px-0 text-danger" type="button">
-                        <i class="bi bi-x-circle me-2"></i>
-                        <span class="fs-sm">Eliminar</span>
-                    </button>
-                    </div>
-                </div>
-                <!-- Item-->
-                <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
-                    <div class="d-block d-sm-flex align-items-center text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
-                        <img src="{{asset('images/01.jpg')}}" width="160" alt="Product"></a>
-                    <div class="pt-2">
-                        <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">TH Jeans City Backpack</a></h3>
-                        <div class="fs-sm"><span class="text-muted me-2">Brand:</span>Tommy Hilfiger</div>
-                        <div class="fs-sm"><span class="text-muted me-2">Color:</span>Khaki</div>
-                        <div class="fs-lg text-accent pt-2">$79.<small>50</small></div>
-                    </div>
-                    </div>
-                    <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                    <label class="form-label" for="quantity2">Cantidad</label>
-                    <input class="form-control" type="number" id="quantity2" min="1" value="1">
-                    <button class="btn btn-link px-0 text-danger" type="button">
-                        <i class="bi bi-x-circle me-2"></i>
-                        <span class="fs-sm">Eliminar</span>
-                    </button>
-                    </div>
-                </div>
-                <!-- Item-->
-                <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
-                    <div class="d-block d-sm-flex align-items-center text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
-                        <img src="{{asset('images/01.jpg')}}" width="160" alt="Product"></a>
-                    <div class="pt-2">
-                        <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">3-Color Sun Stash Hat</a></h3>
-                        <div class="fs-sm"><span class="text-muted me-2">Brand:</span>The North Face</div>
-                        <div class="fs-sm"><span class="text-muted me-2">Color:</span>Pink / Beige / Dark blue</div>
-                        <div class="fs-lg text-accent pt-2">$22.<small>50</small></div>
-                    </div>
-                    </div>
-                    <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                    <label class="form-label" for="quantity3">Cantidad</label>
-                    <input class="form-control" type="number" id="quantity3" min="1" value="1">
-                    <button class="btn btn-link px-0 text-danger" type="button">
-                        <i class="bi bi-x-circle me-2"></i>
-                        <span class="fs-sm">Eliminar</span></button>
-                    </div>
-                </div>
-                <!-- Item-->
-                <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
-                    <div class="d-block d-sm-flex align-items-center text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
-                        <img src="{{asset('images/01.jpg')}}" width="160" alt="Product"></a>
-                    <div class="pt-2">
-                        <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">Cotton Polo Regular Fit</a></h3>
-                        <div class="fs-sm"><span class="text-muted me-2">Size:</span>42</div>
-                        <div class="fs-sm"><span class="text-muted me-2">Color:</span>Light blue</div>
-                        <div class="fs-lg text-accent pt-2">$9.<small>00</small></div>
-                    </div>
-                    </div>
-                    <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                    <label class="form-label" for="quantity4">Cantidad</label>
-                    <input class="form-control" type="number" id="quantity4" min="1" value="1">
-                    <button class="btn btn-link px-0 text-danger" type="button">
-                        <i class="bi bi-x-circle me-2"></i>
-                        <span class="fs-sm">Eliminar</span>
-                    </button>
-                    </div>
-                </div>
+                    <!-- Item-->
+                    @foreach ($cart_items as $item)
+                        <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
+                            <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
+                                <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
+                                    <img src="images/panel.webp" width="160" alt="Product">
+                                </a>
+                            <div class="pt-2">
+                                <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">{{$item->name}}</a></h3>
+                                <div class="fs-sm"><span class="text-muted me-2">Marca:</span>{{$item->attributes->brand}}</div>
+                                <div class="fs-sm"><span class="text-muted me-2">SKU:</span> {{$item->attributes->sku}}</div>
+                                @php
+                                    $formattedPrice = number_format($item->price, 2);
+                                    list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
+                                @endphp
+                                <div class="fs-lg text-accent pt-2">${{$priceWhole}}.<small>{{$priceDecimal}}</small></div>
+                            </div>
+                            </div>
+                            <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
+                            <label class="form-label" for="quantity1">Cantidad</label>
+                            <input class="form-control" type="number" id="Cantidad1" min="1" value="{{ $item->quantity }}">
+                            <button class="btn btn-link px-0 text-danger" type="button">
+                                <i class="bi bi-x-circle me-2"></i>
+                                <span class="fs-sm">Eliminar</span>
+                            </button>
+                            </div>
+                        </div>
+                    @endforeach
 
-                <button class="btn btn-outline-accent d-block w-100 mt-4" type="button">
-                    <i class="bi bi-arrow-clockwise"></i>
-                    Actualizar Carrito
-                </button>
+                    <button class="btn btn-outline-accent d-block w-100 mt-4" type="button">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Actualizar Carrito
+                    </button>
 
                 </section>
                 <!-- Sidebar-->
@@ -125,7 +72,11 @@
                     <div class="py-2 px-xl-2">
                     <div class="text-center mb-4 pb-3 border-bottom">
                         <h2 class="h6 mb-3 pb-1">Subtotal</h2>
-                        <h3 class="fw-normal">$265.<small>00</small></h3>
+                        @php
+                            $formattedPrice = number_format(Cart::getTotal(), 2);
+                            list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
+                        @endphp
+                        <h3 class="fw-normal">${{$priceWhole}}.<small>{{$priceDecimal}}</small></h3>
                     </div>
                     <ul class="list-unstyled fs-sm pb-2 border-bottom">
                         <li class="d-flex justify-content-between align-items-center">
