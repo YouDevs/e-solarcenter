@@ -68,6 +68,9 @@ class UsersSeeder extends Seeder
         $user_marketing->save();
         $user_marketing->assignRole(RolesEnums::MARKETING);
 
+        //TODO: CREAR USUARIO ALMACÉN.
+
+
         // CUSTOMER
         $customer = [
             'name' =>'customer',
