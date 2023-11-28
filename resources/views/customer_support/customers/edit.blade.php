@@ -92,7 +92,7 @@
                                             value="{{$customer->password}}"
                                         >
                                     </div>
-                                    <button type="submit" class="btn btn-primary text-center">Registrar</button>
+                                    <button type="submit" class="btn btn-primary text-center">Actualizar</button>
                                 </div>
                             </div>
                         </div>

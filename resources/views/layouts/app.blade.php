@@ -53,6 +53,11 @@
                                 <a class="nav-link" href="{{route('admin.products.index')}}">Productos</a>
                             </li>
                         @endrole
+                        @role('marketing|operator')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin.orders.index')}}">Ordenes</a>
+                            </li>
+                        @endrole
                     </ul>
 
                     <!-- Right Side Of Navbar -->

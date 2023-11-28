@@ -5,15 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerRegistrationController;
 use App\Http\Controllers\CustomerSupport\CustomerController;
+use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
 
-/*
-* TODO: Eliminar la opción de register que solo quede el pre-registro.
-*/
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -28,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('/pre-registro', [CustomerRegistrationController::class, 'index'])->name('customer-registration.index');
+
 Route::post('/pre-registro', [CustomerRegistrationController::class, 'store'])->name('customer-registration.store');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
@@ -38,6 +33,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 
     Route::middleware(['role:customer_support|operator'])->group(function () {
         Route::resource('customers', CustomerController::class)->except(['create', 'store']);
+        Route::resource('orders', OrderController::class)->except(['create', 'store']);
     });
 
     Route::middleware(['role:marketing|operator'])->group(function () {

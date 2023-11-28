@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->enum('status', ['pending', 'approved', 'cancelled'])->default('pending');
+            $table->enum('name', ['pending_payment', 'pending', 'approved', 'cancelled'])->default('pending');
             $table->string('cancellation_reason', 100)->nullable(); // ¿Por qué razón se cancela el pedido.?
             $table->timestamps();
         });

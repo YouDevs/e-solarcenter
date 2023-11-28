@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('customer_id')->constrained();
             $table->decimal('total', 10, 2);
             $table->string('delivery_status', 50)->nullable(); //NOTA: almcena el status obtenido de la paquetería.
             $table->date('estimated_delivery_date')->nullable();
