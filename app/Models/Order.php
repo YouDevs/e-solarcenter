@@ -19,16 +19,16 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function status()
-    {
-        return $this->hasOne(OrderStatus::class);
-    }
-
     public function getTotalAttribute()
     {
         return $this->items->sum(function ($item) {
             return $item->quantity * $item->price;
         });
     }
+
+    // public function getFormattedTotalAttribute()
+    // {
+    //     return formattedTotal($this->total);
+    // }
 
 }

@@ -15,12 +15,12 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function getFormattedPrice()
-    {
-        $formattedPrice = number_format($this->price, 2);
+    // public function getFormattedPrice()
+    // {
+    //     $formattedPrice = number_format($this->price, 2);
 
-        list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
+    //     list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
 
-        return ['whole' => $priceWhole, 'decimal' => $priceDecimal];
-    }
+    //     return ['whole' => $priceWhole, 'decimal' => $priceDecimal];
+    // }
 }

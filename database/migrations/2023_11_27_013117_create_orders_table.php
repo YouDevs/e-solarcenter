@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained();
             $table->decimal('total', 10, 2);
+
+            $table->enum('status', ['pending_payment', 'pending', 'approved', 'cancelled'])->default('pending');
+            $table->string('cancellation_reason', 100)->nullable(); // ¿Por qué razón se cancela el pedido.?
+
             $table->string('delivery_status', 50)->nullable(); //NOTA: almcena el status obtenido de la paquetería.
             $table->date('estimated_delivery_date')->nullable();
+
             $table->string('method', 50)->nullable(); //Transferencia Bancaria, PayPal, Stripe, Etc.
             $table->timestamps();
         });

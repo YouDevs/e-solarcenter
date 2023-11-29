@@ -42,11 +42,10 @@
                                 <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">{{$item->name}}</a></h3>
                                 <div class="fs-sm"><span class="text-muted me-2">Marca:</span>{{$item->attributes->brand}}</div>
                                 <div class="fs-sm"><span class="text-muted me-2">SKU:</span> {{$item->attributes->sku}}</div>
-                                @php
-                                    $formattedPrice = number_format($item->price, 2);
-                                    list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
-                                @endphp
-                                <div class="fs-lg text-accent pt-2">${{$priceWhole}}.<small>{{$priceDecimal}}</small></div>
+
+                                <div class="fs-lg text-accent pt-2">
+                                    <x-amount-formatter :amount="$item->price" />
+                                </div>
                             </div>
                             </div>
                             <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
@@ -72,11 +71,9 @@
                     <div class="py-2 px-xl-2">
                     <div class="text-center mb-4 pb-3 border-bottom">
                         <h2 class="h6 mb-3 pb-1">Subtotal</h2>
-                        @php
-                            $formattedPrice = number_format(Cart::getTotal(), 2);
-                            list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
-                        @endphp
-                        <h3 class="fw-normal">${{$priceWhole}}.<small>{{$priceDecimal}}</small></h3>
+                        <h3 class="fw-normal">
+                            <x-amount-formatter :amount="Cart::getTotal()" />
+                        </h3>
                     </div>
                     <ul class="list-unstyled fs-sm pb-2 border-bottom">
                         <li class="d-flex justify-content-between align-items-center">

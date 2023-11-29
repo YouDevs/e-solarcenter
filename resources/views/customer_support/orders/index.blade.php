@@ -26,7 +26,7 @@
                                     <th scope="col">Contacto</th>
                                     <th scope="col">Correo</th>
                                     <th scope="col">Total</th>
-                                    <th scope="col">order_status</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">status de envío</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -37,19 +37,21 @@
                                     <th scope="row" class="fw-bold">{{$order->customer->company_name}}</th>
                                     <th scope="row">{{$order->customer->user->name}}</th>
                                     <th scope="row">{{$order->customer->user->email}}</th>
-                                    <th scope="row">{{$order->total}}</th>
+                                    <th scope="row">
+                                        <x-amount-formatter :amount="$order->total" />
+                                    </th>
                                     <th scope="row" class="text-accent">
-                                        @if ($order->status->name == 'pending')
+                                        @if ($order->status == 'pending')
                                             <span class="badge rounded-pill text-bg-warning">
                                                 {{ ucfirst("Pendiente de Aprobación") }}
                                             </span>
-                                        @elseif($order->status->name == 'pending_payment')
+                                        @elseif($order->status == 'pending_payment')
                                             <span class="badge rounded-pill text-bg-info">
                                                 {{ ucfirst("Pendiente de Pago") }}
                                             </span>
-                                        @elseif($order->status->name == 'approved')
+                                        @elseif($order->status == 'approved')
                                             <span class="badge rounded-pill text-bg-success">
-                                                {{ ucfirst("Pago sAprobado") }}
+                                                {{ ucfirst("Pago Aprobado") }}
                                             </span>
                                         @else
                                             <span class="badge rounded-pill text-bg-success">

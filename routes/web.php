@@ -34,6 +34,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::middleware(['role:customer_support|operator'])->group(function () {
         Route::resource('customers', CustomerController::class)->except(['create', 'store']);
         Route::resource('orders', OrderController::class)->except(['create', 'store']);
+
+        Route::post('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.status.update');
     });
 
     Route::middleware(['role:marketing|operator'])->group(function () {

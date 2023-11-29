@@ -22,4 +22,15 @@ class OrderController extends Controller
             'order' => $order
         ]);
     }
+
+    public function updateStatus(Order $order, Request $request)
+    {
+        $order->status = $request->status;
+        $order->save();
+
+        session()->flash('message', 'Status de la orden actualizado exitosamente');
+        session()->flash('icon', 'success');
+
+        return redirect()->route('admin.orders.index');
+    }
 }

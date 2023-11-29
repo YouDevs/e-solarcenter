@@ -104,6 +104,19 @@
         </main>
     </div>
 
+
+    @if (session('message'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                icon: "{{ session('icon') }}",
+                title: "{{ session('message') }}",
+                showConfirmButton: false,
+                timer: 2000,
+            });
+        </script>
+    @endif
+
     @yield('scripts')
 </body>
 </html>

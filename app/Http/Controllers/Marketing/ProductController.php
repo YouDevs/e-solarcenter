@@ -9,7 +9,6 @@ use App\Models\Category;
 use Illuminate\View\View;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-// use Session;
 
 class ProductController extends Controller
 {

@@ -8,17 +8,17 @@
                 <div class="d-flex flex-row p-2">
                     <div class="mt-2 text-end">
                         <span class="fw-bold me-2">Status</span>
-                        @if ($order->status->name == 'pending')
+                        @if ($order->status == 'pending')
                             <span class="badge rounded-pill text-bg-warning">
                                 {{ ucfirst("Pendiente de Aprobación") }}
                             </span>
-                        @elseif($order->status->name == 'pending_payment')
+                        @elseif($order->status == 'pending_payment')
                             <span class="badge rounded-pill text-bg-info">
                                 {{ ucfirst("Pendiente de Pago") }}
                             </span>
-                        @elseif($order->status->name == 'approved')
+                        @elseif($order->status == 'approved')
                             <span class="badge rounded-pill text-bg-success">
-                                {{ ucfirst("Pago sAprobado") }}
+                                {{ ucfirst("Pago Aprobado") }}
                             </span>
                         @else
                             <span class="badge rounded-pill text-bg-success">
@@ -89,7 +89,9 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td class="text-end">${{$order->total}}</td>
+                                <td class="text-end">
+                                    <x-amount-formatter :amount="$order->total" />
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -115,9 +117,8 @@
                     <h5>Actualizar Status</h5>
                 </div>
                 <div class="card-body bg-white">
-                    <form action="{{route('admin.customers.update', $order)}}" method="POST">
+                    <form action="{{route('admin.orders.status.update', $order)}}" method="POST">
                         @csrf
-                        @method('PUT')
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
@@ -127,19 +128,19 @@
                                             <option value="">Selecciona una opción</option>
                                             <option
                                                 value="pending_payment"
-                                                @selected($order->status->name == 'pending_payment')
+                                                @selected($order->status == 'pending_payment')
                                             >
                                                 Pendiente de Pago
                                             </option>
                                             <option
                                                 value="pending"
-                                                @selected($order->status->name == 'pending')
+                                                @selected($order->status == 'pending')
                                             >
                                                 Pendiente de Aproación
                                             </option>
                                             <option
                                                 value="approved"
-                                                @selected($order->status->name == 'approved')
+                                                @selected($order->status == 'approved')
                                             >
                                                 Pago Aprobado
                                             </option>

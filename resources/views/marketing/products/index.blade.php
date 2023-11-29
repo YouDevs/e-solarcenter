@@ -91,7 +91,7 @@ function confirmDelete(button) {
 }
 </script>
 
-@if (session('message'))
+{{-- @if (session('message'))
     <script>
         Swal.fire({
             position: "top-end",
@@ -101,6 +101,6 @@ function confirmDelete(button) {
             timer: 2000,
         });
     </script>
-@endif
+@endif --}}
 
 @endsection

@@ -80,10 +80,7 @@
                     </h3>
                     <div class="d-flex justify-content-between">
                         <div class="product-price">
-                            @php
-                                $formattedPrice = $product->getFormattedPrice();
-                            @endphp
-                            <span class="text-accent">${{$formattedPrice['whole']}}.<small>{{$formattedPrice['decimal']}}</small></span>
+                            <x-amount-formatter :amount="$product->price" />
                             {{-- TODO: sistema de descuentos. --}}
                             {{-- <del class="fs-sm text-muted">$38.<small>50</small></del> --}}
                         </div>
