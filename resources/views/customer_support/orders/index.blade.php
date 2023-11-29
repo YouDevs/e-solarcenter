@@ -64,7 +64,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <a href="{{ route('admin.orders.edit', $order) }}" class="btn btn-warning me-2">Actualizar</a>
+                                            <a href="{{ route('admin.orders.edit', $order) }}" class="btn btn-warning me-2">Detalle</a>
                                             <form
                                                 action="#"
                                                 method="POST"
