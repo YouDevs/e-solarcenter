@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateOrderStatusRequest;
 use App\Http\Requests\UpdateOrderGuideNumberRequest;
 use App\Http\Requests\UpdateOrderInvoiceRequest;
 use App\Models\Order;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -50,13 +51,14 @@ class OrderController extends Controller
 
     public function updateInvoice(UpdateOrderInvoiceRequest $request, Order $order)
     {
-        // $order->guide_number = $request->guide_number;
-        // $order->save();
 
-        // dd($request->hasFile('invoice'));
-
-        // Subir la ficha técnica (PDF)
         if ($request->hasFile('invoice')) {
+
+            // Verificar si ya existe un archivo de factura y eliminarlo
+            if ($order->invoice && Storage::disk('public')->exists($order->invoice)) {
+                Storage::disk('public')->delete($order->invoice);
+            }
+
             $order->invoice = $request->file('invoice')->store('invoice', 'public');
             $order->save();
             session()->flash('message', 'La factura de la orden se actualizó exitosamente');
