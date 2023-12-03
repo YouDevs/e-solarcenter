@@ -35,7 +35,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::resource('customers', CustomerController::class)->except(['create', 'store']);
         Route::resource('orders', OrderController::class)->except(['create', 'store']);
 
-        Route::post('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.status.update');
+        Route::post('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update.status');
+        Route::post('orders/{order}/update-guide-number', [OrderController::class, 'updateGuideNumber'])->name('orders.update.guide-number');
+        Route::post('orders/{order}/invoice', [OrderController::class, 'updateInvoice'])->name('orders.update.invoice');
     });
 
     Route::middleware(['role:marketing|operator'])->group(function () {
