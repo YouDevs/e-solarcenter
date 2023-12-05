@@ -63,7 +63,16 @@
                                 <small>Hola, </small>{{auth()->user()->name}}
                             </div>
                         </a>
-                        <div class="navbar-tool dropdown ms-3">
+                        <div class="navbar-tool ms-3">
+                            <a class="navbar-tool-icon-box bg-secondary" href="{{route('cart.list')}}" previewlistener="true">
+                                <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
+                                <i class="navbar-tool-icon bi bi-cart3"></i>
+                            </a>
+                            <a class="navbar-tool-text" href="{{route('cart.list')}}" previewlistener="true">
+                                <small>Carrito</small>${{ Cart::getTotal() }}
+                            </a>
+                        </div>
+                        {{-- <div class="navbar-tool dropdown ms-3">
                             <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('cart.list')}}" previewlistener="true">
                                 <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
                                 <i class="navbar-tool-icon bi bi-cart3"></i>
@@ -147,7 +156,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -155,7 +164,8 @@
                 <div class="container">
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                     <!-- Search-->
-                    <div class="input-group d-lg-none my-3"><i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
+                    <div class="input-group d-lg-none my-3">
+                        <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
                         <input class="form-control rounded-start" type="text" placeholder="Buscar productos">
                     </div>
                     <!-- Departments menu-->
@@ -231,89 +241,97 @@
                     </ul> --}}
                     <!-- Primary menu-->
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown active"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Admin</a>
+                        @role('operator')
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Admin</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown position-static mb-0">
+                                        <a class="dropdown-item py-2 border-bottom" href="{{route('admin.customers.index')}}" previewlistener="true">
+                                            <span class="d-block text-heading">Clientes</span>
+                                            {{-- <small class="d-block text-muted">Crea, Edita, Actualiza</small> --}}
+                                        </a>
+                                        {{-- <div class="dropdown-menu h-100 animation-none mt-0 p-3">
+                                            <a class="d-block" href="home-fashion-store-v1.html" style="width: 250px;" previewlistener="true">
+                                                <img src="img/home/preview/th01.jpg" alt="Fashion Store v.1">
+                                            </a>
+                                        </div> --}}
+                                    </li>
+                                    <li class="dropdown position-static mb-0">
+                                        <a class="dropdown-item py-2 border-bottom" href="{{route('admin.products.index')}}" previewlistener="true">
+                                            <span class="d-block text-heading">Productos</span>
+                                            {{-- <small class="d-block text-muted">Slider + Promo banners</small> --}}
+                                        </a>
+                                        {{-- <div class="dropdown-menu h-100 animation-none mt-0 p-3">
+                                            <a class="d-block" href="home-electronics-store.html" style="width: 250px;" previewlistener="true">
+                                                <img src="img/home/preview/th03.jpg" alt="Electronics Store">
+                                            </a>
+                                        </div> --}}
+                                    </li>
+                                    <li class="dropdown position-static mb-0">
+                                        <a class="dropdown-item py-2" href="{{route('admin.orders.index')}}" previewlistener="true">
+                                            <span class="d-block text-heading">Ordenes</span>
+                                            {{-- <small class="d-block text-muted">Full width + Side menu</small> --}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endrole
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi perfil</a>
                             <ul class="dropdown-menu">
-                                <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item border-bottom py-2" href="/" previewlistener="true">
-                                        {{-- <span class="d-block text-heading">NFT Marketplace
-                                            <span class="badge bg-danger ms-1">NEW</span>
-                                        </span>
-                                        <small class="d-block text-muted">NFTs, Multi-vendor, Auctions</small> --}}
+                                <li>
+                                    <a class="dropdown-item" href="docs/dev-setup.html" previewlistener="true">
+                                        <div class="d-flex">
+                                            <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
+                                            <div class="ms-2">
+                                                <span class="d-block text-heading">Mis Datos</span>
+                                                <small class="d-block text-muted">Perfil de cliente</small>
+                                            </div>
+                                        </div>
                                     </a>
-                                    {{-- <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-nft.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th08.jpg" alt="NFT Marketplace">
-                                        </a>
-                                    </div> --}}
                                 </li>
-                                <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item py-2 border-bottom" href="{{route('admin.customers.index')}}" previewlistener="true">
-                                        <span class="d-block text-heading">Clientes</span>
-                                        {{-- <small class="d-block text-muted">Crea, Edita, Actualiza</small> --}}
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="components/typography.html" previewlistener="true">
+                                        <div class="d-flex">
+                                            <div class="lead text-muted pt-1"><i class="ci-server"></i></div>
+                                            <div class="ms-2">
+                                                <span class="d-block text-heading">Pedidos En tránsito<span class="badge bg-info ms-2">1+</span></span>
+                                                <small class="d-block text-muted">Seguimiento de ordenes</small>
+                                            </div>
+                                        </div>
                                     </a>
-                                    {{-- <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-fashion-store-v1.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th01.jpg" alt="Fashion Store v.1">
-                                        </a>
-                                    </div> --}}
                                 </li>
-                                <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item py-2 border-bottom" href="{{route('admin.products.index')}}" previewlistener="true">
-                                        <span class="d-block text-heading">Productos</span>
-                                        {{-- <small class="d-block text-muted">Slider + Promo banners</small> --}}
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="docs/changelog.html" previewlistener="true">
+                                    <div class="d-flex">
+                                        <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
+                                            <div class="ms-2">
+                                                <span class="d-block text-heading">Historial de Ordenes
+                                                    {{-- <span class="badge bg-success ms-2">v2.5.1</span> --}}
+                                                </span>
+                                                {{-- <small class="d-block text-muted">Regular updates</small> --}}
+                                            </div>
+                                        </div>
                                     </a>
-                                    {{-- <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-electronics-store.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th03.jpg" alt="Electronics Store">
-                                        </a>
-                                    </div> --}}
                                 </li>
-                                <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item py-2 border-bottom" href="{{route('admin.orders.index')}}" previewlistener="true">
-                                        <span class="d-block text-heading">Ordenes</span>
-                                        {{-- <small class="d-block text-muted">Full width + Side menu</small> --}}
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="">
+                                        <div class="d-flex">
+                                            <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
+                                            <div class="ms-2">
+                                                <span class="d-block text-heading">Soporte</span>
+                                                <small class="d-block text-muted">Formulario de contacto</small>
+                                            </div>
+                                        </div>
                                     </a>
-                                    {{-- <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-grocery-store.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th06.jpg" alt="Grocery Store">
-                                        </a>
-                                    </div> --}}
                                 </li>
-                                {{-- <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item py-2 border-bottom" href="home-food-delivery.html" previewlistener="true">
-                                        <span class="d-block text-heading">Food Delivery Service</span>
-                                        <small class="d-block text-muted">Food &amp; Beverages delivery</small>
-                                    </a>
-                                    <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-food-delivery.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th07.jpg" alt="Food Delivery Service">
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item py-2 border-bottom" href="home-fashion-store-v2.html" previewlistener="true">
-                                        <span class="d-block text-heading">Fashion Store v.2</span>
-                                        <small class="d-block text-muted">Slider + Featured categories</small>
-                                    </a>
-                                    <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-fashion-store-v2.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th02.jpg" alt="Fashion Store v.2">
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="dropdown position-static mb-0">
-                                    <a class="dropdown-item py-2" href="home-single-store.html" previewlistener="true">
-                                        <span class="d-block text-heading">Single Product Store</span>
-                                        <small class="d-block text-muted">Single product / mono brand</small>
-                                    </a>
-                                    <div class="dropdown-menu h-100 animation-none mt-0 p-3">
-                                        <a class="d-block" href="home-single-store.html" style="width: 250px;" previewlistener="true">
-                                            <img src="img/home/preview/th05.jpg" alt="Single Product / Brand Store">
-                                        </a>
-                                    </div>
-                                </li> --}}
                             </ul>
                         </li>
+
                         {{-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
                             <div class="dropdown-menu p-0">
                                 <div class="d-flex flex-wrap flex-sm-nowrap px-2">
@@ -486,33 +504,6 @@
                                     <li><a class="dropdown-item" href="blog-single.html" previewlistener="true">Article no Sidebar</a></li>
                                 </ul>
                                 </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Docs / Components</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="docs/dev-setup.html" previewlistener="true">
-                                    <div class="d-flex">
-                                    <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
-                                    <div class="ms-2"><span class="d-block text-heading">Documentation</span><small class="d-block text-muted">Kick-start customization</small></div>
-                                    </div></a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="components/typography.html" previewlistener="true">
-                                    <div class="d-flex">
-                                    <div class="lead text-muted pt-1"><i class="ci-server"></i></div>
-                                    <div class="ms-2"><span class="d-block text-heading">Components<span class="badge bg-info ms-2">40+</span></span><small class="d-block text-muted">Faster page building</small></div>
-                                    </div></a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="docs/changelog.html" previewlistener="true">
-                                    <div class="d-flex">
-                                    <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
-                                    <div class="ms-2"><span class="d-block text-heading">Changelog<span class="badge bg-success ms-2">v2.5.1</span></span><small class="d-block text-muted">Regular updates</small></div>
-                                    </div></a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="mailto:support@createx.studio">
-                                    <div class="d-flex">
-                                    <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
-                                    <div class="ms-2"><span class="d-block text-heading">Support</span><small class="d-block text-muted">support@createx.studio</small></div>
-                                    </div></a></li>
                             </ul>
                         </li> --}}
                     </ul>
