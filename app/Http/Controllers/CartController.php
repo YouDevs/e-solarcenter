@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class CartController extends Controller
 {
@@ -10,8 +11,12 @@ class CartController extends Controller
     {
         // \Cart::clear();
         $cart_items = \Cart::getContent();
-        // dd($cart_items);
-        return view('cart', compact('cart_items'));
+        $customer = auth()->user()->customer;
+
+        $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
+        $payment_concept = $last_order->generatePaymentConcept($last_order->id);
+
+        return view('cart', compact('cart_items', 'payment_concept'));
     }
 
 

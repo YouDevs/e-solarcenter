@@ -89,8 +89,8 @@
                             <span class="text-end h6">SOLAR CENTER</span>
                         </li>
                         <li class="d-flex justify-content-between align-items-center">
-                            <span class="me-2 h6 fw-bold">Concepto:</span>
-                            <span class="text-end h6 fw-bold">01010101010101</span>
+                            <span class="me-2 h6 fw-bold mb-0">Concepto:</span>
+                            <input type="text" class="form-control text-end fw-bold" value="{{$payment_concept}}">
                         </li>
                       </ul>
                     {{-- <div class="mb-3 mb-4">
