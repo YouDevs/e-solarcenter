@@ -182,17 +182,37 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <div class="form-floating @error('data_sheet') is-invalid @enderror">
-                                                    <input
-                                                        class="form-control @error('data_sheet') is-invalid @enderror"
-                                                        type="file"
-                                                        id="data_sheet"
-                                                        name="data_sheet"
+                                                <div class="form-floating @error('delivery_service') is-invalid @enderror">
+                                                    <select
+                                                        class="form-select @error('delivery_service') is-invalid @enderror"
+                                                        id="delivery_service"
+                                                        name="delivery_service"
                                                     >
-                                                    <label for="name">Ficha técnica</label>
+                                                        <option value="">Selecciona una opción</option>
+                                                        <option
+                                                            value="pending_payment"
+                                                            @selected($order->delivery_service == 'DHL')
+                                                        >
+                                                            DHL
+                                                        </option>
+                                                    </select>
+                                                    <label for="company-name">Servicio de paquetería</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating @error('guide_number') is-invalid @enderror">
+                                                    <input
+                                                        class="form-control @error('guide_number') is-invalid @enderror"
+                                                        type="text"
+                                                        id="guide_number"
+                                                        placeholder=""
+                                                        name="guide_number"
+                                                        value="{{old('guide_number', $order->guide_number)}}"
+                                                    >
+                                                    <label for="name">Número de guía</label>
                                                 </div>
                                                 <div class="invalid-feedback">
-                                                    @error('data_sheet')
+                                                    @error('guide_number')
                                                         <strong>{{$message}}</strong>
                                                     @enderror
                                                 </div>
