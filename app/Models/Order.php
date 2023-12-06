@@ -39,7 +39,6 @@ class Order extends Model
         $company_words = explode(' ', $this->customer->company_name);
         $first_word_of_company_name = $company_words[0];
 
-
         return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
     }
 

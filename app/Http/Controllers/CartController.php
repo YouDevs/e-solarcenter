@@ -13,8 +13,16 @@ class CartController extends Controller
         $cart_items = \Cart::getContent();
         $customer = auth()->user()->customer;
 
+        if (is_null($customer)) {
+            session()->flash('message', 'No tienes permiso para realizar esta acción.');
+            session()->flash('icon', 'warning');
+            return redirect()->back();
+        }
+
         $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
-        $payment_concept = $last_order->generatePaymentConcept($last_order->id);
+
+        $last_order_id = !is_null($last_order) ? $last_order->id: 1;
+        $payment_concept = $last_order->generatePaymentConcept($last_order_id);
 
         return view('cart', compact('cart_items', 'payment_concept'));
     }
