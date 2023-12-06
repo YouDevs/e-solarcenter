@@ -38,23 +38,29 @@
                                 <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
                                     <img src="{{Storage::url($item->attributes->featured)}}" width="160" alt="Product">
                                 </a>
-                            <div class="pt-2">
-                                <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">{{$item->name}}</a></h3>
-                                <div class="fs-sm"><span class="text-muted me-2">Marca:</span>{{$item->attributes->brand}}</div>
-                                <div class="fs-sm"><span class="text-muted me-2">SKU:</span> {{$item->attributes->sku}}</div>
+                                <div class="pt-2">
+                                    <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">{{$item->name}}</a></h3>
+                                    <div class="fs-sm"><span class="text-muted me-2">Marca:</span>{{$item->attributes->brand}}</div>
+                                    <div class="fs-sm"><span class="text-muted me-2">SKU:</span> {{$item->attributes->sku}}</div>
 
-                                <div class="fs-lg text-accent pt-2">
-                                    <x-amount-formatter :amount="$item->price" />
+                                    <div class="fs-lg text-accent pt-2">
+                                        <x-amount-formatter :amount="$item->price" />
+                                    </div>
                                 </div>
                             </div>
-                            </div>
                             <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
-                            <label class="form-label" for="quantity1">Cantidad</label>
-                            <input class="form-control" type="number" id="Cantidad1" min="1" value="{{ $item->quantity }}">
-                            <button class="btn btn-link px-0 text-danger" type="button">
-                                <i class="bi bi-x-circle me-2"></i>
-                                <span class="fs-sm">Eliminar</span>
-                            </button>
+                                <form action="">
+                                    <label class="form-label" for="quantity1">Cantidad</label>
+                                    <input class="form-control" type="number" id="Cantidad1" min="1" value="{{ $item->quantity }}">
+                                </form>
+                                <form action="{{route('cart.remove')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="item_id" value="{{$item->id}}">
+                                    <button class="btn btn-link px-0 text-danger" type="submit">
+                                        <i class="bi bi-x-circle me-2"></i>
+                                        <span class="fs-sm">Eliminar</span>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endforeach
@@ -179,4 +185,20 @@
         </div>
     {{-- </div>
 </div> --}}
+@endsection
+
+@section('scripts')
+
+@if (session('message'))
+<script>
+    Swal.fire({
+        position: "center",
+        icon: "{{ session('icon') }}",
+        title: "{{ session('message') }}",
+        showConfirmButton: false,
+        timer: 2000,
+    });
+</script>
+@endif
+
 @endsection

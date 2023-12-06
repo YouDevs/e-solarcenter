@@ -454,3 +454,78 @@ $btn-video-transition:                background-color .3s ease-in-out, color .3
 $btn-video-hover-bg:                  var(--#{$prefix}primary) !default;
 $btn-video-hover-color:               $white !default;
 $btn-video-hover-box-shadow:          0 .5rem 1.125rem -.5rem rgba(var(--#{$prefix}primary-rgb), .9) !default;
+
+// Widgets
+
+$widget-title-font-size:              $h6-font-size !default;
+$widget-title-font-weight:            $headings-font-weight !default;
+$widget-transition:                   color .25s ease-in-out !default;
+
+// Widget: Categories
+$widget-categories-font-size:              $font-size-base * .9375 !default;
+$widget-categories-color:                  $gray-700 !default;
+$widget-categories-hover-color:            var(--#{$prefix}primary) !default;
+$widget-categories-active-color:           var(--#{$prefix}primary) !default;
+$widget-categories-indicator-size:         1.375rem !default;
+$widget-categories-indicator-icon-size:    .5rem !default;
+$widget-categories-indicator-hover-bg:     rgba(var(--#{$prefix}primary-rgb), .1) !default;
+$widget-categories-indicator-hover-color:  var(--#{$prefix}primary) !default;
+$widget-categories-indicator-active-bg:    rgba(var(--#{$prefix}primary-rgb), .1) !default;
+$widget-categories-indicator-active-color: var(--#{$prefix}primary) !default;
+
+
+// Widget: Links
+$widget-links-font-size:              $font-size-sm !default;
+$widget-links-font-weight:            normal !default;
+$widget-links-dark-color:             $gray-700 !default;
+$widget-links-dark-hover-color:       var(--#{$prefix}primary) !default;
+$widget-links-dark-active-color:      var(--#{$prefix}primary) !default;
+$widget-links-light-color:            rgba($white, .65) !default;
+$widget-links-light-hover-color:      $white !default;
+$widget-links-light-active-color:     $white !default;
+
+// Widget: Featured products, Cart common styles
+$widget-product-title-color:          $headings-color !default;
+$widget-product-title-hover-color:    var(--#{$prefix}primary) !default;
+$widget-product-title-font-size:      $font-size-sm !default;
+$widget-product-title-font-weight:    $headings-font-weight !default;
+$widget-product-meta-font-size:       $font-size-sm !default;
+
+// Widget: Tags
+$tag-padding-y:                       .375rem !default;
+$tag-padding-x:                       .5625rem !default;
+$tag-color:                           $gray-700 !default;
+$tag-font-size:                       $font-size-xs !default;
+$tag-border-width:                    $border-width !default;
+$tag-border-color:                    $border-color !default;
+$tag-border-radius:                   $border-radius-sm !default;
+
+$tag-hover-color:                     $gray-700 !default;
+$tag-hover-border-color:              $border-color !default;
+$tag-hover-bg:                        $gray-200 !default;
+
+$tag-active-color:                    $white !default;
+$tag-active-border-color:             var(--#{$prefix}primary) !default;
+$tag-active-bg:                       var(--#{$prefix}primary) !default;
+$tag-active-box-shadow:               0 .5rem 1.125rem -.5rem rgba(var(--#{$prefix}primary-rgb), .9) !default;
+
+// Accordion
+
+$accordion-bg:                        transparent !default;
+$accordion-border-color:              darken($border-color, 2%) !default;
+$accordion-border-radius:             $border-radius-lg !default;
+$accordion-body-padding-y:            $card-spacer-y !default;
+
+$accordion-button-padding-y:          .625rem !default;
+$accordion-button-color:              $headings-color !default;
+$accordion-button-font-weight:        $headings-font-weight !default;
+$accordion-button-active-bg:          $accordion-bg !default;
+$accordion-button-active-color:       $accordion-button-color !default;
+$accordion-button-focus-border-color: $accordion-border-color !default;
+
+$accordion-icon-box-size:             2.125rem !default;
+$accordion-icon-box-bg:               $gray-200 !default;
+$accordion-icon-box-border-radius:    50% !default;
+$accordion-icon-width:                1rem !default;
+$accordion-icon-color:                $accordion-button-color !default;
+$accordion-icon-active-color:         $accordion-icon-color !default;
