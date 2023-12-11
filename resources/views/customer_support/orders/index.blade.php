@@ -113,7 +113,7 @@ function confirmDelete(button) {
 @if (session('message'))
     <script>
         Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "{{ session('icon') }}",
             title: "{{ session('message') }}",
             showConfirmButton: false,

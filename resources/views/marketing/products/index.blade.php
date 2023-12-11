@@ -90,17 +90,4 @@ function confirmDelete(button) {
     });
 }
 </script>
-
-{{-- @if (session('message'))
-    <script>
-        Swal.fire({
-            position: "top-end",
-            icon: "{{ session('icon') }}",
-            title: "{{ session('message') }}",
-            showConfirmButton: false,
-            timer: 2000,
-        });
-    </script>
-@endif --}}
-
 @endsection

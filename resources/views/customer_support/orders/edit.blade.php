@@ -83,13 +83,13 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td class="text-end">Total</td>
+                                <td class="text-end fw-bold">Total</td>
                             </tr>
                             <tr class="content">
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td class="text-end">
+                                <td class="text-end fw-bold">
                                     <x-amount-formatter :amount="$order->total" />
                                 </td>
                             </tr>
@@ -260,7 +260,7 @@
                                             @if ($order->invoice)
                                                 <a
                                                     href="{{Storage::url($order->invoice)}}"
-                                                    class="btn btn-link float-end"
+                                                    class="btn btn-outline-accent float-end"
                                                     target="_blank">
                                                     Ver factura
                                                 </a>
