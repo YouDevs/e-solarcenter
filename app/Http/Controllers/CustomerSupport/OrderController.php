@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateOrderGuideNumberRequest;
 use App\Http\Requests\UpdateOrderInvoiceRequest;
 use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
+use App\Enums\DeliveryServicesEnum;
 
 class OrderController extends Controller
 {
@@ -22,9 +23,18 @@ class OrderController extends Controller
 
     public function edit(Order $order): View
     {
+        $delivery_services = [
+            DeliveryServicesEnum::DHL => DeliveryServicesEnum::DHL,
+            DeliveryServicesEnum::ESTAFETA => DeliveryServicesEnum::ESTAFETA,
+            DeliveryServicesEnum::FEDEX => DeliveryServicesEnum::FEDEX,
+            DeliveryServicesEnum::PAQUETEXPRESS => DeliveryServicesEnum::PAQUETEXPRESS,
+        ];
+
         return view('customer_support.orders.edit', [
-            'order' => $order
+            'order' => $order,
+            'delivery_services' => $delivery_services
         ]);
+
     }
 
     public function updateStatus(UpdateOrderStatusRequest $request, Order $order)
@@ -40,6 +50,7 @@ class OrderController extends Controller
 
     public function updateGuideNumber(UpdateOrderGuideNumberRequest $request, Order $order)
     {
+        $order->delivery_service = $request->delivery_service;
         $order->guide_number = $request->guide_number;
         $order->save();
 

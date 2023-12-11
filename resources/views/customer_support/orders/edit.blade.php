@@ -189,11 +189,14 @@
                                                         name="delivery_service"
                                                     >
                                                         <option value="">Selecciona una opción</option>
-                                                        <option
-                                                            value="pending_payment"
-                                                            @selected($order->delivery_service == 'DHL')
-                                                        >
-                                                            DHL
+
+                                                        @foreach ($delivery_services as $key => $service)
+                                                            <option
+                                                                value="{{$key}}"
+                                                                @selected($key == $order->delivery_service)>
+                                                                {{$service}}
+                                                            </option>
+                                                        @endforeach
                                                         </option>
                                                     </select>
                                                     <label for="company-name">Servicio de paquetería</label>
