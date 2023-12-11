@@ -5,8 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border border-0 shadow-sm">
-                <div class="card-header bg-white border-0">
-                    <h4>Rellene los campos para solicitar registro</h4>
+                <div class="card-header border-0 bg-white">
+                    <h4 class="fw-bold mt-2">Rellene los campos para solicitar registro</h4>
                 </div>
 
                 <div class="card-body bg-white">

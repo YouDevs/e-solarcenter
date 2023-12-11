@@ -24,11 +24,18 @@
                                     <td>{{$customer->user->name}}</td>
                                     <td>{{$customer->rfc}}</td>
                                     <td>
-                                        <span class="badge rounded-pill {{ $customer->status == 'pending' ? 'text-bg-warning' :
+                                        <span
+                                            class="badge rounded-pill {{ $customer->status == 'pending' ? 'text-bg-warning' :
                                                            ($customer->status == 'active' ? 'text-bg-success' :
                                                            'text-bg-danger')}}"
                                         >
-                                            {{ ucfirst($customer->status) }}
+                                            @if ($customer->status == 'pending')
+                                                Pendiente
+                                            @elseif($customer->status == 'active')
+                                                Activo
+                                            @else
+                                                Inactivo
+                                            @endif
                                         </span>
                                     </td>
                                     <td>
