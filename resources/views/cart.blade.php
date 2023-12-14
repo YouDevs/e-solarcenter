@@ -35,7 +35,7 @@
                     @foreach ($cart_items as $item)
                         <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
                             <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
-                                <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="shop-single-v1.html" previewlistener="true">
+                                <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="#" previewlistener="true">
                                     <img src="{{Storage::url($item->attributes->featured)}}" width="160" alt="Product">
                                 </a>
                                 <div class="pt-2">
@@ -81,7 +81,7 @@
                                 <x-amount-formatter :amount="Cart::getTotal()" />
                             </h3>
                         </div>
-                        <ul class="list-unstyled fs-sm pb-2 border-bottom">
+                        {{-- <ul class="list-unstyled fs-sm pb-2 border-bottom">
                             <li class="d-flex justify-content-between align-items-center">
                                 <span class="me-2 h6">Cuenta Bancaria:</span>
                                 <span class="text-end h6">4242 4242 4242 4242</span>
@@ -98,7 +98,7 @@
                                 <span class="me-2 h6 fw-bold mb-0">Concepto:</span>
                                 <input type="text" class="form-control text-end fw-bold" value="{{$payment_concept}}">
                             </li>
-                        </ul>
+                        </ul> --}}
                         {{-- <div class="mb-3 mb-4">
                             <label class="form-label mb-3" for="order-comments">
                                 <span class="badge bg-info fs-xs me-2">Nota</span>
@@ -170,14 +170,18 @@
                             </div>
                         </div> --}}
 
-                        <a class="btn btn-success btn-shadow d-block w-100 mt-4" href="checkout-details.html" previewlistener="true">
+                        <a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="{{route('checkout.details')}}" previewlistener="true">
+                            <i class="bi bi-credit-card"></i>
+                            Proceso de pago
+                        </a>
+                        {{-- <a class="btn btn-success btn-shadow d-block w-100 mt-4" href="checkout-details.html" previewlistener="true">
                             <i class="bi bi-check-circle"></i>
                             Ya realicé mi pago
                         </a>
                         <a class="btn btn-warning btn-shadow d-block w-100 mt-4" href="checkout-details.html" previewlistener="true">
                             <i class="bi bi-clock"></i>
                             Pagaré Después
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
                 </aside>

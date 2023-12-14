@@ -529,3 +529,28 @@ $accordion-icon-box-border-radius:    50% !default;
 $accordion-icon-width:                1rem !default;
 $accordion-icon-color:                $accordion-button-color !default;
 $accordion-icon-active-color:         $accordion-icon-color !default;
+
+
+// Steps
+
+$step-bar-height:                     .25rem !default;
+$step-bar-border-radius:              $step-bar-height * .5 !default;
+$step-count-size:                     1.625rem !default;
+$step-count-font-size:                $font-size-sm !default;
+$step-transition:                     color .25s ease-in-out !default;
+
+$step-dark-color:                     $gray-600 !default;
+$step-dark-hover-color:               $gray-700 !default;
+$step-dark-active-color:              $gray-800 !default;
+$step-dark-progress-bg:               $gray-200 !default;
+$step-dark-progress-color:            $gray-700 !default;
+$step-dark-progress-active-color:     $white !default;
+$step-dark-progress-active-bg:        var(--#{$prefix}primary) !default;
+
+$step-light-color:                    rgba($white, .55) !default;
+$step-light-hover-color:              rgba($white, .8) !default;
+$step-light-active-color:             $white !default;
+$step-light-progress-bg:              lighten($gray-800, 8%) !default;
+$step-light-progress-color:           $white !default;
+$step-light-progress-active-color:    $white !default;
+$step-light-progress-active-bg:       var(--#{$prefix}primary) !default;
