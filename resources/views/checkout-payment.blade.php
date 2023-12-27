@@ -24,28 +24,7 @@
     <div class="row">
         <section class="col-lg-8">
             <!-- Steps-->
-            <div class="steps steps-light pt-2 pb-3 mb-5">
-                <a class="step-item active" href="shop-cart.html">
-                    <div class="step-progress"><span class="step-count">1</span></div>
-                    <div class="step-label"><i class="ci-cart"></i>Carrito</div>
-                </a>
-                <a class="step-item active" href="checkout-details.html">
-                    <div class="step-progress"><span class="step-count">2</span></div>
-                    <div class="step-label"><i class="ci-user-circle"></i>A tener en cuenta</div>
-                </a>
-                <a class="step-item active" href="checkout-shipping.html">
-                    <div class="step-progress"><span class="step-count">3</span></div>
-                    <div class="step-label"><i class="ci-package"></i>Envío</div>
-                </a>
-                <a class="step-item active current" href="checkout-payment.html">
-                    <div class="step-progress"><span class="step-count">4</span></div>
-                    <div class="step-label"><i class="ci-card"></i>Pago</div>
-                </a>
-                <a class="step-item" href="checkout-review.html">
-                    <div class="step-progress"><span class="step-count">5</span></div>
-                    <div class="step-label"><i class="ci-check-circle"></i>Finalizado</div>
-                </a>
-            </div>
+            <x-payment-steps step="4" />
 
             <!-- Shipping address-->
             <div class="container bg-secondary p-4 rounded-3 mb-grid-gutter text-center">
@@ -76,22 +55,23 @@
             <!-- Navigation (desktop)-->
             <div class="d-none d-lg-flex pt-4 mt-3">
                 <div class="w-50 pe-3">
-                    <a class="btn btn-secondary d-block w-100" href="shop-cart.html">
-                        <i class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Volver</span>
+                    <a class="btn btn-secondary d-block w-100" href="{{route('checkout.shipping')}}">
+                        <i class="ci-arrow-left mt-sm-0 me-1"></i>
+                        <span class="d-none d-sm-inline">Volver</span>
                         <span class="d-inline d-sm-none">Volver</span>
                     </a>
                 </div>
                 <div class="w-50 ps-2">
                     <a class="btn btn-primary d-block w-100" href="checkout-shipping.html">
-                        <span class="d-none d-sm-inline">Pagado</span>
-                        <span class="d-inline d-sm-none">Pagar</span>
+                        <span class="d-none d-sm-inline">Ya Realicé Mi Pago</span>
+                        <span class="d-inline d-sm-none">Pago realizado</span>
                         <i class="ci-arrow-right mt-sm-0 ms-1"></i>
                     </a>
                 </div>
                 <div class="w-50 ps-3">
                     <a class="btn btn-warning d-block w-100" href="checkout-shipping.html">
-                        <span class="d-none d-sm-inline">Proceder después</span>
-                        <span class="d-inline d-sm-none">Pagar después</span>
+                        <span class="d-none d-sm-inline">Pagar Después</span>
+                        <span class="d-inline d-sm-none">Pagar Después</span>
                         <i class="ci-arrow-right mt-sm-0 ms-1"></i>
                     </a>
                 </div>

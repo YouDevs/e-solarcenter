@@ -24,17 +24,7 @@
     <div class="row">
         <section class="col-lg-8">
             <!-- Steps-->
-            <div class="steps steps-light pt-2 pb-3 mb-5"><a class="step-item active" href="shop-cart.html">
-                <div class="step-progress"><span class="step-count">1</span></div>
-                <div class="step-label"><i class="ci-cart"></i>Carrito</div></a><a class="step-item active current" href="checkout-details.html">
-                <div class="step-progress"><span class="step-count">2</span></div>
-                <div class="step-label"><i class="ci-user-circle"></i>A tener en cuenta</div></a><a class="step-item" href="checkout-shipping.html">
-                <div class="step-progress"><span class="step-count">3</span></div>
-                <div class="step-label"><i class="ci-package"></i>Envío</div></a><a class="step-item" href="checkout-payment.html">
-                <div class="step-progress"><span class="step-count">4</span></div>
-                <div class="step-label"><i class="ci-card"></i>Pago</div></a><a class="step-item" href="checkout-review.html">
-                <div class="step-progress"><span class="step-count">5</span></div>
-                <div class="step-label"><i class="ci-check-circle"></i>Revisión</div></a></div>
+            <x-payment-steps :step="2" />
             <!-- Autor info-->
 
             <div class="container bg-secondary p-4 rounded-3 mb-grid-gutter text-center">
