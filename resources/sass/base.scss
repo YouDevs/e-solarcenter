@@ -12,13 +12,26 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-@import 'components/buttons';
 
 @import 'components/widgets';
 @import 'product-card';
 @import 'components/navbar';
 @import 'components/shop';
 @import 'components/steps';
+@import 'components/buttons';
+
+@keyframes girar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.girando {
+    animation: girar 6s linear infinite !important;
+}
 
 .btn-solar {
     @extend .btn;
