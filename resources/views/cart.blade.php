@@ -50,9 +50,17 @@
                             </div>
                             <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
                                 <form action="">
-                                    <label class="form-label" for="quantity1">Cantidad</label>
-                                    <input class="form-control" type="number" id="Cantidad1" min="1" value="{{ $item->quantity }}">
+                                    <label class="form-label" for="quantity{{$item->id}}">Cantidad</label>
+                                    <input
+                                        class="form-control quantity-input"
+                                        type="number"
+                                        id="quantity-{{$item->id}}"
+                                        min="1"
+                                        value="{{ $item->quantity }}"
+                                        data-id="{{ $item->id }}"
+                                    >
                                 </form>
+
                                 <form action="{{route('cart.remove')}}" method="post">
                                     @csrf
                                     <input type="hidden" name="item_id" value="{{$item->id}}">
@@ -65,11 +73,6 @@
                         </div>
                     @endforeach
 
-                    <button class="btn btn-outline-accent d-block w-100 mt-4" type="button">
-                        <i class="bi bi-arrow-clockwise"></i>
-                        Actualizar Carrito
-                    </button>
-
                 </section>
                 <!-- Sidebar-->
                 <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
@@ -77,7 +80,7 @@
                         <div class="py-2 px-xl-2">
                             <div class="text-center mb-4 pb-3 border-bottom">
                                 <h2 class="h6 mb-3 pb-1">Subtotal</h2>
-                                <h3 class="fw-normal">
+                                <h3 class="fw-normal subtotal-display">
                                     <x-amount-formatter :amount="Cart::getTotal()" />
                                 </h3>
                             </div>
@@ -196,6 +199,72 @@
 @endsection
 
 @section('scripts')
+
+<script>
+
+function debounce(func, wait) {
+    let timeout;
+
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+const updateCartQuantity = debounce(function(event) {
+    let item = event.target;
+    let itemId = item.getAttribute('data-id');
+    let quantity = item.value;
+
+    console.log(`itemId ${itemId} quantity ${quantity}`)
+
+    fetch('{{ route('cart.update') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ id: itemId, quantity: quantity })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.querySelector('.subtotal-display').innerHTML = data.newSubtotalFormatted;
+    });
+},  ); // 500 ms de espera
+
+document.querySelectorAll('.quantity-input').forEach(item => {
+    item.addEventListener('input', updateCartQuantity);
+});
+
+// document.querySelectorAll('.quantity-input').forEach(item => {
+//     console.log("quantity-input");
+//     item.addEventListener('change', event => {
+//         let itemId = item.getAttribute('data-id');
+//         let quantity = item.value;
+
+//         console.log(`itemId ${itemId} - quantity ${quantity}`)
+
+//         fetch('{{ route('cart.update') }}', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
+//             },
+//             body: JSON.stringify({ id: itemId, quantity: quantity })
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             const subtotalElement = document.querySelector('.subtotal-display');
+//             subtotalElement.innerHTML = data.newSubtotalFormatted;
+//         });
+//     });
+// });
+</script>
 
 @if (session('message'))
 <script>

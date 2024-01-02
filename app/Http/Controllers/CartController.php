@@ -51,6 +51,8 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
+        //TODO: consultar el stock antes de permitirle actualizar el carrito para comprobar que la cantidad de existe.
+
         \Cart::update(
             $request->id,
             [
@@ -61,9 +63,10 @@ class CartController extends Controller
             ]
         );
 
-        session()->flash('success', 'Item Cart is Updated Successfully !');
+        $new_subtotal = \Cart::getTotal();
 
-        return redirect()->route('cart.list');
+        $new_subtotal_formatted = view('components.amount-formatter', ['amount' => $new_subtotal])->render();
+        return response()->json(['newSubtotalFormatted' => $new_subtotal_formatted]);
     }
 
     public function removeCart(Request $request)
