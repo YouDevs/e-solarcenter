@@ -27,7 +27,6 @@ class CartController extends Controller
         return view('cart', compact('cart_items', 'payment_concept'));
     }
 
-
     public function addToCart(Request $request)
     {
         \Cart::add([

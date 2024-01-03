@@ -77,10 +77,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <p>
+                {{-- <p>
                     <span>botón editar dirección.</span> //
                     <span>botón agregar dirección.</span>
-                </p>
+                </p> --}}
               </div>
             <!-- Navigation (desktop)-->
             <div class="d-none d-lg-flex pt-4 mt-3">

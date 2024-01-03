@@ -24,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // session()->flush();
+
         $products = Product::all();
         return view('index', compact('products'));
     }

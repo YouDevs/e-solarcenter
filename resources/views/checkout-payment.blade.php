@@ -62,18 +62,32 @@
                     </a>
                 </div>
                 <div class="w-50 ps-2">
-                    <a class="btn btn-primary d-block w-100" href="checkout-shipping.html">
-                        <span class="d-none d-sm-inline">Ya Realicé Mi Pago</span>
-                        <span class="d-inline d-sm-none">Pago realizado</span>
-                        <i class="ci-arrow-right mt-sm-0 ms-1"></i>
-                    </a>
+                    <form action="{{ route('checkout.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="pay_now" value="1" >
+                        <button
+                            type="submit"
+                            class="btn btn-primary d-block w-100"
+                        >
+                            <span class="d-none d-sm-inline">Ya Realicé Mi Pago</span>
+                            <span class="d-inline d-sm-none">Pago realizado</span>
+                            <i class="ci-arrow-right mt-sm-0 ms-1"></i>
+                        </button>
+                    </form>
                 </div>
                 <div class="w-50 ps-3">
-                    <a class="btn btn-warning d-block w-100" href="checkout-shipping.html">
-                        <span class="d-none d-sm-inline">Pagar Después</span>
-                        <span class="d-inline d-sm-none">Pagar Después</span>
-                        <i class="ci-arrow-right mt-sm-0 ms-1"></i>
-                    </a>
+                    <form action="{{ route('checkout.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="pay_later" value="1" >
+                        <button
+                            type="submit"
+                            class="btn btn-warning d-block w-100"
+                        >
+                            <span class="d-none d-sm-inline">Pagar Después</span>
+                            <span class="d-inline d-sm-none">Pagar Después</span>
+                            <i class="ci-arrow-right mt-sm-0 ms-1"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -142,7 +156,7 @@
         icon: "{{ session('icon') }}",
         title: "{{ session('message') }}",
         showConfirmButton: false,
-        timer: 2000,
+        timer: 3000,
     });
 </script>
 @endif

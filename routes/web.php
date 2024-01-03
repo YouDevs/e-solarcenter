@@ -22,6 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('checkout-details', [CheckoutController::class, 'details'])->name('checkout.details');
     Route::get('checkout-shipping', [CheckoutController::class, 'shipping'])->name('checkout.shipping');
     Route::get('checkout-payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+    Route::get('checkout-complete', [CheckoutController::class, 'complete'])->name('checkout.complete');
+    Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
 
 
