@@ -32,11 +32,6 @@ class Order extends Model
         });
     }
 
-    // public function getFormattedTotalAttribute()
-    // {
-    //     return formattedTotal($this->total);
-    // }
-
     public function generatePaymentConcept($last_order_id)
     {
         $folio = sprintf('%04d', $last_order_id);
@@ -46,6 +41,12 @@ class Order extends Model
         $first_word_of_company_name = $company_words[0];
 
         return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
+    }
+
+    public function folio()
+    {
+        $folio = sprintf('%04d', $this->id);
+        return $folio;
     }
 
 }

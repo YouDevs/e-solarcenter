@@ -1,16 +1,15 @@
 // Fonts
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
+// iconos
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
 // Variables
 @import 'variables';
 @import 'variables-base';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
-
-// iconos
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-
 
 
 @import 'components/widgets';
@@ -19,6 +18,7 @@
 @import 'components/shop';
 @import 'components/steps';
 @import 'components/buttons';
+@import 'components/nav';
 
 @keyframes girar {
     from {

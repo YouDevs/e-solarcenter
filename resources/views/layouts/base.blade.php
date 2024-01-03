@@ -285,7 +285,7 @@
                         @endrole
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi perfil</a>
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi Cuenta</a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="docs/dev-setup.html" previewlistener="true">
@@ -293,7 +293,22 @@
                                             <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
                                             <div class="ms-2">
                                                 <span class="d-block text-heading">Mis Datos</span>
-                                                <small class="d-block text-muted">Perfil de cliente</small>
+                                                <small class="d-block text-muted">Mi Perfil</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+
+                                <li>
+                                    <a class="dropdown-item" href="{{route('account.orders')}}" previewlistener="true">
+                                    <div class="d-flex">
+                                        <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
+                                            <div class="ms-2">
+                                                <span class="d-block text-heading">Historial de Ordenes
+                                                    {{-- <span class="badge bg-success ms-2">v2.5.1</span> --}}
+                                                </span>
+                                                {{-- <small class="d-block text-muted">Regular updates</small> --}}
                                             </div>
                                         </div>
                                     </a>
@@ -304,22 +319,8 @@
                                         <div class="d-flex">
                                             <div class="lead text-muted pt-1"><i class="ci-server"></i></div>
                                             <div class="ms-2">
-                                                <span class="d-block text-heading">Pedidos En tránsito<span class="badge bg-info ms-2">1+</span></span>
-                                                <small class="d-block text-muted">Seguimiento de ordenes</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="docs/changelog.html" previewlistener="true">
-                                    <div class="d-flex">
-                                        <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
-                                            <div class="ms-2">
-                                                <span class="d-block text-heading">Historial de Ordenes
-                                                    {{-- <span class="badge bg-success ms-2">v2.5.1</span> --}}
-                                                </span>
-                                                {{-- <small class="d-block text-muted">Regular updates</small> --}}
+                                                <span class="d-block text-heading">Pedidos En Tránsito<span class="badge bg-info ms-2">1+</span></span>
+                                                <small class="d-block text-muted">Seguimiento de Ordenes</small>
                                             </div>
                                         </div>
                                     </a>

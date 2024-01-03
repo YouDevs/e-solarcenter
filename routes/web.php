@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerRegistrationController;
+use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\CustomerSupport\CustomerController;
 use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
@@ -24,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('checkout-payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
     Route::get('checkout-complete', [CheckoutController::class, 'complete'])->name('checkout.complete');
     Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    Route::get('cuenta/ordenes', [CustomerAccountController::class, 'accountOrders'])->name('account.orders');
 });
 
 
