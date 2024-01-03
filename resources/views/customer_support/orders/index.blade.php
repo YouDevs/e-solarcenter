@@ -28,6 +28,7 @@
                                     <th scope="col">Total</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">status de envío</th>
+                                    <th scope="col">Fecha</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -61,6 +62,9 @@
                                     </th>
                                     <td>
                                         status_de_envio
+                                    </td>
+                                    <td>
+                                        {{ $order->created_at->format('m/d/y H:i') }}
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center justify-content-center">

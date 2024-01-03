@@ -17,7 +17,7 @@ class OrderController extends Controller
 {
     public function index(): View
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('created_at', 'DESC')->get();
         return view('customer_support.orders.index', ['orders' => $orders]);
     }
 
