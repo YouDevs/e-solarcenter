@@ -12,6 +12,7 @@ use App\Http\Requests\UpdateOrderInvoiceRequest;
 use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\DeliveryServicesEnum;
+use App\Enums\DeliveryStatusEnum;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
@@ -21,14 +22,9 @@ class OrderController extends Controller
     {
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
-        $delivery_status_translations = [
-            'notfound' => 'No encontrado',
-            'transit' => 'En tránsito',
-            'delivered' => 'Entregado',
-            // ... otros estados
-        ];
+        $delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
 
-        return view('customer_support.orders.index', ['orders' => $orders, 'delivery_status_translations' => $delivery_status_translations]);
+        return view('customer_support.orders.index', ['orders' => $orders, 'delivery_status' => $delivery_status]);
     }
 
     public function edit(Order $order): View

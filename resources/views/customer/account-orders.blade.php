@@ -132,6 +132,7 @@
                     <th>Status Sistema</th>
                     <th>Status Envío</th>
                     <th>Total</th>
+                    <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,17 +149,20 @@
                                 <span class="badge bg-info m-0">Pendiente</span>
                             @elseif($order->status == 'pending_payment')
                                 <span class="badge bg-warning m-0">Pendiente de pago</span>
+                            @elseif($order->status == 'approved')
+                                <span class="badge bg-success m-0">Pago Aprobado</span>
                             @elseif($order->status == 'canceled')
                                 <span class="badge bg-danger m-0">Cancelado</span>
-                            @elseif($order->status == 'approved')
-                                <span class="badge bg-success m-0">Aprobado</span>
                             @endif
                         </td>
                         <td class="py-3">
-                            N/A
+                            {{$order->translated_delivery_status}}
                         </td>
                         <td class="py-3">
                             <x-amount-formatter :amount="$order->total" />
+                        </td>
+                        <td>
+                            <a href="/" class="btn btn-primary btn-sm">Ver orden</a>
                         </td>
                     </tr>
                     @endforeach
