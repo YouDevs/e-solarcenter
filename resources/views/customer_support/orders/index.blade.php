@@ -61,7 +61,7 @@
                                         @endif
                                     </th>
                                     <td>
-                                        {{$delivery_status}}
+                                        {{$order->translated_delivery_status}}
                                     </td>
                                     <td>
                                         {{ $order->created_at->format('m/d/y H:i') }}

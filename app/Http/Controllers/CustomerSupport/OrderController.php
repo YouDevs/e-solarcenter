@@ -22,9 +22,21 @@ class OrderController extends Controller
     {
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
-        $delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
+        foreach ($orders as $order) {
+            // Obtiene el estado de entrega actualizado
+            // $latest_status = $this->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            // Log::info("latest_status $latest_status");
 
-        return view('customer_support.orders.index', ['orders' => $orders, 'delivery_status' => $delivery_status]);
+            // Actualiza el estado en la base de datos si es diferente
+            // if ($order->delivery_status !== $latest_status) {
+            //     $order->update(['delivery_status' => $latest_status]);
+            // }
+
+            // Traduce el estado para mostrarlo en la vista
+            $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
+        }
+
+        return view('customer_support.orders.index', ['orders' => $orders]);
     }
 
     public function edit(Order $order): View
