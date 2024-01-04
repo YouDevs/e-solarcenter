@@ -182,18 +182,18 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <div class="form-floating @error('delivery_service') is-invalid @enderror">
+                                                <div class="form-floating @error('courier_code') is-invalid @enderror">
                                                     <select
-                                                        class="form-select @error('delivery_service') is-invalid @enderror"
-                                                        id="delivery_service"
-                                                        name="delivery_service"
+                                                        class="form-select @error('courier_code') is-invalid @enderror"
+                                                        id="courier_code"
+                                                        name="courier_code"
                                                     >
                                                         <option value="">Selecciona una opción</option>
 
-                                                        @foreach ($delivery_services as $key => $service)
+                                                        @foreach ($courier_codes as $key => $service)
                                                             <option
                                                                 value="{{$key}}"
-                                                                @selected($key == $order->delivery_service)>
+                                                                @selected($key == $order->courier_code)>
                                                                 {{$service}}
                                                             </option>
                                                         @endforeach
@@ -203,19 +203,19 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <div class="form-floating @error('guide_number') is-invalid @enderror">
+                                                <div class="form-floating @error('tracking_number') is-invalid @enderror">
                                                     <input
-                                                        class="form-control @error('guide_number') is-invalid @enderror"
+                                                        class="form-control @error('tracking_number') is-invalid @enderror"
                                                         type="text"
-                                                        id="guide_number"
+                                                        id="tracking_number"
                                                         placeholder=""
-                                                        name="guide_number"
-                                                        value="{{old('guide_number', $order->guide_number)}}"
+                                                        name="tracking_number"
+                                                        value="{{old('tracking_number', $order->tracking_number)}}"
                                                     >
                                                     <label for="name">Número de guía</label>
                                                 </div>
                                                 <div class="invalid-feedback">
-                                                    @error('guide_number')
+                                                    @error('tracking_number')
                                                         <strong>{{$message}}</strong>
                                                     @enderror
                                                 </div>

@@ -22,14 +22,14 @@ class UpdateOrderGuideNumberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'guide_number' => 'required',
+            'tracking_number' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'guide_number.required' => 'El Número de guía es un campo obligatorio',
+            'tracking_number.required' => 'El Número de guía es un campo obligatorio',
         ];
     }
 }
