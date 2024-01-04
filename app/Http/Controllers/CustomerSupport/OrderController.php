@@ -73,11 +73,15 @@ class OrderController extends Controller
 
             // Si necesitas el código de estado o cualquier otra información
             $status_code = $response->getStatusCode();
-            Log::info($status_code);
 
             if($status_code == 200) {
+
+                $response_array = json_decode($response->getBody(), true);
+                $delivery_status = $response_array['data']['delivery_status'];
+
                 $order->courier_code = $request->courier_code;
                 $order->tracking_number = $request->tracking_number;
+                $order->delivery_status = $delivery_status;
                 $order->save();
 
                 session()->flash('message', 'Número de guía guardado exitosamente');

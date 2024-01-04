@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('cancellation_reason', 100)->nullable(); // ¿Por qué razón se cancela el pedido.?
 
             $table->string('courier_code', 40)->nullable();
-            $table->string('shipment_status', 50)->nullable(); //NOTA: almacena el status obtenido de la paquetería.
+            $table->string('delivery_status', 50)->nullable(); //NOTA: almacena el status obtenido de la paquetería.
             $table->string('tracking_number', 50)->nullable();
             $table->date('estimated_delivery_date')->nullable();
 
