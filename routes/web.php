@@ -45,7 +45,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::resource('orders', OrderController::class)->except(['create', 'store']);
 
         Route::post('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update.status');
-        Route::post('orders/{order}/update-guide-number', [OrderController::class, 'updateGuideNumber'])->name('orders.update.guide-number');
+        Route::post('orders/{order}/update-tracking-number', [OrderController::class, 'updateTrankingNumber'])->name('orders.update.tracking-number');
         Route::post('orders/{order}/invoice', [OrderController::class, 'updateInvoice'])->name('orders.update.invoice');
     });
 

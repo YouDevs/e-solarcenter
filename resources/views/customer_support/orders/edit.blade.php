@@ -176,7 +176,7 @@
                             <h5>Actualizar Número de Guía</h5>
                         </div>
                         <div class="card-body bg-white">
-                            <form action="{{route('admin.orders.update.guide-number', $order)}}" method="POST">
+                            <form action="{{route('admin.orders.update.tracking-number', $order)}}" method="POST">
                                 @csrf
                                 <div class="container">
                                     <div class="row">
@@ -276,4 +276,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+@if (session('message'))
+    <script>
+        Swal.fire({
+            position: "center",
+            icon: "{{ session('icon') }}",
+            title: "{{ session('message') }}",
+            showConfirmButton: false,
+            timer: 5000,
+        });
+    </script>
+@endif
 @endsection

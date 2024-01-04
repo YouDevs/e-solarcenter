@@ -20,7 +20,15 @@ class OrderController extends Controller
     public function index(): View
     {
         $orders = Order::orderBy('created_at', 'DESC')->get();
-        return view('customer_support.orders.index', ['orders' => $orders]);
+
+        $delivery_status_translations = [
+            'notfound' => 'No encontrado',
+            'transit' => 'En tránsito',
+            'delivered' => 'Entregado',
+            // ... otros estados
+        ];
+
+        return view('customer_support.orders.index', ['orders' => $orders, 'delivery_status_translations' => $delivery_status_translations]);
     }
 
     public function edit(Order $order): View
@@ -48,48 +56,22 @@ class OrderController extends Controller
         session()->flash('message', 'Status de la orden actualizado exitosamente');
         session()->flash('icon', 'success');
 
-        return redirect()->route('admin.orders.index');
+        return redirect()->back();
     }
 
-    public function updateGuideNumber(UpdateOrderGuideNumberRequest $request, Order $order)
+    public function updateTrankingNumber(UpdateOrderGuideNumberRequest $request, Order $order)
     {
-        // Log::info( $request->all() );
-        $client = new Client();
-        $api_key = env("TRACKING_MORE_API_KEY");
 
-        // delivery_status
-        // return json_decode($response->getBody(), true);
         try {
-            $response = $client->request('POST', 'https://api.trackingmore.com/v4/trackings/create', [
-                'headers' => [
-                    'Tracking-Api-Key' => $api_key,
-                    'Content-Type' => 'application/json'
-                ],
-                'json' => [
-                    'tracking_number' => $request->tracking_number,
-                    'courier_code' => $request->courier_code
-                ]
+            $delivery_status = $this->createTracking($request->tracking_number, $request->courier_code);
+
+            $order->update([
+                'courier_code' => $request->courier_code,
+                'tracking_number' => $request->tracking_number,
+                'delivery_status' => $delivery_status
             ]);
 
-            // Si necesitas el código de estado o cualquier otra información
-            $status_code = $response->getStatusCode();
-
-            if($status_code == 200) {
-
-                $response_array = json_decode($response->getBody(), true);
-                $delivery_status = $response_array['data']['delivery_status'];
-
-                $order->courier_code = $request->courier_code;
-                $order->tracking_number = $request->tracking_number;
-                $order->delivery_status = $delivery_status;
-                $order->save();
-
-                session()->flash('message', 'Número de guía guardado exitosamente');
-                session()->flash('icon', 'success');
-
-                return redirect()->route('admin.orders.index');
-            }
-
+            return $this->successRedirect('Número de guía guardado exitosamente');
 
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             // errores del cliente, como un 400 Bad Request
@@ -99,26 +81,56 @@ class OrderController extends Controller
             Log::info($response_body_as_string);
             session()->flash('message', 'Hubo un problema con la solicitud: ' . $response_body_as_string);
             session()->flash('icon', 'error');
-            return redirect()->route('admin.orders.index');
+            return redirect()->back();
 
         } catch (\GuzzleHttp\Exception\ServerException $e) {
             // Aquí capturas errores del servidor, como un 500 Internal Server Error
             Log::info($e->getMessage());
             session()->flash('message', 'Hubo un problema con el servidor: ' . $e->getMessage());
             session()->flash('icon', 'error');
-            return redirect()->route('admin.orders.index');
+            return redirect()->back();
 
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             // Capturas cualquier otro error de Guzzle
             Log::info($e->getMessage());
             session()->flash('message', 'Error al realizar la solicitud: ' . $e->getMessage());
             session()->flash('icon', 'error');
-            return redirect()->route('admin.orders.index');
+            return redirect()->back();
         }
+    }
 
+    private function createTracking($trackingNumber, $courierCode)
+    {
+        $client = new Client();
+        $api_key = env("TRACKING_MORE_API_KEY");
 
+        $response = $client->request('POST', 'https://api.trackingmore.com/v4/trackings/create', [
+            'headers' => [
+                'Tracking-Api-Key' => $api_key,
+                'Content-Type' => 'application/json'
+            ],
+            'json' => [
+                'tracking_number' => $trackingNumber,
+                'courier_code' => $courierCode
+            ]
+        ]);
 
+        $responseArray = json_decode($response->getBody(), true);
+        return $responseArray['data']['delivery_status'];
+    }
 
+    private function successRedirect($message)
+    {
+        session()->flash('message', $message);
+        session()->flash('icon', 'success');
+        return redirect()->back();
+    }
+
+    private function errorRedirect($message)
+    {
+        session()->flash('message', $message);
+        session()->flash('icon', 'error');
+        return redirect()->back();
     }
 
     public function updateInvoice(UpdateOrderInvoiceRequest $request, Order $order)

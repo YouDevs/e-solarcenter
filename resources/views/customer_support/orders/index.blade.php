@@ -61,7 +61,7 @@
                                         @endif
                                     </th>
                                     <td>
-                                        status_de_envio
+                                        {{ $delivery_status_translations[$order->delivery_status] ?? 'Estado desconocido' }}
                                     </td>
                                     <td>
                                         {{ $order->created_at->format('m/d/y H:i') }}
