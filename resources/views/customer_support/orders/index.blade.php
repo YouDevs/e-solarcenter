@@ -22,9 +22,10 @@
                         <table class="table table-hover">
                             <thead class="table-light">
                                 <tr class="text-center">
+                                    <th scope="col">Folio</th>
                                     <th scope="col">Cliente</th>
-                                    <th scope="col">Contacto</th>
-                                    <th scope="col">Correo</th>
+                                    {{-- <th scope="col">Contacto</th> --}}
+                                    {{-- <th scope="col">Correo</th> --}}
                                     <th scope="col">Total</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">status de envío</th>
@@ -35,9 +36,10 @@
                             <tbody>
                                 @foreach ($orders as $order)
                                 <tr class="text-center">
+                                    <th scope="row" class="fw-bold">{{$order->folio()}}</th>
                                     <th scope="row" class="fw-bold">{{$order->customer->company_name}}</th>
-                                    <th scope="row">{{$order->customer->user->name}}</th>
-                                    <th scope="row">{{$order->customer->user->email}}</th>
+                                    {{-- <th scope="row">{{$order->customer->user->name}}</th> --}}
+                                    {{-- <th scope="row">{{$order->customer->user->email}}</th> --}}
                                     <th scope="row">
                                         <x-amount-formatter :amount="$order->total" />
                                     </th>
