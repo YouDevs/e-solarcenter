@@ -10,11 +10,13 @@ use App\Http\Requests\UpdateOrderStatusRequest;
 use App\Http\Requests\UpdateOrderGuideNumberRequest;
 use App\Http\Requests\UpdateOrderInvoiceRequest;
 use App\Models\Order;
-use Illuminate\Support\Facades\Storage;
 use App\Enums\DeliveryServicesEnum;
 use App\Enums\DeliveryStatusEnum;
 use GuzzleHttp\Client;
 use App\Services\TrackingService;
+use App\Mail\OrderDelivered;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -39,6 +41,11 @@ class OrderController extends Controller
             // Actualiza el estado en la base de datos si es diferente
             if ($order->delivery_status && $order->delivery_status !== $latest_status) {
                 $order->update(['delivery_status' => $latest_status]);
+
+                //TODO: enviar correo desde un cron-job.
+                if( $latest_status == 'delivered' ) {
+                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+                }
             }
 
             // Traduce el estado para mostrarlo en la vista
@@ -96,21 +103,21 @@ class OrderController extends Controller
             $response_body_as_string = $response->getBody()->getContents();
             $status_code = $response->getStatusCode();
             Log::info($response_body_as_string);
-            session()->flash('message', 'Hubo un problema con la solicitud: ' . $response_body_as_string);
+            session()->flash('message', 'Error: Intenta de nuevo cuando estes sobrio.');
             session()->flash('icon', 'error');
             return redirect()->back();
 
         } catch (\GuzzleHttp\Exception\ServerException $e) {
             // Aquí capturas errores del servidor, como un 500 Internal Server Error
             Log::info($e->getMessage());
-            session()->flash('message', 'Hubo un problema con el servidor: ' . $e->getMessage());
+            session()->flash('message', 'Error: mejor consulta con el genio que programó esto! ');
             session()->flash('icon', 'error');
             return redirect()->back();
 
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             // Capturas cualquier otro error de Guzzle
             Log::info($e->getMessage());
-            session()->flash('message', 'Error al realizar la solicitud: ' . $e->getMessage());
+            session()->flash('message', 'Error: Algo falló con éxito!');
             session()->flash('icon', 'error');
             return redirect()->back();
         }

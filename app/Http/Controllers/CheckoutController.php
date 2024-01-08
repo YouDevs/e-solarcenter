@@ -32,7 +32,7 @@ class CheckoutController extends Controller
         $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
 
         $last_order_id = !is_null($last_order) ? $last_order->id: 1;
-        $payment_concept = $last_order->generatePaymentConcept($last_order_id);
+        $payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
 
         return view('checkout-payment', compact('cart_items', 'payment_concept'));
     }
@@ -92,5 +92,16 @@ class CheckoutController extends Controller
         session()->flash('icon', 'success');
 
         return view('checkout-complete');
+    }
+
+    private function generatePaymentConcept($last_order_id, $company_name)
+    {
+        $folio = sprintf('%04d', $last_order_id);
+
+        // Divide el nombre de la empresa en palabras y toma la primera palabra
+        $company_words = explode(' ', $company_name);
+        $first_word_of_company_name = $company_words[0];
+
+        return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
     }
 }

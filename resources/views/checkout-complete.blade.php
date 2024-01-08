@@ -10,9 +10,9 @@
                 {{-- <p class="fs-sm mb-2">El estado </p> --}}
                 <p class="fs-sm">Recibirá un correo con la confirmación de su orden <u>: la cual puede consultar desde su historial de ordenes.</u></p>
                 <a class="btn btn-secondary mt-3 me-3" href="/">Volver a Comprar</a>
-                <a class="btn btn-primary mt-3" href="/">
+                <a class="btn btn-primary mt-3" href="{{route('account.orders')}}">
                     <i class="bi bi-geo-alt"></i>
-                    &nbsp;Seguimiendo de Orden
+                    &nbsp;Seguimiento de Orden
                 </a>
             </div>
         </div>

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Enums\DeliveryStatusEnum;
 use App\Services\TrackingService;
+use App\Mail\OrderDelivered;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
 class CustomerAccountController extends Controller
@@ -32,6 +34,11 @@ class CustomerAccountController extends Controller
             // Actualiza el estado en la base de datos si es diferente
             if ($order->delivery_status && $order->delivery_status !== $latest_status) {
                 $order->update(['delivery_status' => $latest_status]);
+
+                //TODO: enviar correo desde un cron-job.
+                if( $latest_status == 'delivered' ) {
+                    Mail::to( $customer->user->email )->send(new OrderDelivered($order) );
+                }
             }
 
             // Traduce el estado para mostrarlo en la vista
