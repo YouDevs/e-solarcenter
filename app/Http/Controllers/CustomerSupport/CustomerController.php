@@ -5,7 +5,10 @@ namespace App\Http\Controllers\CustomerSupport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Mail\AccountActivated;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -14,7 +17,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::orderBy('id', 'DESC')->get();
         return view('customer_support.customers.index', ['customers' => $customers]);
     }
 
@@ -55,13 +58,27 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        $customer->netsuite_key = $request->netsuite_key;
-        $customer->user->password = Hash::make($request->password);
-        $customer->status = 'active';
-        $customer->save();
-        $customer->user->save();
+        DB::beginTransaction();
 
-        //TODO: send email.
+        try {
+
+            $customer->netsuite_key = $request->netsuite_key;
+            $customer->user->password = Hash::make($request->password);
+            $customer->status = 'active';
+            $customer->save();
+            $customer->user->save();
+
+            Mail::to( $customer->user->email )->send( new AccountActivated($customer->user->email, $request->password) );
+
+            DB::commit();
+
+            session()->flash('message', 'Nuevo cliente activo: a venderle como desquiciado 🥴!');
+            session()->flash('icon', 'error');
+
+        } catch (\Exception $e) {
+            session()->flash('message', 'Ups! Algo salió mal, pero no sabría decirte qué!');
+            session()->flash('icon', 'error');
+        }
 
         return redirect()->route('admin.customers.index');
     }
