@@ -14,23 +14,32 @@ use Illuminate\Support\Facades\Storage;
 use App\Enums\DeliveryServicesEnum;
 use App\Enums\DeliveryStatusEnum;
 use GuzzleHttp\Client;
+use App\Services\TrackingService;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
+    protected $trackingService;
+
+    public function __construct(TrackingService $trackingService)
+    {
+        $this->trackingService = $trackingService;
+    }
+
     public function index(): View
     {
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
         foreach ($orders as $order) {
             // Obtiene el estado de entrega actualizado
-            // $latest_status = $this->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            // Log::info("latest_status $latest_status");
+            if($order->tracking_number && $order->courier_code) {
+                $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            }
 
             // Actualiza el estado en la base de datos si es diferente
-            // if ($order->delivery_status !== $latest_status) {
-            //     $order->update(['delivery_status' => $latest_status]);
-            // }
+            if ($order->delivery_status && $order->delivery_status !== $latest_status) {
+                $order->update(['delivery_status' => $latest_status]);
+            }
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);

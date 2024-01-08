@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Enums;
+use Illuminate\Support\Facades\Log;
 
 abstract class DeliveryStatusEnum
 {
@@ -9,6 +10,7 @@ abstract class DeliveryStatusEnum
     const DELIVERED = 'Entregado';
 
     public static function getTranslatedStatus($status) {
+        Log::info("status -> $status");
         switch ($status) {
             case 'notfound':
                 return self::NOT_FOUND;
