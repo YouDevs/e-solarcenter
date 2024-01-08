@@ -9,7 +9,6 @@ use  App\Http\Requests\StoreCustomerRegistrationRequest;
 
 class CustomerRegistrationController extends Controller
 {
-
     public function index()
     {
         return view('auth.register');
@@ -33,7 +32,6 @@ class CustomerRegistrationController extends Controller
             'status' => 'pending',
         ]);
 
-        return "PRE REGISTRO EXITOSO!";
-        return redirect()->route('registration.success');
+        return redirect()->route('customer-registration.success');
     }
 }

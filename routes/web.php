@@ -31,8 +31,10 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('/pre-registro', [CustomerRegistrationController::class, 'index'])->name('customer-registration.index');
-
 Route::post('/pre-registro', [CustomerRegistrationController::class, 'store'])->name('customer-registration.store');
+Route::get('/pre-registro/exitoso', function() {
+    return view('auth.pre-register');
+})->name('customer-registration.success');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
 

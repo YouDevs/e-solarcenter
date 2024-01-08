@@ -42,10 +42,12 @@
                     <a class="navbar-brand d-sm-none flex-shrink-0 me-2" href="/" previewlistener="true">
                         <img src="{{asset('images/logo.webp')}}" width="74" alt="Solar Center">
                     </a>
+                    @if (Auth::check())
                     <div class="input-group d-none d-lg-flex mx-4">
                         <input class="form-control rounded-end pe-5" type="text" placeholder="Buscar productos">
                         <i class="ci-search position-absolute top-50 end-0 translate-middle-y text-muted fs-base me-3"></i>
                     </div>
+                    @endif
                     <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                             <span class="navbar-toggler-icon"></span>
@@ -62,6 +64,7 @@
                                 <i class="navbar-tool-icon ci-heart"></i>
                             </div>
                         </a>
+                        @if (Auth::check())
                         <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
                             <div class="navbar-tool-icon-box">
                                 <i class="navbar-tool-icon bi bi-person-circle fs-1"></i>
@@ -79,6 +82,7 @@
                                 <small>Carrito</small>${{ Cart::getTotal() }}
                             </a>
                         </div>
+                        @endif
                         {{-- <div class="navbar-tool dropdown ms-3">
                             <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('cart.list')}}" previewlistener="true">
                                 <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
@@ -170,11 +174,13 @@
             <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
                 <div class="container">
                     <div class="collapse navbar-collapse" id="navbarCollapse">
+                    @if (Auth::check())
                     <!-- Search-->
                     <div class="input-group d-lg-none my-3">
                         <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
                         <input class="form-control rounded-start" type="text" placeholder="Buscar productos">
                     </div>
+                    @endif
                     <!-- Departments menu-->
                     {{-- <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
                         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle ps-lg-0" href="#" data-bs-toggle="dropdown"><i class="ci-view-grid me-2"></i>Departments</a>
@@ -284,6 +290,7 @@
                             </li>
                         @endrole
 
+                        @if (Auth::check())
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi Cuenta</a>
                             <ul class="dropdown-menu">
@@ -353,6 +360,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
                         {{-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
                             <div class="dropdown-menu p-0">
