@@ -18,7 +18,6 @@ class TrackingService
 
     public function getLatestDeliveryStatus($tracking_number, $courier_code)
     {
-        Log::info("getLatestDeliveryStatus");
         try {
             $response = $this->client->request("GET", "https://api.trackingmore.com/v4/trackings/get?tracking_numbers=$tracking_number", [
                 'headers' => [

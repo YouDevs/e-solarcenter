@@ -1,5 +1,3 @@
-{{-- resources/views/emails/orderDelivered.blade.php --}}
-
 <!DOCTYPE html>
 <html>
 <head>

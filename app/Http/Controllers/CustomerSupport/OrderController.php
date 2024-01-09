@@ -14,8 +14,8 @@ use App\Enums\DeliveryServicesEnum;
 use App\Enums\DeliveryStatusEnum;
 use GuzzleHttp\Client;
 use App\Services\TrackingService;
-use App\Mail\OrderDelivered;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderDelivered;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 

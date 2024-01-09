@@ -9,8 +9,8 @@ abstract class DeliveryStatusEnum
     const TRANSIT = 'En trásito';
     const DELIVERED = 'Entregado';
 
-    public static function getTranslatedStatus($status) {
-        Log::info("status -> $status");
+    public static function getTranslatedStatus($status)
+    {
         switch ($status) {
             case 'notfound':
                 return self::NOT_FOUND;

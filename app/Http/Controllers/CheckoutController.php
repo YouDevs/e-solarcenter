@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaidOrder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -73,6 +75,11 @@ class CheckoutController extends Controller
             // Vaciar el carrito
             \Cart::clear();
 
+            if($request->has('pay_now') ) {
+                Log::info("Enviando correo.... orden realizada!");
+                Mail::to( $order->customer->user->email )->send( new PaidOrder($order) );
+            }
+
             // Redireccionar o responder con éxito
             return redirect()->route('checkout.complete');
 
@@ -80,6 +87,7 @@ class CheckoutController extends Controller
             // Algo salió mal, hacer rollback
             session()->flash('message', 'La transacción no ha podido ser guardada; comunicate con el administrador de la plataforma');
             session()->flash('icon', 'error');
+            Log::info($e);
 
             DB::rollback();
             return redirect()->back()->with('error', 'Error al guardar la orden.');
