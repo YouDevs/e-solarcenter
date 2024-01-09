@@ -9,9 +9,8 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class PaidOrder extends Mailable
+class PaidOrderAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +18,9 @@ class PaidOrder extends Mailable
      * Create a new message instance.
      */
     public function __construct(private $order)
-    {}
+    {
+        //
+    }
 
     /**
      * Get the message envelope.
@@ -38,7 +39,7 @@ class PaidOrder extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.paid-order',
+            view: 'mails.paid-order-admin',
             with: ['order' => $this->order],
         );
     }

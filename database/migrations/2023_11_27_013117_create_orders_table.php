@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained();
             $table->decimal('total', 10, 2);
+            $table->string('payment_concept', 30)->nullable();
 
             $table->enum('status', ['pending_payment', 'pending', 'approved', 'cancelled'])->default('pending');
             $table->string('cancellation_reason', 100)->nullable(); // ¿Por qué razón se cancela el pedido.?

@@ -8,6 +8,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaidOrder;
+use App\Mail\PaidOrderAdmin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -52,6 +53,7 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'customer_id' => $customer_id,
                 'total' => \Cart::getTotal(),
+                'payment_concept' => $request->payment_concept,
                 'status' => $request->has('pay_now') ? 'pending' : 'pending_payment',
             ]);
 
@@ -78,6 +80,8 @@ class CheckoutController extends Controller
             if($request->has('pay_now') ) {
                 Log::info("Enviando correo.... orden realizada!");
                 Mail::to( $order->customer->user->email )->send( new PaidOrder($order) );
+                // TODO: enviar al correo que le corresponda.
+                Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new PaidOrderAdmin($order) );
             }
 
             // Redireccionar o responder con éxito

@@ -65,6 +65,7 @@
                     <form action="{{ route('checkout.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="pay_now" value="1" >
+                        <input type="hidden" name="payment_concept" value="{{$payment_concept}}" >
                         <button
                             type="submit"
                             class="btn btn-primary d-block w-100"
