@@ -299,8 +299,8 @@
                                         <div class="d-flex">
                                             <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
                                             <div class="ms-2">
-                                                <span class="d-block text-heading">Mis Datos</span>
-                                                <small class="d-block text-muted">Mi Perfil</small>
+                                                <span class="d-block text-heading">Mi Perfil</span>
+                                                <small class="d-block text-muted">Perfil y configuraciones</small>
                                             </div>
                                         </div>
                                     </a>
@@ -312,16 +312,16 @@
                                     <div class="d-flex">
                                         <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
                                             <div class="ms-2">
-                                                <span class="d-block text-heading">Historial de Ordenes
+                                                <span class="d-block text-heading">Mis Ordenes
                                                     {{-- <span class="badge bg-success ms-2">v2.5.1</span> --}}
                                                 </span>
-                                                {{-- <small class="d-block text-muted">Regular updates</small> --}}
+                                                <small class="d-block text-muted">Historial de ordenes</small>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="dropdown-divider"></li>
-                                <li>
+                                {{-- <li>
                                     <a class="dropdown-item" href="components/typography.html" previewlistener="true">
                                         <div class="d-flex">
                                             <div class="lead text-muted pt-1"><i class="ci-server"></i></div>
@@ -332,13 +332,13 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li class="dropdown-divider"></li>
+                                <li class="dropdown-divider"></li> --}}
                                 <li>
                                     <a class="dropdown-item" href="">
                                         <div class="d-flex">
                                             <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
                                             <div class="ms-2">
-                                                <span class="d-block text-heading">Soporte</span>
+                                                <span class="d-block text-heading">Contacto</span>
                                                 <small class="d-block text-muted">Formulario de contacto</small>
                                             </div>
                                         </div>

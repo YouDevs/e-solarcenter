@@ -55,8 +55,13 @@
                 </div>
                 <ul class="list-unstyled mb-0">
                     <li class="border-bottom mb-0">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-orders.html">
+                            <i class="ci-bag opacity-60 me-2"></i> Mi Cuenta
+                        </a>
+                    </li>
+                    <li class="border-bottom mb-0">
                         <a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="account-orders.html">
-                            <i class="ci-bag opacity-60 me-2"></i>Ordenes
+                            <i class="ci-bag opacity-60 me-2"></i>Mis Ordenes
                             <span class="fs-sm text-muted ms-auto"> {{$orders->count()}} </span>
                         </a>
                     </li>
@@ -67,21 +72,21 @@
                     </li> --}}
                     <li class="mb-0">
                         <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-tickets.html">
-                            <i class="ci-help opacity-60 me-2"></i>Soporte
+                            <i class="ci-help opacity-60 me-2"></i>Contacto
                             <span class="fs-sm text-muted ms-auto">1</span>
                         </a>
                     </li>
                 </ul>
-                <div class="bg-secondary px-4 py-3">
+                {{-- <div class="bg-secondary px-4 py-3">
                     <h3 class="fs-sm mb-0 text-muted">Configuración de Cuenta</h3>
-                </div>
-                <ul class="list-unstyled mb-0">
-                    <li class="border-bottom mb-0">
+                </div> --}}
+                {{-- <ul class="list-unstyled mb-0"> --}}
+                    {{-- <li class="border-bottom mb-0">
                         <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-profile.html">
                             <i class="ci-user opacity-60 me-2"></i>
                             Información de perfil
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- <li class="border-bottom mb-0">
                         <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-address.html">
                             <i class="ci-location opacity-60 me-2"></i>
@@ -99,7 +104,7 @@
                             Cerrar Sesión
                         </a>
                     </li> --}}
-                </ul>
+                {{-- </ul> --}}
                 </div>
             </div>
         </aside>
