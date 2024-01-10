@@ -73,7 +73,7 @@ class CustomerController extends Controller
             DB::commit();
 
             session()->flash('message', 'Nuevo cliente activo: a venderle como desquiciado 🥴!');
-            session()->flash('icon', 'error');
+            session()->flash('icon', 'success');
 
         } catch (\Exception $e) {
             session()->flash('message', 'Ups! Algo salió mal, pero no sabría decirte qué!');

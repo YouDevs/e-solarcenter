@@ -71,9 +71,9 @@
                         </a>
                     </li> --}}
                     <li class="mb-0">
-                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="account-tickets.html">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="{{route('account.contact')}}">
                             <i class="ci-help opacity-60 me-2"></i>Contacto
-                            <span class="fs-sm text-muted ms-auto">1</span>
+                            {{-- <span class="fs-sm text-muted ms-auto">1</span> --}}
                         </a>
                     </li>
                 </ul>

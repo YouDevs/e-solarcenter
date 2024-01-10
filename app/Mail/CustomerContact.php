@@ -10,14 +10,14 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AccountActivated extends Mailable
+class CustomerContact extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(private $email, private $password)
+    public function __construct(public $name, public $email, public $phone, public $subject, public $message_body)
     {}
 
     /**
@@ -27,7 +27,7 @@ class AccountActivated extends Mailable
     {
         return new Envelope(
             from: new Address('carlos.develops@gmail.com', 'Solar Center'),
-            subject: 'Cuenta Actividad! - Solar Center',
+            subject: 'Mensaje de cliente! - Solar Center',
         );
     }
 
@@ -37,8 +37,8 @@ class AccountActivated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.account-activated',
-            with: ['email' => $this->email, 'password' => $this->password],
+            view: 'mails.customer-contact',
+            with: [ $this->name, $this->email, $this->phone, $this->subject, $this->message_body ],
         );
     }
 

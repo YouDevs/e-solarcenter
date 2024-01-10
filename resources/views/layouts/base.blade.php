@@ -334,7 +334,7 @@
                                 </li>
                                 <li class="dropdown-divider"></li> --}}
                                 <li>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{route('account.contact')}}">
                                         <div class="d-flex">
                                             <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
                                             <div class="ms-2">

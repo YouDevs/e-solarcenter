@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Enums\DeliveryStatusEnum;
 use App\Services\TrackingService;
+use App\Http\Requests\CustomerContactRequest;
 use App\Mail\OrderDelivered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\CustomerContact;
 use Illuminate\Support\Facades\Log;
 
 class CustomerAccountController extends Controller
@@ -49,6 +51,32 @@ class CustomerAccountController extends Controller
             'customer' => $customer,
             'orders' => $orders,
         ]);
+    }
+
+    public function contact()
+    {
+        return view('customer.contact');
+    }
+
+    public function sendCustomerContact(CustomerContactRequest $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $subject = $request->subject;
+        $message_body = $request->message;
+
+        try {
+            Mail::to( $email )->send( new CustomerContact( $name, $email, $phone, $subject, $message_body ) );
+            session()->flash('message', 'Tu mensaje ha sido enviado con éxito!');
+            session()->flash('icon', 'success');
+        } catch (\Exception $e) {
+            session()->flash('message', 'Hubo un error al enviar tu mensaje. Por favor, intenta de nuevo más tarde.');
+            session()->flash('icon', 'error');
+            Log::error('Error al encolar correo: ' . $e->getMessage());
+        }
+
+        return redirect()->back();
     }
 
 }
