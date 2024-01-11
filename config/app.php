@@ -16,6 +16,12 @@ return [
     |
     */
 
+    'consumer_key' => env('CONSUMER_KEY'),
+    'consumer_secret' => env('CONSUMER_SECRET'),
+    'token_secret' => env('TOKEN_SECRET'),
+    'token' => env('TOKEN'),
+    'realm' => env('REALM'),
+
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

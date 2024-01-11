@@ -19,7 +19,7 @@ class ProductsSeeder extends Seeder
             'price' => 400.00,
             'category_id' => 1,
             'sku' => 'PV-PS-575-LNG',
-            'stock' => 10,
+            'netsuite_stock' => 10,
             'data_sheet' => 'datasheet.pdf',
             'featured' => 'images/panel.webp',
         ]);
@@ -30,7 +30,7 @@ class ProductsSeeder extends Seeder
             'price' => 350.00,
             'category_id' => 1,
             'sku' => 'PV-PS-550-LNG',
-            'stock' => 10,
+            'netsuite_stock' => 10,
             'data_sheet' => 'datasheet.pdf',
             'featured' => 'images/panel.webp',
         ]);
@@ -41,7 +41,7 @@ class ProductsSeeder extends Seeder
             'price' => 150.00,
             'category_id' => 1,
             'sku' => 'PV-PS-450-RSN',
-            'stock' => 10,
+            'netsuite_stock' => 10,
             'data_sheet' => 'datasheet.pdf',
             'featured' => 'images/panel.webp',
         ]);

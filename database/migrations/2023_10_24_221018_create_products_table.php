@@ -18,7 +18,9 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('sku')->nullable();
-            $table->integer('stock')->nullable();
+            $table->string('netsuite_item')->nullable();
+            $table->string('netsuite_item_txt')->nullable(); //NOTA: en netsuite está como: itemTxt
+            $table->integer('netsuite_stock')->nullable(); //NOTA: es el stock total obtenido de todas las ubicaciones desde netsuite.
             $table->string('data_sheet', 100)->nullable();
             $table->string('featured', 100)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
 

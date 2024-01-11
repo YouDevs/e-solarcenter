@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = ['name', 'brand', 'netsuite_item', 'netsuite_item_txt', 'netsuite_stock', 'slug'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

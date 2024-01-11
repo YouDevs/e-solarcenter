@@ -40,7 +40,7 @@
                                     <th scope="row">{{$product->brand}}</th>
                                     <th scope="row" class="text-accent">${{number_format($product->price, 2, '.', ',')}}</th>
                                     <td>
-                                        {{$product->category->name}}
+                                        {{$product->category? $product->category->name: ''}}
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center justify-content-center">
