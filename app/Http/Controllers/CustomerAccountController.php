@@ -25,7 +25,8 @@ class CustomerAccountController extends Controller
     {
         $customer = Auth::user()->customer;
 
-        $orders = $customer->orders()->orderBy('id', 'desc')->get();
+        // $orders = $customer->orders()->orderBy('id', 'desc')->get();
+        $orders = $customer->orders()->orderBy('id', 'desc')->paginate(2);
 
         foreach ($orders as $order) {
             // Obtiene el estado de entrega actualizado

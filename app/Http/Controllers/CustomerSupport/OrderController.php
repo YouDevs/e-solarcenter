@@ -45,6 +45,9 @@ class OrderController extends Controller
                 //TODO: enviar correo desde un cron-job.
                 if( $latest_status == 'delivered' ) {
                     Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+
+                    //TODO: enviar correo también al operador:
+                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
                 }
             }
 

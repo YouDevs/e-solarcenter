@@ -175,7 +175,9 @@
                 </table>
             </div>
             <!-- Pagination-->
-            <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+            {{ $orders->links('vendor.pagination.bootstrap-5') }}
+
+            {{-- <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Atrás</a>
@@ -202,9 +204,9 @@
                     </li>
                 </ul>
                 <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#" aria-label="Next">Siguiente<i class="ci-arrow-right ms-2"></i></a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-label="Next">Siguiente<i class="ci-arrow-right ms-2"></i></a></li>
                 </ul>
-            </nav>
+            </nav> --}}
         </section>
     </div>
 </div>
