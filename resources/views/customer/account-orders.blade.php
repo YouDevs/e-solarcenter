@@ -112,17 +112,28 @@
         <section class="col-lg-8">
             <!-- Toolbar-->
             <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
-                <div class="d-flex align-items-center">
-                    <label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Ordernar por:</label>
-                    <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Ordenar por:</label>
-                    <select class="form-select" id="order-sort">
-                        <option>Todo</option>
-                        <option>Enviado</option>
-                        <option>En progreso</option>
-                        <option>Demorado</option>
-                        <option>Cancelado</option>
-                    </select>
-                </div>
+                <form action="{{route('account.orders')}}" method="get">
+                    <div class="d-flex align-items-center">
+                        <label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Status de pago:</label>
+                        <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Status de pago:</label>
+                        <select class="form-select" name="status" id="status">
+                            <option value=""> Elige una opción </option>
+                            <option value="pending_payment" @selected($status == 'pending_payment')>Pago pendiente</option>
+                            <option value="pending" @selected($status == 'pending')>Pendiente de aprobación</option>
+                            <option value="approved" @selected($status == 'approved')>Aprobado</option>
+                            <option value="cancelled" @selected($status == 'cancelled')>Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Status de envío:</label>
+                        <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Status de envío:</label>
+                        <select class="form-select" name="delivery_status" id="delivery-status">
+                            <option value=""> Elige una opción </option>
+                            <option value="transit" @selected($delivery_status == 'transit')>En tránsito</option>
+                            <option value="delivered" @selected($delivery_status == 'delivered')>Entregado</option>
+                        </select>
+                    </div>
+                </form>
                 <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html">
                     <i class="ci-sign-out me-2"></i>Cerrar sesión
                 </a>
@@ -150,10 +161,10 @@
                         </td>
                         <td class="py-3">{{ $order->created_at->format('m/d/y H:i') }}</td>
                         <td class="py-3">
-                            @if ($order->status == 'pending')
-                                <span class="badge bg-info m-0">Pendiente</span>
-                            @elseif($order->status == 'pending_payment')
+                            @if($order->status == 'pending_payment')
                                 <span class="badge bg-warning m-0">Pendiente de pago</span>
+                            @elseif ($order->status == 'pending')
+                                <span class="badge bg-info m-0">Pendiente de aprobación</span>
                             @elseif($order->status == 'approved')
                                 <span class="badge bg-success m-0">Pago Aprobado</span>
                             @elseif($order->status == 'canceled')
@@ -175,38 +186,8 @@
                 </table>
             </div>
             <!-- Pagination-->
-            {{ $orders->links('vendor.pagination.bootstrap-5') }}
-
-            {{-- <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Atrás</a>
-                    </li>
-                </ul>
-                <ul class="pagination">
-                    <li class="page-item d-sm-none">
-                        <span class="page-link page-link-static">1 / 5</span>
-                    </li>
-                    <li class="page-item active d-none d-sm-block" aria-current="page">
-                        <span class="page-link">1<span class="visually-hidden">(current)</span></span>
-                    </li>
-                    <li class="page-item d-none d-sm-block">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item d-none d-sm-block">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item d-none d-sm-block">
-                        <a class="page-link" href="#">4</a>
-                    </li>
-                    <li class="page-item d-none d-sm-block">
-                        <a class="page-link" href="#">5</a>
-                    </li>
-                </ul>
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#" aria-label="Next">Siguiente<i class="ci-arrow-right ms-2"></i></a></li>
-                </ul>
-            </nav> --}}
+            {{-- {{ $orders->links('vendor.pagination.bootstrap-5') }} --}}
+            {{ $orders->appends(request()->query())->links('vendor.pagination.bootstrap-5') }}
         </section>
     </div>
 </div>
@@ -225,5 +206,22 @@
     });
 </script>
 @endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+        // Obtén los elementos select por su ID
+        var statusPaymentSelect = document.getElementById('status');
+        var statusDeliverySelect = document.getElementById('delivery-status');
+
+        // Función para enviar el formulario
+        function submitForm() {
+            this.form.submit();
+        }
+
+        // Añade el evento change a los elementos select
+        statusPaymentSelect.addEventListener('change', submitForm);
+        statusDeliverySelect.addEventListener('change', submitForm);
+    });
+</script>
 
 @endsection

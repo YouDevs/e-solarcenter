@@ -33,7 +33,7 @@ class TrackingService
 
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             Log::error("Error al obtener el estado de entrega: " . $e->getMessage());
-            return 'Estado desconocido';
+            return 'unknown';
         }
     }
 

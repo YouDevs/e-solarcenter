@@ -21,12 +21,24 @@ class CustomerAccountController extends Controller
         $this->trackingService = $trackingService;
     }
 
-    public function accountOrders()
+    public function orders(Request $request)
     {
+        Log::info( $request->all() );
         $customer = Auth::user()->customer;
+        $query = $customer->orders()->orderBy('id', 'desc');
 
-        // $orders = $customer->orders()->orderBy('id', 'desc')->get();
-        $orders = $customer->orders()->orderBy('id', 'desc')->paginate(2);
+        // Aplica filtros
+        if ($request->filled('status')) {
+            Log::info( "status" );
+            $query->where('status', $request->input('status'));
+        }
+        if ($request->filled('delivery_status')) {
+            Log::info( "delivery_status" );
+            $query->where('delivery_status', $request->input('delivery_status'));
+        }
+
+        // Pagina el resultado
+        $orders = $query->paginate(3);
 
         foreach ($orders as $order) {
             // Obtiene el estado de entrega actualizado
@@ -51,6 +63,8 @@ class CustomerAccountController extends Controller
         return view('customer.account-orders', [
             'customer' => $customer,
             'orders' => $orders,
+            'status' => $request->has('status')? $request->status: null,
+            'delivery_status' => $request->has('delivery_status')? $request->delivery_status: null
         ]);
     }
 
