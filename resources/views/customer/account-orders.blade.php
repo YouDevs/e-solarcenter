@@ -47,7 +47,7 @@
                             {{$customer->user->name}}
                         </span>
                     </div>
-                </div><a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu" data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Account menu</a>
+                </div><a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu" data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Menú</a>
                 </div>
                 <div class="d-lg-block collapse" id="account-menu">
                 <div class="bg-secondary px-4 py-3">
@@ -113,27 +113,28 @@
             <!-- Toolbar-->
             <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
                 <form action="{{route('account.orders')}}" method="get">
-                    <div class="d-flex align-items-center">
-                        <label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Status de pago:</label>
-                        <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Status de pago:</label>
-                        <select class="form-select" name="status" id="status">
-                            <option value=""> Elige una opción </option>
-                            <option value="pending_payment" @selected($status == 'pending_payment')>Pago pendiente</option>
-                            <option value="pending" @selected($status == 'pending')>Pendiente de aprobación</option>
-                            <option value="approved" @selected($status == 'approved')>Aprobado</option>
-                            <option value="cancelled" @selected($status == 'cancelled')>Cancelado</option>
-                        </select>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Status de envío:</label>
-                        <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Status de envío:</label>
-                        <select class="form-select" name="delivery_status" id="delivery-status">
-                            <option value=""> Elige una opción </option>
-                            <option value="transit" @selected($delivery_status == 'transit')>En tránsito</option>
-                            <option value="delivered" @selected($delivery_status == 'delivered')>Entregado</option>
-                        </select>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="d-flex align-items-center me-2 mb-2 mb-lg-0">
+                            <label class="fs-sm text-light text-nowrap opacity-75 me-2" for="status">Status de pago:</label>
+                            <select class="form-select" name="status" id="status">
+                                <option value=""> Elige una opción </option>
+                                <option value="pending_payment" @selected($status == 'pending_payment')>Pago pendiente</option>
+                                <option value="pending" @selected($status == 'pending')>Pendiente de aprobación</option>
+                                <option value="approved" @selected($status == 'approved')>Aprobado</option>
+                                <option value="cancelled" @selected($status == 'cancelled')>Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <label class="fs-sm text-light text-nowrap opacity-75 me-2" for="delivery-status">Status de envío:</label>
+                            <select class="form-select" name="delivery_status" id="delivery-status">
+                                <option value=""> Elige una opción </option>
+                                <option value="transit" @selected($delivery_status == 'transit')>En tránsito</option>
+                                <option value="delivered" @selected($delivery_status == 'delivered')>Entregado</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
+                
                 <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html">
                     <i class="ci-sign-out me-2"></i>Cerrar sesión
                 </a>
@@ -178,9 +179,11 @@
                             <x-amount-formatter :amount="$order->total" />
                         </td>
                         <td>
-                            <a href="/" class="btn btn-primary btn-sm">Ver orden</a>
+                            <a class="btn btn-primary btn-sm mt-2" href="#order-details-{{$order->id}}" data-bs-toggle="modal">Ver detalle</a>
                         </td>
                     </tr>
+
+                    <x-modal-order-detail :order="$order" />
                     @endforeach
                 </tbody>
                 </table>
