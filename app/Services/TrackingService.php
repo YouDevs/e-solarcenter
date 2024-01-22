@@ -13,22 +13,27 @@ class TrackingService
     public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->api_key = env("TRACKING_MORE_API_KEY");
+        $this->api_key = env("17TRACK_API_KEY");
     }
 
-    public function getLatestDeliveryStatus($tracking_number, $courier_code)
+    public function getLatestDeliveryStatus($tracking_number)
     {
         try {
-            $response = $this->client->request("GET", "https://api.trackingmore.com/v4/trackings/get?tracking_numbers=$tracking_number", [
+            $response = $this->client->request("GET", "https://api.17track.net/track/v2/get?num=$tracking_number", [
                 'headers' => [
-                    'Tracking-Api-Key' => $this->api_key,
+                    '17token' => $this->api_key,
                     'Content-Type' => 'application/json'
                 ]
             ]);
 
             if ($response->getStatusCode() == 200) {
                 $response_array = json_decode($response->getBody(), true);
-                return $response_array['data'][0]['delivery_status'];
+
+                Log::info($response_array);
+
+                // Debes revisar la documentación de 17TRACK para entender la estructura exacta de la respuesta
+                // y ajustar la siguiente línea acorde a ello.
+                return $response_array['data']['status']; // Ajusta esto según la estructura de respuesta de 17TRACK
             }
 
         } catch (\GuzzleHttp\Exception\ClientException $e) {

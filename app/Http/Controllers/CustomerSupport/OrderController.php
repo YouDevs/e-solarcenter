@@ -33,23 +33,23 @@ class OrderController extends Controller
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
         foreach ($orders as $order) {
-            // Obtiene el estado de entrega actualizado
-            if($order->tracking_number && $order->courier_code) {
-                $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            }
+            // // Obtiene el estado de entrega actualizado
+            // if($order->tracking_number && $order->courier_code) {
+            //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            // }
 
-            // Actualiza el estado en la base de datos si es diferente
-            if ($order->delivery_status && $order->delivery_status !== $latest_status) {
-                $order->update(['delivery_status' => $latest_status]);
+            // // Actualiza el estado en la base de datos si es diferente
+            // if ($order->delivery_status && $order->delivery_status !== $latest_status) {
+            //     $order->update(['delivery_status' => $latest_status]);
 
-                //TODO: enviar correo desde un cron-job.
-                if( $latest_status == 'delivered' ) {
-                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+            //     //TODO: enviar correo desde un cron-job.
+            //     if( $latest_status == 'delivered' ) {
+            //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
 
-                    //TODO: enviar correo también al operador:
-                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
-                }
-            }
+            //         //TODO: enviar correo también al operador:
+            //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
+            //     }
+            // }
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
@@ -57,6 +57,30 @@ class OrderController extends Controller
 
         return view('customer_support.orders.index', ['orders' => $orders]);
     }
+
+    // En tu TrackingController
+    public function handleWebhook(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        Log::info('Webhook received from 17TRACK:', $data);
+
+        // Procesa la actualización aquí. Por ejemplo, actualizar el estado en tu base de datos.
+        if (isset($data['event']) && $data['event'] == 'TRACKING_UPDATED') {
+            foreach ($data['data']['accepted'] as $tracking) {
+                $trackingNumber = $tracking['number'];
+                $updatedStatus = $tracking['status']; // Asegúrate de que 'status' es la clave correcta.
+
+                Log::info("trackingNumber: $trackingNumber");
+                Log::info("updatedStatus: $updatedStatus");
+
+                // Aquí actualizas el estado de tu pedido en la base de datos.
+                // Asegúrate de tener una lógica para encontrar y actualizar el pedido correspondiente.
+        }
+    }
+
+    return response()->json(['message' => 'Webhook received and processed']);
+}
 
     public function edit(Order $order): View
     {
@@ -90,7 +114,7 @@ class OrderController extends Controller
     {
 
         try {
-            $delivery_status = $this->createTracking($request->tracking_number, $request->courier_code);
+            $delivery_status = $this->createTracking($request->tracking_number);
 
             $order->update([
                 'courier_code' => $request->courier_code,
@@ -126,24 +150,38 @@ class OrderController extends Controller
         }
     }
 
-    private function createTracking($trackingNumber, $courierCode)
+    private function createTracking($trackingNumber)
     {
         $client = new Client();
-        $api_key = env("TRACKING_MORE_API_KEY");
+        $api_key = env("17TRACK_API_KEY");
 
-        $response = $client->request('POST', 'https://api.trackingmore.com/v4/trackings/create', [
-            'headers' => [
-                'Tracking-Api-Key' => $api_key,
-                'Content-Type' => 'application/json'
-            ],
-            'json' => [
-                'tracking_number' => $trackingNumber,
-                'courier_code' => $courierCode
-            ]
-        ]);
+        try {
+            $response = $client->request('POST', 'https://api.17track.net/track/v2.2/register', [
+                'headers' => [
+                    '17token' => $api_key,
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => [
+                    [
+                        'number' => $trackingNumber
+                        // No necesitas 'courier_code' aquí ya que 17TRACK detecta automáticamente el transportista.
+                    ]
+                ]
+            ]);
 
-        $responseArray = json_decode($response->getBody(), true);
-        return $responseArray['data']['delivery_status'];
+            if ($response->getStatusCode() == 200) {
+                $responseArray = json_decode($response->getBody(), true);
+                Log::info("responseArray: ");
+                Log::info($responseArray);
+                // Aquí debes revisar la documentación de 17TRACK para entender cómo interpretar la respuesta.
+                // Por ejemplo, si la respuesta incluye un estado de aceptación o rechazo de los números de seguimiento.
+                return $responseArray['data']['accepted'][0]['number']; // Esto es un ejemplo, ajusta según la respuesta real.
+            }
+
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            Log::error("Error al crear el seguimiento: " . $e->getMessage());
+            return 'unknown';
+        }
     }
 
     private function successRedirect($message)

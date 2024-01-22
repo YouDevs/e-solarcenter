@@ -50,6 +50,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 
         Route::post('orders/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update.status');
         Route::post('orders/{order}/update-tracking-number', [OrderController::class, 'updateTrankingNumber'])->name('orders.update.tracking-number');
+
+        Route::post('/tracking-updates', [OrderController::class, 'handleWebhook' ])->name('orders.handle-webhook');
+
         Route::post('orders/{order}/invoice', [OrderController::class, 'updateInvoice'])->name('orders.update.invoice');
     });
 
