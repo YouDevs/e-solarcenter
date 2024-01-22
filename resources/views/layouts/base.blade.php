@@ -83,6 +83,7 @@
                             </a>
                         </div>
                         @endif
+                        <!-- Menú Carrito de compras con dropdown -->
                         {{-- <div class="navbar-tool dropdown ms-3">
                             <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('cart.list')}}" previewlistener="true">
                                 <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
@@ -174,88 +175,90 @@
             <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2">
                 <div class="container">
                     <div class="collapse navbar-collapse" id="navbarCollapse">
-                    @if (Auth::check())
-                    <!-- Search-->
-                    <div class="input-group d-lg-none my-3">
-                        <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-                        <input class="form-control rounded-start" type="text" placeholder="Buscar productos">
-                    </div>
-                    @endif
-                    <!-- Departments menu-->
-                    {{-- <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle ps-lg-0" href="#" data-bs-toggle="dropdown"><i class="ci-view-grid me-2"></i>Departments</a>
-                            <div class="dropdown-menu px-2 pb-4">
-                                <div class="d-flex flex-wrap flex-sm-nowrap">
-                                <div class="mega-dropdown-column pt-3 pt-sm-4 px-2 px-lg-3">
-                                    <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/01.jpg" alt="Clothing"></a>
-                                    <h6 class="fs-base mb-2">Clothing</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Women's clothing</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Men's clothing</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Kid's clothing</a></li>
-                                    </ul>
+                        @if (Auth::check())
+                        <!-- Search-->
+                        <div class="input-group d-lg-none my-3">
+                            <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
+                            <input class="form-control rounded-start" type="text" placeholder="Buscar productos">
+                        </div>
+                        @endif
+
+                        <!-- Departments menu-->
+                        {{-- <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
+                            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle ps-lg-0" href="#" data-bs-toggle="dropdown"><i class="ci-view-grid me-2"></i>Departments</a>
+                                <div class="dropdown-menu px-2 pb-4">
+                                    <div class="d-flex flex-wrap flex-sm-nowrap">
+                                    <div class="mega-dropdown-column pt-3 pt-sm-4 px-2 px-lg-3">
+                                        <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/01.jpg" alt="Clothing"></a>
+                                        <h6 class="fs-base mb-2">Clothing</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Women's clothing</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Men's clothing</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Kid's clothing</a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
+                                        <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/02.jpg" alt="Shoes"></a>
+                                        <h6 class="fs-base mb-2">Shoes</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Women's shoes</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Men's shoes</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Kid's shoes</a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
+                                        <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/03.jpg" alt="Gadgets"></a>
+                                        <h6 class="fs-base mb-2">Gadgets</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Smartphones &amp; Tablets</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Wearable gadgets</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">E-book readers</a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="d-flex flex-wrap flex-sm-nowrap">
+                                    <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
+                                        <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/04.jpg" alt="Furniture"></a>
+                                        <h6 class="fs-base mb-2">Furniture &amp; Decor</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Home furniture</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Office furniture</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Lighting and decoration</a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
+                                        <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/05.jpg" alt="Accessories"></a>
+                                        <h6 class="fs-base mb-2">Accessories</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Hats</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Sunglasses</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Bags</a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                    <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
+                                        <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/06.jpg" alt="Entertainment"></a>
+                                        <h6 class="fs-base mb-2">Entertainment</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Kid's toys</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Video games</a></li>
+                                            <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Outdoor / Camping</a></li>
+                                        </ul>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
-                                <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
-                                    <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/02.jpg" alt="Shoes"></a>
-                                    <h6 class="fs-base mb-2">Shoes</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Women's shoes</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Men's shoes</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Kid's shoes</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
-                                    <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/03.jpg" alt="Gadgets"></a>
-                                    <h6 class="fs-base mb-2">Gadgets</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Smartphones &amp; Tablets</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Wearable gadgets</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">E-book readers</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="d-flex flex-wrap flex-sm-nowrap">
-                                <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
-                                    <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/04.jpg" alt="Furniture"></a>
-                                    <h6 class="fs-base mb-2">Furniture &amp; Decor</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Home furniture</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Office furniture</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Lighting and decoration</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
-                                    <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/05.jpg" alt="Accessories"></a>
-                                    <h6 class="fs-base mb-2">Accessories</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Hats</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Sunglasses</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Bags</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                <div class="mega-dropdown-column pt-4 px-2 px-lg-3">
-                                    <div class="widget widget-links"><a class="d-block overflow-hidden rounded-3 mb-3" href="#"><img src="img/shop/departments/06.jpg" alt="Entertainment"></a>
-                                    <h6 class="fs-base mb-2">Entertainment</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Kid's toys</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Video games</a></li>
-                                        <li class="widget-list-item mb-1"><a class="widget-list-link" href="#">Outdoor / Camping</a></li>
-                                    </ul>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul> --}}
-                    <!-- Primary menu-->
-                    <ul class="navbar-nav">
+                            </li>
+                        </ul> --}}
+
+                        <!-- Admin menu -->
                         @role('operator')
-                            <li class="nav-item dropdown active">
+                        <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Admin</a>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown position-static mb-0">
@@ -288,255 +291,258 @@
                                     </li>
                                 </ul>
                             </li>
+                        </ul>
                         @endrole
 
-                        @if (Auth::check())
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi Cuenta</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="docs/dev-setup.html" previewlistener="true">
-                                        <div class="d-flex">
-                                            <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
-                                            <div class="ms-2">
-                                                <span class="d-block text-heading">Mi Perfil</span>
-                                                <small class="d-block text-muted">Perfil y configuraciones</small>
+                        <!-- Primary menu-->
+                        <ul class="navbar-nav">
+                            @if (Auth::check())
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi Cuenta</a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="docs/dev-setup.html" previewlistener="true">
+                                            <div class="d-flex">
+                                                <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
+                                                <div class="ms-2">
+                                                    <span class="d-block text-heading">Mi Perfil</span>
+                                                    <small class="d-block text-muted">Perfil y configuraciones</small>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="dropdown-divider"></li>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
 
-                                <li>
-                                    <a class="dropdown-item" href="{{route('account.orders')}}" previewlistener="true">
-                                    <div class="d-flex">
-                                        <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
-                                            <div class="ms-2">
-                                                <span class="d-block text-heading">Mis Ordenes
-                                                    {{-- <span class="badge bg-success ms-2">v2.5.1</span> --}}
-                                                </span>
-                                                <small class="d-block text-muted">Historial de ordenes</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                {{-- <li>
-                                    <a class="dropdown-item" href="components/typography.html" previewlistener="true">
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('account.orders')}}" previewlistener="true">
                                         <div class="d-flex">
-                                            <div class="lead text-muted pt-1"><i class="ci-server"></i></div>
-                                            <div class="ms-2">
-                                                <span class="d-block text-heading">Pedidos En Tránsito<span class="badge bg-info ms-2">1+</span></span>
-                                                <small class="d-block text-muted">Seguimiento de Ordenes</small>
+                                            <div class="lead text-muted pt-1"><i class="ci-edit"></i></div>
+                                                <div class="ms-2">
+                                                    <span class="d-block text-heading">Mis Ordenes
+                                                        {{-- <span class="badge bg-success ms-2">v2.5.1</span> --}}
+                                                    </span>
+                                                    <small class="d-block text-muted">Historial de ordenes</small>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="dropdown-divider"></li> --}}
-                                <li>
-                                    <a class="dropdown-item" href="{{route('account.contact')}}">
-                                        <div class="d-flex">
-                                            <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
-                                            <div class="ms-2">
-                                                <span class="d-block text-heading">Contacto</span>
-                                                <small class="d-block text-muted">Formulario de contacto</small>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    {{-- <li>
+                                        <a class="dropdown-item" href="components/typography.html" previewlistener="true">
+                                            <div class="d-flex">
+                                                <div class="lead text-muted pt-1"><i class="ci-server"></i></div>
+                                                <div class="ms-2">
+                                                    <span class="d-block text-heading">Pedidos En Tránsito<span class="badge bg-info ms-2">1+</span></span>
+                                                    <small class="d-block text-muted">Seguimiento de Ordenes</small>
+                                                </div>
                                             </div>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-divider"></li> --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{route('account.contact')}}">
+                                            <div class="d-flex">
+                                                <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
+                                                <div class="ms-2">
+                                                    <span class="d-block text-heading">Contacto</span>
+                                                    <small class="d-block text-muted">Formulario de contacto</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();"
+                                        >
+                                            Cerrar Sesión
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @endif
+
+                            {{-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
+                                <div class="dropdown-menu p-0">
+                                    <div class="d-flex flex-wrap flex-sm-nowrap px-2">
+                                    <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
+                                        <div class="widget widget-links mb-4">
+                                        <h6 class="fs-base mb-3">Shop layouts</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-ls.html" previewlistener="true">Shop Grid - Left Sidebar</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-rs.html" previewlistener="true">Shop Grid - Right Sidebar</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-ft.html" previewlistener="true">Shop Grid - Filters on Top</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-list-ls.html" previewlistener="true">Shop List - Left Sidebar</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-list-rs.html" previewlistener="true">Shop List - Right Sidebar</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-list-ft.html" previewlistener="true">Shop List - Filters on Top</a></li>
+                                        </ul>
                                         </div>
-                                    </a>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                       document.getElementById('logout-form').submit();"
-                                    >
-                                        Cerrar Sesión
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        @endif
-
-                        {{-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
-                            <div class="dropdown-menu p-0">
-                                <div class="d-flex flex-wrap flex-sm-nowrap px-2">
-                                <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
-                                    <div class="widget widget-links mb-4">
-                                    <h6 class="fs-base mb-3">Shop layouts</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-ls.html" previewlistener="true">Shop Grid - Left Sidebar</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-rs.html" previewlistener="true">Shop Grid - Right Sidebar</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-grid-ft.html" previewlistener="true">Shop Grid - Filters on Top</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-list-ls.html" previewlistener="true">Shop List - Left Sidebar</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-list-rs.html" previewlistener="true">Shop List - Right Sidebar</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-list-ft.html" previewlistener="true">Shop List - Filters on Top</a></li>
-                                    </ul>
+                                        <div class="widget widget-links mb-4">
+                                        <h6 class="fs-base mb-3">Marketplace</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item"><a class="widget-list-link" href="marketplace-category.html" previewlistener="true">Category Page</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="marketplace-single.html" previewlistener="true">Single Item Page</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="marketplace-vendor.html" previewlistener="true">Vendor Page</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="marketplace-cart.html" previewlistener="true">Cart</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="marketplace-checkout.html" previewlistener="true">Checkout</a></li>
+                                        </ul>
+                                        </div>
+                                        <div class="widget widget-links">
+                                        <h6 class="fs-base mb-3">Grocery store</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item"><a class="widget-list-link" href="grocery-catalog.html" previewlistener="true">Product Catalog</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="grocery-single.html" previewlistener="true">Single Product Page</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="grocery-checkout.html" previewlistener="true">Checkout</a></li>
+                                        </ul>
+                                        </div>
                                     </div>
-                                    <div class="widget widget-links mb-4">
-                                    <h6 class="fs-base mb-3">Marketplace</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-category.html" previewlistener="true">Category Page</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-single.html" previewlistener="true">Single Item Page</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-vendor.html" previewlistener="true">Vendor Page</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-cart.html" previewlistener="true">Cart</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="marketplace-checkout.html" previewlistener="true">Checkout</a></li>
-                                    </ul>
+                                    <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
+                                        <div class="widget widget-links mb-4">
+                                        <h6 class="fs-base mb-3">Food Delivery</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-category.html" previewlistener="true">Category Page</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-single.html" previewlistener="true">Single Item (Restaurant)</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-cart.html" previewlistener="true">Cart (Your Order)</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-checkout.html" previewlistener="true">Checkout (Address &amp; Payment)</a></li>
+                                        </ul>
+                                        </div>
+                                        <div class="widget widget-links">
+                                        <h6 class="fs-base mb-3">NFT Marketplace<span class="badge bg-danger ms-1">NEW</span></h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-catalog-v1.html" previewlistener="true">Catalog v.1</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-catalog-v2.html" previewlistener="true">Catalog v.2</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-single-auction-live.html" previewlistener="true">Single Item - Auction Live</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-single-auction-ended.html" previewlistener="true">Single Item - Auction Ended</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-single-buy.html" previewlistener="true">Single Item - Buy Now</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-vendor.html" previewlistener="true">Vendor Page</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-connect-wallet.html" previewlistener="true">Connect Wallet</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="nft-create-item.html" previewlistener="true">Create New Item</a></li>
+                                        </ul>
+                                        </div>
                                     </div>
-                                    <div class="widget widget-links">
-                                    <h6 class="fs-base mb-3">Grocery store</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item"><a class="widget-list-link" href="grocery-catalog.html" previewlistener="true">Product Catalog</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="grocery-single.html" previewlistener="true">Single Product Page</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="grocery-checkout.html" previewlistener="true">Checkout</a></li>
-                                    </ul>
+                                    <div class="mega-dropdown-column pt-1 pt-lg-4 px-2 px-lg-3">
+                                        <div class="widget widget-links mb-4">
+                                        <h6 class="fs-base mb-3">Shop pages</h6>
+                                        <ul class="widget-list">
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-categories.html" previewlistener="true">Shop Categories</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-single-v1.html" previewlistener="true">Product Page v.1</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-single-v2.html" previewlistener="true">Product Page v.2</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="shop-cart.html" previewlistener="true">Cart</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="checkout-details.html" previewlistener="true">Checkout - Details</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="checkout-shipping.html" previewlistener="true">Checkout - Shipping</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="checkout-payment.html" previewlistener="true">Checkout - Payment</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="checkout-review.html" previewlistener="true">Checkout - Review</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="checkout-complete.html" previewlistener="true">Checkout - Complete</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="order-tracking.html" previewlistener="true">Order Tracking</a></li>
+                                            <li class="widget-list-item"><a class="widget-list-link" href="comparison.html" previewlistener="true">Product Comparison</a></li>
+                                        </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mega-dropdown-column pt-1 pt-lg-4 pb-4 px-2 px-lg-3">
-                                    <div class="widget widget-links mb-4">
-                                    <h6 class="fs-base mb-3">Food Delivery</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-category.html" previewlistener="true">Category Page</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-single.html" previewlistener="true">Single Item (Restaurant)</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-cart.html" previewlistener="true">Cart (Your Order)</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="food-delivery-checkout.html" previewlistener="true">Checkout (Address &amp; Payment)</a></li>
-                                    </ul>
-                                    </div>
-                                    <div class="widget widget-links">
-                                    <h6 class="fs-base mb-3">NFT Marketplace<span class="badge bg-danger ms-1">NEW</span></h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-catalog-v1.html" previewlistener="true">Catalog v.1</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-catalog-v2.html" previewlistener="true">Catalog v.2</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-single-auction-live.html" previewlistener="true">Single Item - Auction Live</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-single-auction-ended.html" previewlistener="true">Single Item - Auction Ended</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-single-buy.html" previewlistener="true">Single Item - Buy Now</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-vendor.html" previewlistener="true">Vendor Page</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-connect-wallet.html" previewlistener="true">Connect Wallet</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="nft-create-item.html" previewlistener="true">Create New Item</a></li>
-                                    </ul>
                                     </div>
                                 </div>
-                                <div class="mega-dropdown-column pt-1 pt-lg-4 px-2 px-lg-3">
-                                    <div class="widget widget-links mb-4">
-                                    <h6 class="fs-base mb-3">Shop pages</h6>
-                                    <ul class="widget-list">
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-categories.html" previewlistener="true">Shop Categories</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-single-v1.html" previewlistener="true">Product Page v.1</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-single-v2.html" previewlistener="true">Product Page v.2</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="shop-cart.html" previewlistener="true">Cart</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-details.html" previewlistener="true">Checkout - Details</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-shipping.html" previewlistener="true">Checkout - Shipping</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-payment.html" previewlistener="true">Checkout - Payment</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-review.html" previewlistener="true">Checkout - Review</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="checkout-complete.html" previewlistener="true">Checkout - Complete</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="order-tracking.html" previewlistener="true">Order Tracking</a></li>
-                                        <li class="widget-list-item"><a class="widget-list-link" href="comparison.html" previewlistener="true">Product Comparison</a></li>
+                            </li>
+                            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Account</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop User Account</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="account-orders.html" previewlistener="true">Orders History</a></li>
+                                        <li><a class="dropdown-item" href="account-profile.html" previewlistener="true">Profile Settings</a></li>
+                                        <li><a class="dropdown-item" href="account-address.html" previewlistener="true">Account Addresses</a></li>
+                                        <li><a class="dropdown-item" href="account-payment.html" previewlistener="true">Payment Methods</a></li>
+                                        <li><a class="dropdown-item" href="account-wishlist.html" previewlistener="true">Wishlist</a></li>
+                                        <li><a class="dropdown-item" href="account-tickets.html" previewlistener="true">My Tickets</a></li>
+                                        <li><a class="dropdown-item" href="account-single-ticket.html" previewlistener="true">Single Ticket</a></li>
                                     </ul>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Account</a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop User Account</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="account-orders.html" previewlistener="true">Orders History</a></li>
-                                    <li><a class="dropdown-item" href="account-profile.html" previewlistener="true">Profile Settings</a></li>
-                                    <li><a class="dropdown-item" href="account-address.html" previewlistener="true">Account Addresses</a></li>
-                                    <li><a class="dropdown-item" href="account-payment.html" previewlistener="true">Payment Methods</a></li>
-                                    <li><a class="dropdown-item" href="account-wishlist.html" previewlistener="true">Wishlist</a></li>
-                                    <li><a class="dropdown-item" href="account-tickets.html" previewlistener="true">My Tickets</a></li>
-                                    <li><a class="dropdown-item" href="account-single-ticket.html" previewlistener="true">Single Ticket</a></li>
+                                    </li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Vendor Dashboard</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="dashboard-settings.html" previewlistener="true">Settings</a></li>
+                                        <li><a class="dropdown-item" href="dashboard-purchases.html" previewlistener="true">Purchases</a></li>
+                                        <li><a class="dropdown-item" href="dashboard-favorites.html" previewlistener="true">Favorites</a></li>
+                                        <li><a class="dropdown-item" href="dashboard-sales.html" previewlistener="true">Sales</a></li>
+                                        <li><a class="dropdown-item" href="dashboard-products.html" previewlistener="true">Products</a></li>
+                                        <li><a class="dropdown-item" href="dashboard-add-new-product.html" previewlistener="true">Add New Product</a></li>
+                                        <li><a class="dropdown-item" href="dashboard-payouts.html" previewlistener="true">Payouts</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">NFT Marketplace<span class="badge bg-danger ms-1">NEW</span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="nft-account-settings.html" previewlistener="true">Profile Settings</a></li>
+                                        <li><a class="dropdown-item" href="nft-account-payouts.html" previewlistener="true">Wallet &amp; Payouts</a></li>
+                                        <li><a class="dropdown-item" href="nft-account-my-items.html" previewlistener="true">My Items</a></li>
+                                        <li><a class="dropdown-item" href="nft-account-my-collections.html" previewlistener="true">My Collections</a></li>
+                                        <li><a class="dropdown-item" href="nft-account-favorites.html" previewlistener="true">Favorites</a></li>
+                                        <li><a class="dropdown-item" href="nft-account-notifications.html" previewlistener="true">Notifications</a></li>
+                                    </ul>
+                                    </li>
+                                    <li><a class="dropdown-item" href="account-signin.html" previewlistener="true">Sign In / Sign Up</a></li>
+                                    <li><a class="dropdown-item" href="account-password-recovery.html" previewlistener="true">Password Recovery</a></li>
                                 </ul>
-                                </li>
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Vendor Dashboard</a>
+                            </li>
+                            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Pages</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="dashboard-settings.html" previewlistener="true">Settings</a></li>
-                                    <li><a class="dropdown-item" href="dashboard-purchases.html" previewlistener="true">Purchases</a></li>
-                                    <li><a class="dropdown-item" href="dashboard-favorites.html" previewlistener="true">Favorites</a></li>
-                                    <li><a class="dropdown-item" href="dashboard-sales.html" previewlistener="true">Sales</a></li>
-                                    <li><a class="dropdown-item" href="dashboard-products.html" previewlistener="true">Products</a></li>
-                                    <li><a class="dropdown-item" href="dashboard-add-new-product.html" previewlistener="true">Add New Product</a></li>
-                                    <li><a class="dropdown-item" href="dashboard-payouts.html" previewlistener="true">Payouts</a></li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Navbar Variants</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="navbar-1-level-light.html" previewlistener="true">1 Level Light</a></li>
+                                        <li><a class="dropdown-item" href="navbar-1-level-dark.html" previewlistener="true">1 Level Dark</a></li>
+                                        <li><a class="dropdown-item" href="navbar-2-level-light.html" previewlistener="true">2 Level Light</a></li>
+                                        <li><a class="dropdown-item" href="navbar-2-level-dark.html" previewlistener="true">2 Level Dark</a></li>
+                                        <li><a class="dropdown-item" href="navbar-3-level-light.html" previewlistener="true">3 Level Light</a></li>
+                                        <li><a class="dropdown-item" href="navbar-3-level-dark.html" previewlistener="true">3 Level Dark</a></li>
+                                        <li><a class="dropdown-item" href="home-electronics-store.html" previewlistener="true">Electronics Store</a></li>
+                                        <li><a class="dropdown-item" href="home-marketplace.html" previewlistener="true">Marketplace</a></li>
+                                        <li><a class="dropdown-item" href="home-grocery-store.html" previewlistener="true">Side Menu (Grocery)</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="about.html" previewlistener="true">About Us</a></li>
+                                    <li><a class="dropdown-item" href="contacts.html" previewlistener="true">Contacts</a></li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Help Center</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="help-topics.html" previewlistener="true">Help Topics</a></li>
+                                        <li><a class="dropdown-item" href="help-single-topic.html" previewlistener="true">Single Topic</a></li>
+                                        <li><a class="dropdown-item" href="help-submit-request.html" previewlistener="true">Submit a Request</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">404 Not Found</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="404-simple.html" previewlistener="true">404 - Simple Text</a></li>
+                                        <li><a class="dropdown-item" href="404-illustration.html" previewlistener="true">404 - Illustration</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="sticky-footer.html" previewlistener="true">Sticky Footer Demo</a></li>
                                 </ul>
-                                </li>
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">NFT Marketplace<span class="badge bg-danger ms-1">NEW</span></a>
+                            </li>
+                            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Blog</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="nft-account-settings.html" previewlistener="true">Profile Settings</a></li>
-                                    <li><a class="dropdown-item" href="nft-account-payouts.html" previewlistener="true">Wallet &amp; Payouts</a></li>
-                                    <li><a class="dropdown-item" href="nft-account-my-items.html" previewlistener="true">My Items</a></li>
-                                    <li><a class="dropdown-item" href="nft-account-my-collections.html" previewlistener="true">My Collections</a></li>
-                                    <li><a class="dropdown-item" href="nft-account-favorites.html" previewlistener="true">Favorites</a></li>
-                                    <li><a class="dropdown-item" href="nft-account-notifications.html" previewlistener="true">Notifications</a></li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Blog List Layouts</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="blog-list-sidebar.html" previewlistener="true">List with Sidebar</a></li>
+                                        <li><a class="dropdown-item" href="blog-list.html" previewlistener="true">List no Sidebar</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Blog Grid Layouts</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="blog-grid-sidebar.html" previewlistener="true">Grid with Sidebar</a></li>
+                                        <li><a class="dropdown-item" href="blog-grid.html" previewlistener="true">Grid no Sidebar</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Single Post Layouts</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="blog-single-sidebar.html" previewlistener="true">Article with Sidebar</a></li>
+                                        <li><a class="dropdown-item" href="blog-single.html" previewlistener="true">Article no Sidebar</a></li>
+                                    </ul>
+                                    </li>
                                 </ul>
-                                </li>
-                                <li><a class="dropdown-item" href="account-signin.html" previewlistener="true">Sign In / Sign Up</a></li>
-                                <li><a class="dropdown-item" href="account-password-recovery.html" previewlistener="true">Password Recovery</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Navbar Variants</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="navbar-1-level-light.html" previewlistener="true">1 Level Light</a></li>
-                                    <li><a class="dropdown-item" href="navbar-1-level-dark.html" previewlistener="true">1 Level Dark</a></li>
-                                    <li><a class="dropdown-item" href="navbar-2-level-light.html" previewlistener="true">2 Level Light</a></li>
-                                    <li><a class="dropdown-item" href="navbar-2-level-dark.html" previewlistener="true">2 Level Dark</a></li>
-                                    <li><a class="dropdown-item" href="navbar-3-level-light.html" previewlistener="true">3 Level Light</a></li>
-                                    <li><a class="dropdown-item" href="navbar-3-level-dark.html" previewlistener="true">3 Level Dark</a></li>
-                                    <li><a class="dropdown-item" href="home-electronics-store.html" previewlistener="true">Electronics Store</a></li>
-                                    <li><a class="dropdown-item" href="home-marketplace.html" previewlistener="true">Marketplace</a></li>
-                                    <li><a class="dropdown-item" href="home-grocery-store.html" previewlistener="true">Side Menu (Grocery)</a></li>
-                                </ul>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="about.html" previewlistener="true">About Us</a></li>
-                                <li><a class="dropdown-item" href="contacts.html" previewlistener="true">Contacts</a></li>
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Help Center</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="help-topics.html" previewlistener="true">Help Topics</a></li>
-                                    <li><a class="dropdown-item" href="help-single-topic.html" previewlistener="true">Single Topic</a></li>
-                                    <li><a class="dropdown-item" href="help-submit-request.html" previewlistener="true">Submit a Request</a></li>
-                                </ul>
-                                </li>
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">404 Not Found</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="404-simple.html" previewlistener="true">404 - Simple Text</a></li>
-                                    <li><a class="dropdown-item" href="404-illustration.html" previewlistener="true">404 - Illustration</a></li>
-                                </ul>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="sticky-footer.html" previewlistener="true">Sticky Footer Demo</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Blog List Layouts</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="blog-list-sidebar.html" previewlistener="true">List with Sidebar</a></li>
-                                    <li><a class="dropdown-item" href="blog-list.html" previewlistener="true">List no Sidebar</a></li>
-                                </ul>
-                                </li>
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Blog Grid Layouts</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="blog-grid-sidebar.html" previewlistener="true">Grid with Sidebar</a></li>
-                                    <li><a class="dropdown-item" href="blog-grid.html" previewlistener="true">Grid no Sidebar</a></li>
-                                </ul>
-                                </li>
-                                <li class="dropdown"><a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">Single Post Layouts</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="blog-single-sidebar.html" previewlistener="true">Article with Sidebar</a></li>
-                                    <li><a class="dropdown-item" href="blog-single.html" previewlistener="true">Article no Sidebar</a></li>
-                                </ul>
-                                </li>
-                            </ul>
-                        </li> --}}
-                    </ul>
+                            </li> --}}
+                        </ul>
                     </div>
                 </div>
             </div>

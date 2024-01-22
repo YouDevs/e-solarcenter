@@ -38,7 +38,18 @@
             <div class="modal-footer flex-wrap justify-content-between bg-secondary fs-md">
                 {{-- <div class="px-2 py-1"><span class="text-muted">Subtotal:&nbsp;</span><span>$265.<small>00</small></span></div> --}}
                 {{-- <div class="px-2 py-1"><span class="text-muted">Shipping:&nbsp;</span><span>$22.<small>50</small></span></div> --}}
-                {{-- <div class="px-2 py-1"><span class="text-muted">Tax:&nbsp;</span><span>$9.<small>50</small></span></div> --}}
+                <div class="px-2 py-1">
+                @if ($order->invoice)
+                    <span>
+                        <a
+                            href="{{Storage::url($order->invoice)}}"
+                            class="btn btn-outline-accent float-end"
+                            target="_blank">
+                            Ver factura
+                        </a>
+                    </span>
+                @endif
+                </div>
                 <div class="px-2 py-1">
                     <span class="text-muted">Total:&nbsp;</span>
                     <span class="fs-lg">
