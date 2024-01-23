@@ -39,7 +39,7 @@ class OrderController extends Controller
             }
 
             // Actualiza el estado en la base de datos si es diferente
-            if ($order->delivery_status && $order->delivery_status !== $latest_status) {
+            if (isset($latest_status) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
                 $order->update(['delivery_status' => $latest_status]);
 
                 //TODO: enviar correo desde un cron-job.
