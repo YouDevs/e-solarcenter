@@ -2,11 +2,32 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center align-items-md-center">
-        <div class="col-md-12">
-            {{-- <h1>Familias de productos</h1> --}}
-            {{-- <h2>Filtros</h2> --}}
+    <div class="row justify-content-center mb-4">
+        {{-- <h2 class="text-center mb-4">Familias de productos</h2>
+        <div class="col-md-2 text-center">
+            <a href="/paneles">
+                <img src="{{asset('images/panel.png')}}" width="40" alt="Panel">
+                <p>Paneles</p>
+            </a>
         </div>
+        <div class="col-md-2 text-center">
+            <a href="/inversores">
+                <img src="{{asset('images/inverter.png')}}" width="40" alt="Panel">
+                <p>Inversores</p>
+            </a>
+        </div>
+        <div class="col-md-2 text-center">
+            <a href="/microinversores">
+                <img src="{{asset('images/microinversor.png')}}" width="40" alt="Panel">
+                <p>Microinversores</p>
+            </a>
+        </div>
+        <div class="col-md-2 text-center">
+            <a href="/estructuras">
+                <img src="{{asset('images/structure.png')}}" width="40" alt="Panel">
+                <p>Estructuras</p>
+            </a>
+        </div> --}}
         <!-- 1er PRODUCT ORIGINAL DEL TEMPLATE (para referencia)
         <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
             <div class="card product-card">
