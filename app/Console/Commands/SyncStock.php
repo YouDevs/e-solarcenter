@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Product;
 use App\Traits\OAuth1ClientCreator;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 class SyncStock extends Command
 {
@@ -35,7 +35,7 @@ class SyncStock extends Command
 
         $end = microtime(true);
         $time = $end-$start;
-        Log::info("----> sync stock duration: {$time}");
+        // Log::info("----> sync stock duration: {$time}");
     }
 
     private function syncStock()
