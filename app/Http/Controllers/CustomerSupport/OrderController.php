@@ -33,6 +33,7 @@ class OrderController extends Controller
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
         foreach ($orders as $order) {
+            $latest_status = null;
             // Obtiene el estado de entrega actualizado
             if($order->tracking_number && $order->courier_code) {
                 $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
