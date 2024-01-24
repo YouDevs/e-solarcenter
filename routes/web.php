@@ -13,36 +13,37 @@ use App\Http\Controllers\Marketing\ProductController;
 
 Route::middleware(['auth'])->group(function () {
     // Delete this routes when deploy is fucking ready!
-    Route::get('/symlink', function () {
-        Artisan::call('storage:link');
-        return 'Migrate fresh successfully!';
-    });
+    // Route::get('/symlink', function () {
+    //     Artisan::call('storage:link');
+    //     return 'Migrate fresh successfully!';
+    // });
 
-    Route::get('/migrate-fresh', function () {
-        try {
-            Artisan::call('migrate:fresh');
+    // Route::get('/migrate-fresh', function () {
+    //     try {
+    //         Artisan::call('migrate:fresh');
 
-            Artisan::call('db:seed');
+    //         Artisan::call('db:seed');
 
-            return 'Migrate fresh successfully!';
-        } catch (\Exception $e) {
-            return 'Error clearing cache: ' . $e->getMessage();
-        }
-    });
+    //         return 'Migrate fresh successfully!';
+    //     } catch (\Exception $e) {
+    //         return 'Error clearing cache: ' . $e->getMessage();
+    //     }
+    // });
 
-    Route::get('/clear-cache', function () {
-        try {
-            Artisan::call('optimize:clear');
-            Artisan::call('config:cache');
-            Artisan::call('route:cache');
-            Artisan::call('view:cache');
-            return 'Cache cleared successfully!';
-        } catch (\Exception $e) {
-            return 'Error clearing cache: ' . $e->getMessage();
-        }
-    });
+    // Route::get('/clear-cache', function () {
+    //     try {
+    //         Artisan::call('optimize:clear');
+    //         Artisan::call('config:cache');
+    //         Artisan::call('route:cache');
+    //         Artisan::call('view:cache');
+    //         return 'Cache cleared successfully!';
+    //     } catch (\Exception $e) {
+    //         return 'Error clearing cache: ' . $e->getMessage();
+    //     }
+    // });
 
     Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
 
     Route::get('cart', [CartController::class, 'cartList'])->name('cart.list');
     Route::post('cart', [CartController::class, 'addToCart'])->name('cart.store');

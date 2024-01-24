@@ -4,8 +4,8 @@
 <div class="container">
     <div class="row justify-content-center align-items-md-center">
         <div class="col-md-12">
-            <h1>Familias de productos</h1>
-            <h2>Filtros</h2>
+            {{-- <h1>Familias de productos</h1> --}}
+            {{-- <h2>Filtros</h2> --}}
         </div>
         <!-- 1er PRODUCT ORIGINAL DEL TEMPLATE (para referencia)
         <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
@@ -61,6 +61,8 @@
             <hr class="d-sm-none">
         </div>
         -->
+    </div>
+    <div class="row justify-content-center align-items-md-center" id="grid-products">
         <!-- 2do PRODUCT ORIGINAL DEL TEMPLATE (para referencia) -->
         @foreach ($products as $product)
         <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
@@ -164,5 +166,94 @@
     });
 </script>
 @endif
+
+<script>
+document.getElementById('search-product').addEventListener('input', function(e) {
+    const searchTerm = e.target.value
+
+    console.log(`busqueda ${searchTerm}`)
+
+    // Verifica si el término de búsqueda no está vacío
+    if (searchTerm.length) { // Ajusta según necesidad
+        fetch(`/buscar-productos?search_term=${searchTerm}`)
+        .then(response => response.json())
+        .then(data => {
+            const gridProducts = document.getElementById('grid-products');
+            gridProducts.innerHTML = ``; // Limpiar resultados anteriores
+            data.products.forEach(product => {
+                const price = formattedAmount(product.price);
+                gridProducts.innerHTML += `<div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" id="grid-products">
+                                                <div class="card product-card">
+                                                    <a class="card-img-top d-block overflow-hidden" href="#" previewlistener="true">
+                                                        <img src="${product.featured_url}" alt="${product.name}">
+                                                    </a>
+                                                    <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Paneles</a>
+                                                        <h3 class="product-title fs-sm fw-bold">
+                                                            <a href="#" previewlistener="true">
+                                                                ${product.name}
+                                                            </a>
+                                                        </h3>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="product-price">
+                                                                $${price.whole}.<small>${price.decimal}</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body card-body-hidden">
+                                                            <form action="/cart" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
+                                                                <input type="hidden" value="${product.id}" name="id">
+                                                                <input type="hidden" value="${product.name}" name="name">
+                                                                <input type="hidden" value="${product.brand}" name="brand">
+                                                                <input type="hidden" value="${product.price }" name="price">
+                                                                <input type="hidden" value="${product.sku }" name="sku">
+                                                                <input type="hidden" value="${product.featured }"  name="featured">
+                                                                <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
+                                                            </form>
+                                                        <div class="text-center">
+                                                            <a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal">
+                                                                Vista rápida <i class="bi bi-eye"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="d-sm-none">
+                                            </div>`;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+});
+
+function formattedAmount(amount) {
+    const formatter = new Intl.NumberFormat('es-ES', {
+        style: 'currency',
+        currency: 'MXN', // Ajusta esto a tu moneda local
+        minimumFractionDigits: 2
+    });
+
+    // Extraemos la parte entera y decimal del monto formateado
+    const parts = formatter.formatToParts(amount);
+    let whole = '';
+    let decimal = '';
+
+    parts.forEach(part => {
+        if (part.type === 'integer' || part.type === 'group') {
+            whole += part.value;
+        } else if (part.type === 'decimal') {
+            decimal = part.value;
+        } else if (part.type === 'fraction') {
+            decimal += part.value;
+        }
+    });
+
+    // Devuelve un objeto con las partes entera y decimal
+    return {
+        whole: whole,
+        decimal: decimal
+    };
+}
+</script>
 
 @endsection

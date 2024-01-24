@@ -44,8 +44,13 @@
                     </a>
                     @if (Auth::check())
                     <div class="input-group d-none d-lg-flex mx-4">
-                        <input class="form-control rounded-end pe-5" type="text" placeholder="Buscar productos">
-                        <i class="ci-search position-absolute top-50 end-0 translate-middle-y text-muted fs-base me-3"></i>
+                        <input
+                            class="form-control rounded-end pe-5"
+                            type="text"
+                            placeholder="Buscar productos"
+                            id="search-product"
+                        >
+                        <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y text-muted fs-base me-3"></i>
                     </div>
                     @endif
                     <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
