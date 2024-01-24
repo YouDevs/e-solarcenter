@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center mb-4">
-        {{-- <h2 class="text-center mb-4">Familias de productos</h2>
+        <h2 class="text-center mb-4">Familias de productos</h2>
         <div class="col-md-2 text-center">
             <a href="/paneles">
                 <img src="{{asset('images/panel.png')}}" width="40" alt="Panel">
@@ -27,7 +27,7 @@
                 <img src="{{asset('images/structure.png')}}" width="40" alt="Panel">
                 <p>Estructuras</p>
             </a>
-        </div> --}}
+        </div>
         <!-- 1er PRODUCT ORIGINAL DEL TEMPLATE (para referencia)
         <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
             <div class="card product-card">
