@@ -23,17 +23,14 @@ class CustomerAccountController extends Controller
 
     public function orders(Request $request)
     {
-        Log::info( $request->all() );
         $customer = Auth::user()->customer;
         $query = $customer->orders()->orderBy('id', 'desc');
 
         // Aplica filtros
         if ($request->filled('status')) {
-            Log::info( "status" );
             $query->where('status', $request->input('status'));
         }
         if ($request->filled('delivery_status')) {
-            Log::info( "delivery_status" );
             $query->where('delivery_status', $request->input('delivery_status'));
         }
 
@@ -49,12 +46,15 @@ class CustomerAccountController extends Controller
             }
 
             // Actualiza el estado en la base de datos si es diferente
-            if (isset($latest_status) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
-                $order->update(['delivery_status' => $latest_status]);
+            if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
+                $order->update(['delivery_status' => $latest_status['status']]);
 
                 //TODO: enviar correo desde un cron-job.
-                if( $latest_status == 'delivered' ) {
-                    Mail::to( $customer->user->email )->send(new OrderDelivered($order) );
+                if( $latest_status == 'Delivered' ) {
+                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+
+                    //TODO: enviar correo también al operador:
+                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
                 }
             }
 

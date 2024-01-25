@@ -28,7 +28,7 @@
                                     {{-- <th scope="col">Correo</th> --}}
                                     <th scope="col">Total</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">status de envío</th>
+                                    <th scope="col">Status de envío</th>
                                     <th scope="col">Fecha</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -63,7 +63,7 @@
                                         @endif
                                     </th>
                                     <td>
-                                        {{$order->translated_delivery_status}}
+                                        <x-order-delivery-status :status="$order->translated_delivery_status" />
                                     </td>
                                     <td>
                                         {{ $order->created_at->format('m/d/y H:i') }}

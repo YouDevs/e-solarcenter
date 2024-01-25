@@ -64,6 +64,8 @@ class TrackingService
             ]);
 
             $responseArray = json_decode($response->getBody(), true);
+            Log::info("responseArray::::: ");
+            Log::info($responseArray);
 
             // Asumiendo que el código de respuesta es 0 para éxito
             if ($response->getStatusCode() === 200 && $responseArray['code'] === 0) {

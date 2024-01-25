@@ -162,18 +162,26 @@
                         </td>
                         <td class="py-3">{{ $order->created_at->format('m/d/y H:i') }}</td>
                         <td class="py-3">
-                            @if($order->status == 'pending_payment')
-                                <span class="badge bg-warning m-0">Pendiente de pago</span>
-                            @elseif ($order->status == 'pending')
-                                <span class="badge bg-info m-0">Pendiente de aprobación</span>
+                            @if ($order->status == 'pending')
+                                <span class="badge rounded-pill text-bg-warning">
+                                    {{ ucfirst("Pendiente de Aprobación") }}
+                                </span>
+                            @elseif($order->status == 'pending_payment')
+                                <span class="badge rounded-pill text-bg-info">
+                                    {{ ucfirst("Pendiente de Pago") }}
+                                </span>
                             @elseif($order->status == 'approved')
-                                <span class="badge bg-success m-0">Pago Aprobado</span>
-                            @elseif($order->status == 'canceled')
-                                <span class="badge bg-danger m-0">Cancelado</span>
+                                <span class="badge rounded-pill text-bg-success">
+                                    {{ ucfirst("Pago Aprobado") }}
+                                </span>
+                            @else
+                                <span class="badge rounded-pill text-bg-success">
+                                    {{ ucfirst("Cancelada") }}
+                                </span>
                             @endif
                         </td>
                         <td class="py-3">
-                            {{$order->translated_delivery_status}}
+                            <x-order-delivery-status :status="$order->translated_delivery_status" />
                         </td>
                         <td class="py-3">
                             <x-amount-formatter :amount="$order->total" />

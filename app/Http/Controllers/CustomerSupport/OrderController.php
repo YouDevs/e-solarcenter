@@ -40,10 +40,6 @@ class OrderController extends Controller
                 $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
             }
 
-            Log::info("latest_status");
-            Log::info($latest_status);
-            Log::info($order->delivery_status);
-
             // Actualiza el estado en la base de datos si es diferente
             if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
                 $order->update(['delivery_status' => $latest_status['status']]);
