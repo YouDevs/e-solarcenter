@@ -33,25 +33,29 @@ class OrderController extends Controller
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
         foreach ($orders as $order) {
-            // $latest_status = null;
+            $latest_status = null;
 
             // Obtiene el estado de entrega actualizado
-            // if($order->tracking_number && $order->courier_code) {
-            //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            // }
+            if($order->tracking_number && $order->courier_code) {
+                $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            }
+
+            Log::info("latest_status");
+            Log::info($latest_status);
+            Log::info($order->delivery_status);
 
             // Actualiza el estado en la base de datos si es diferente
-            // if (isset($latest_status) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
-            //     $order->update(['delivery_status' => $latest_status]);
+            if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
+                $order->update(['delivery_status' => $latest_status['status']]);
 
-            //     //TODO: enviar correo desde un cron-job.
-            //     if( $latest_status == 'delivered' ) {
-            //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+                //TODO: enviar correo desde un cron-job.
+                if( $latest_status == 'Delivered' ) {
+                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
 
-            //         //TODO: enviar correo también al operador:
-            //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
-            //     }
-            // }
+                    //TODO: enviar correo también al operador:
+                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
+                }
+            }
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
