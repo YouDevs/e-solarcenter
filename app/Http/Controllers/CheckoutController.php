@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PaidOrder;
 use App\Mail\PaidOrderAdmin;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
@@ -112,8 +113,9 @@ class CheckoutController extends Controller
 
         // Divide el nombre de la empresa en palabras y toma la primera palabra
         $company_words = explode(' ', $company_name);
-        $first_word_of_company_name = $company_words[0];
+        // $first_word_of_company_name = $company_words[0];
 
-        return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
+        // return  Auth::user()->customer->netsuite_key .' '. $folio .' '. $first_word_of_company_name .' '. date('y-m-d');
+        return  Auth::user()->customer->netsuite_key .' '. $folio .' '. date('y-m-d');
     }
 }

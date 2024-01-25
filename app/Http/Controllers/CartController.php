@@ -23,7 +23,7 @@ class CartController extends Controller
 
         $last_order_id = !is_null($last_order) ? $last_order->id: 1;
 
-        $payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
+        // $payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
 
         return view('cart', compact('cart_items', 'payment_concept'));
     }
@@ -87,14 +87,14 @@ class CartController extends Controller
         return redirect()->route('cart.list');
     }
 
-    private function generatePaymentConcept($last_order_id, $company_name)
-    {
-        $folio = sprintf('%04d', $last_order_id);
+    // private function generatePaymentConcept($last_order_id, $company_name)
+    // {
+    //     $folio = sprintf('%04d', $last_order_id);
 
-        // Divide el nombre de la empresa en palabras y toma la primera palabra
-        $company_words = explode(' ', $company_name);
-        $first_word_of_company_name = $company_words[0];
+    //     // Divide el nombre de la empresa en palabras y toma la primera palabra
+    //     $company_words = explode(' ', $company_name);
+    //     $first_word_of_company_name = $company_words[0];
 
-        return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
-    }
+    //     return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
+    // }
 }
