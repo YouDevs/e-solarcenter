@@ -33,24 +33,25 @@ class OrderController extends Controller
         $orders = Order::orderBy('created_at', 'DESC')->get();
 
         foreach ($orders as $order) {
-            $latest_status = null;
+            // $latest_status = null;
+
             // Obtiene el estado de entrega actualizado
-            if($order->tracking_number && $order->courier_code) {
-                $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            }
+            // if($order->tracking_number && $order->courier_code) {
+            //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            // }
 
             // Actualiza el estado en la base de datos si es diferente
-            if (isset($latest_status) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
-                $order->update(['delivery_status' => $latest_status]);
+            // if (isset($latest_status) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
+            //     $order->update(['delivery_status' => $latest_status]);
 
-                //TODO: enviar correo desde un cron-job.
-                if( $latest_status == 'delivered' ) {
-                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+            //     //TODO: enviar correo desde un cron-job.
+            //     if( $latest_status == 'delivered' ) {
+            //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
 
-                    //TODO: enviar correo también al operador:
-                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
-                }
-            }
+            //         //TODO: enviar correo también al operador:
+            //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
+            //     }
+            // }
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
@@ -61,17 +62,11 @@ class OrderController extends Controller
 
     public function edit(Order $order): View
     {
-        $courier_codes = [
-            DeliveryServicesEnum::TEST_CARRIER => DeliveryServicesEnum::TEST_CARRIER,
-            DeliveryServicesEnum::DHL => DeliveryServicesEnum::DHL,
-            DeliveryServicesEnum::ESTAFETA => DeliveryServicesEnum::ESTAFETA,
-            DeliveryServicesEnum::FEDEX => DeliveryServicesEnum::FEDEX,
-            DeliveryServicesEnum::PAQUETEXPRESS => DeliveryServicesEnum::PAQUETEXPRESS,
-        ];
+        $courierOptions = DeliveryServicesEnum::getCourierOptions();
 
         return view('customer_support.orders.edit', [
             'order' => $order,
-            'courier_codes' => $courier_codes
+            'courierOptions' => $courierOptions
         ]);
 
     }
@@ -89,62 +84,30 @@ class OrderController extends Controller
 
     public function updateTrankingNumber(UpdateOrderGuideNumberRequest $request, Order $order)
     {
-
         try {
-            $delivery_status = $this->createTracking($request->tracking_number, $request->courier_code);
 
-            $order->update([
-                'courier_code' => $request->courier_code,
-                'tracking_number' => $request->tracking_number,
-                'delivery_status' => $delivery_status
-            ]);
+            $result = $this->trackingService->createTracking($request->tracking_number, $request->courier_code);
 
-            return $this->successRedirect('Número de guía guardado exitosamente');
+            if($result) {
+
+                // Después de crear el tracking hay que volver hacer una petición para obtener el status actual.
+                $latestDeliveryStatus = $this->trackingService->getLatestDeliveryStatus($request->tracking_number, $request->courier_code);
+                Log::info("latestDeliveryStatus: ");
+                Log::info($latestDeliveryStatus);
+                $order->update([
+                    'courier_code' => $request->courier_code,
+                    'tracking_number' => $request->tracking_number,
+                    'delivery_status' => $latestDeliveryStatus['status'],
+                ]);
+                return $this->successRedirect('Número de guía guardado exitosamente');
+            } else {
+                return $this->successRedirect('Ups! algo salió mal... intenta de nuevo');
+            }
 
         } catch (\GuzzleHttp\Exception\ClientException $e) {
-            // errores del cliente, como un 400 Bad Request
-            $response = $e->getResponse();
-            $response_body_as_string = $response->getBody()->getContents();
-            $status_code = $response->getStatusCode();
-            Log::info($response_body_as_string);
-            session()->flash('message', 'Error: Intenta de nuevo cuando estes sobrio.');
-            session()->flash('icon', 'error');
-            return redirect()->back();
-
-        } catch (\GuzzleHttp\Exception\ServerException $e) {
-            // Aquí capturas errores del servidor, como un 500 Internal Server Error
-            Log::info($e->getMessage());
-            session()->flash('message', 'Error: mejor consulta con el genio que programó esto! ');
-            session()->flash('icon', 'error');
-            return redirect()->back();
-
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-            // Capturas cualquier otro error de Guzzle
-            Log::info($e->getMessage());
-            session()->flash('message', 'Error: Algo falló con éxito!');
-            session()->flash('icon', 'error');
-            return redirect()->back();
+            Log::error("Error al crear el seguimiento: " . $e->getMessage());
+            return 'unknown';
         }
-    }
-
-    private function createTracking($trackingNumber, $courierCode)
-    {
-        $client = new Client();
-        $api_key = env("TRACKING_MORE_API_KEY");
-
-        $response = $client->request('POST', 'https://api.trackingmore.com/v4/trackings/create', [
-            'headers' => [
-                'Tracking-Api-Key' => $api_key,
-                'Content-Type' => 'application/json'
-            ],
-            'json' => [
-                'tracking_number' => $trackingNumber,
-                'courier_code' => $courierCode
-            ]
-        ]);
-
-        $responseArray = json_decode($response->getBody(), true);
-        return $responseArray['data']['delivery_status'];
     }
 
     private function successRedirect($message)

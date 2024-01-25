@@ -190,11 +190,9 @@
                                                     >
                                                         <option value="">Selecciona una opción</option>
 
-                                                        @foreach ($courier_codes as $key => $service)
-                                                            <option
-                                                                value="{{$key}}"
-                                                                @selected($key == $order->courier_code)>
-                                                                {{$service}}
+                                                        @foreach ($courierOptions as $code => $name)
+                                                            <option value="{{$code}}" @selected($code == $order->courier_code)>
+                                                                {{$name}}
                                                             </option>
                                                         @endforeach
                                                         </option>
