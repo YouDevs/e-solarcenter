@@ -61,7 +61,6 @@ class HomeController extends Controller
         $products = $products->get()->map(function ($product) {
             $product->featured_url = Storage::url($product->featured);
             $product->data_sheet_url = Storage::url($product->data_sheet);
-            dd($product->data_sheet_url);
             return $product;
         });
 

@@ -360,9 +360,12 @@ document.getElementById('search-product').addEventListener('input', function(e) 
                                                                                 </button>
                                                                             </div>
                                                                         </form>
-                                                                        <h5 class="h6 mb-3 pb-2 border-bottom">
-                                                                            <i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Ficha técnica
-                                                                        </h5>
+                                                                        <a
+                                                                            href="{{$product->data_sheet_url}}"
+                                                                            class="btn btn-outline-accent float-end"
+                                                                            target="_blank">
+                                                                            Ficha Técnica
+                                                                        </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
