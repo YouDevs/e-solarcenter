@@ -27,7 +27,15 @@ class HomeController extends Controller
     public function index()
     {
         // session()->flush();
-        $products = Product::all();
+        $products = Product::query();
+        $products->orderBy('id', 'DESC');
+
+        $products = $products->get()->map(function ($product) {
+            $product->featured_url = Storage::url($product->featured);
+            $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet): null;
+            return $product;
+        });
+
         return view('index', compact('products'));
     }
 
@@ -52,6 +60,8 @@ class HomeController extends Controller
 
         $products = $products->get()->map(function ($product) {
             $product->featured_url = Storage::url($product->featured);
+            $product->data_sheet_url = Storage::url($product->data_sheet);
+            dd($product->data_sheet_url);
             return $product;
         });
 

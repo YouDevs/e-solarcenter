@@ -166,19 +166,83 @@
                         {{-- <a class="btn btn-solar btn-sm" type="button"><i class="ci-cart fs-sm me-1"></i>Comprar Ahora</a> --}}
                     {{-- </div> --}}
                     <div class="text-center">
-                        <a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal">
-                            {{-- <i class="ci-eye align-middle me-1"></i> --}}
-                            {{-- <i class="bi bi-eye"></i> --}}
-                            Vista rápida <i class="bi bi-eye"></i>
+                        <a class="nav-link-style fs-ms" data-bs-toggle="modal" data-bs-target="#quick-view-{{$product->id}}">
+                            <i class="bi bi-eye"></i> Vista rápida
                         </a>
                     </div>
                 </div>
             </div>
             <hr class="d-sm-none">
         </div>
+
+        <div class="modal fade modal-quick-view" id="quick-view-{{$product->id}}" tabindex="-1" aria-labelledby="quickViewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title product-title" id="quickViewLabel">
+                            <a href="shop-single-v1.html" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Go to product page">
+                                {{$product->name}}
+                            </a>
+                        </h4>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- Product gallery-->
+                            <div class="col-lg-7 pe-lg-0">
+                                <div class="product-gallery">
+                                    <div class="product-gallery-preview order-sm-2">
+                                        <div class="product-gallery-preview-item active">
+                                            <img src="{{$product->featured_url}}" alt="Product">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Product details-->
+                            <div class="col-lg-5 pt-4 pt-lg-0 image-zoom-pane">
+                                <div class="product-details ms-auto pb-3">
+                                    <div class="mb-3">
+                                        <x-amount-formatter :amount="$product->price" />
+                                    </div>
+                                    <div class="fs-sm mb-4">
+                                        <span class="text-heading fw-medium me-1">Stock:</span>
+                                        <span class="text-muted" id="colorOptionText">1</span>
+                                    </div>
+                                    <form action="{{ route('cart.store') }}" class="mb-grid-gutter" method="POST" enctype="multipart/form-data">
+                                        <div class="mb-3 d-flex align-items-center">
+                                            @csrf
+                                            <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1">
+                                            <input type="hidden" value="{{ $product->id }}" name="id">
+                                            <input type="hidden" value="{{ $product->name }}" name="name">
+                                            <input type="hidden" value="{{ $product->brand }}" name="brand">
+                                            <input type="hidden" value="{{ $product->price }}" name="price">
+                                            <input type="hidden" value="{{ $product->sku }}" name="sku">
+                                            <input type="hidden" value="{{ $product->featured }}"  name="featured">
+                                            <button class="btn btn-solar btn-shadow d-block w-100" type="submit">
+                                                <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
+                                            </button>
+                                        </div>
+                                    </form>
+                                    @if (!is_null($product->data_sheet_url))
+                                        <a
+                                            href="{{$product->data_sheet_url}}"
+                                            class="btn btn-outline-accent float-end"
+                                            target="_blank">
+                                            Ficha Técnica
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @endforeach
     </div>
 </div>
+
 @endsection
 
 @section('scripts')
@@ -240,14 +304,73 @@ document.getElementById('search-product').addEventListener('input', function(e) 
                                                                 <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
                                                             </form>
                                                         <div class="text-center">
-                                                            <a class="nav-link-style fs-ms" href="#quick-view" data-bs-toggle="modal">
-                                                                Vista rápida <i class="bi bi-eye"></i>
+                                                            <a class="nav-link-style fs-ms" data-bs-toggle="modal" data-bs-target="#quick-view-${product.id}">
+                                                                <i class="bi bi-eye"></i> Vista rápida
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <hr class="d-sm-none">
-                                            </div>`;
+                                            </div>
+                                            <div class="modal fade modal-quick-view" id="quick-view-${product.id}" tabindex="-1" aria-labelledby="quickViewLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-xl">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title product-title" id="quickViewLabel">
+                                                                <a data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Go to product page">
+                                                                    ${product.name}
+                                                                </a>
+                                                            </h4>
+                                                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-7 pe-lg-0">
+                                                                    <div class="product-gallery">
+                                                                        <div class="product-gallery-preview order-sm-2">
+                                                                            <div class="product-gallery-preview-item active">
+                                                                                <img src="${product.featured_url}" alt="Product">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-5 pt-4 pt-lg-0 image-zoom-pane">
+                                                                    <div class="product-details ms-auto pb-3">
+                                                                        <div class="mb-3">
+                                                                            <div class="product-price">
+                                                                                $${price.whole}.<small>${price.decimal}</small>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="fs-sm mb-4">
+                                                                            <span class="text-heading fw-medium me-1">Stock:</span>
+                                                                            <span class="text-muted">1</span>
+                                                                        </div>
+                                                                        <form action="/cart" class="mb-grid-gutter" method="POST" enctype="multipart/form-data">
+                                                                            <div class="mb-3 d-flex align-items-center">
+                                                                                @csrf
+                                                                                <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1">
+                                                                                <input type="hidden" value="${product.id}" name="id">
+                                                                                <input type="hidden" value="${product.name}" name="name">
+                                                                                <input type="hidden" value="${product.brand}" name="brand">
+                                                                                <input type="hidden" value="${product.price}" name="price">
+                                                                                <input type="hidden" value="${product.sku}" name="sku">
+                                                                                <input type="hidden" value="${product.featured}"  name="featured">
+                                                                                <button class="btn btn-solar btn-shadow d-block w-100" type="submit">
+                                                                                    <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
+                                                                                </button>
+                                                                            </div>
+                                                                        </form>
+                                                                        <h5 class="h6 mb-3 pb-2 border-bottom">
+                                                                            <i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Ficha técnica
+                                                                        </h5>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            `;
             });
         })
         .catch(error => console.error('Error:', error));
