@@ -35,19 +35,34 @@ class HomeController extends Controller
     {
         $searchTerm = $request->search_term;
 
-        if($searchTerm) {
-            $products = Product::where('name', 'LIKE', "%{$searchTerm}%")
-            ->orWhere('brand', 'LIKE', "%{$searchTerm}%")
-            ->get()
-            ->map(function ($product) {
-                $product->featured_url = Storage::url($product->featured);
-                return $product;
+        $products = Product::query();
+        $products->with('category');
+
+        if ($searchTerm) {
+            $products = $products->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('brand', 'LIKE', "%{$searchTerm}%")
+                    ->orWhereHas('category', function ($subQuery) use ($searchTerm) {
+                        $subQuery->where('name', 'LIKE', "%{$searchTerm}%");
+                    });
             });
         } else {
-            $products = Products::orderBy('id', 'DESC')->get();
+            $products = $products->orderBy('id', 'DESC');
         }
 
+        $products = $products->get()->map(function ($product) {
+            $product->featured_url = Storage::url($product->featured);
+            return $product;
+        });
+
         return response()->json(['products' => $products]);
+    }
+
+    public function filterByCategory(Request $request)
+    {
+
+
+        return view('category', compact('products'));
     }
 
 }

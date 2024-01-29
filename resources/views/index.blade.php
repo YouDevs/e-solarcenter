@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center mb-4">
-        <h2 class="text-center mb-4">Familias de productos</h2>
+        {{-- <h2 class="text-center mb-4">Familias de productos</h2>
         <div class="col-md-2 text-center">
             <a href="/paneles">
                 <img src="{{asset('images/panel.png')}}" width="40" alt="Panel">
@@ -23,11 +23,17 @@
             </a>
         </div>
         <div class="col-md-2 text-center">
-            <a href="/estructuras">
-                <img src="{{asset('images/structure.png')}}" width="40" alt="Panel">
-                <p>Estructuras</p>
+            <a href="/monitor">
+                <img src="{{asset('images/monitor.png')}}" width="40" alt="Panel">
+                <p>Monitor</p>
             </a>
         </div>
+        <div class="col-md-2 text-center">
+            <a href="/estructuras">
+                <img src="{{asset('images/structures.png')}}" width="40" alt="Panel">
+                <p>Estructuras</p>
+            </a>
+        </div> --}}
         <!-- 1er PRODUCT ORIGINAL DEL TEMPLATE (para referencia)
         <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
             <div class="card product-card">
@@ -95,7 +101,8 @@
                 <a class="card-img-top d-block overflow-hidden" href="#" previewlistener="true">
                     <img src="{{Storage::url($product->featured)}}" alt="Product">
                 </a>
-                <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Paneles</a>
+                <div class="card-body py-2">
+                    <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->netsuite_stock }}</a>
                     <h3 class="product-title fs-sm fw-bold">
                         <a href="#" previewlistener="true">
                             {{$product->name}}
@@ -195,7 +202,7 @@ document.getElementById('search-product').addEventListener('input', function(e) 
     console.log(`busqueda ${searchTerm}`)
 
     // Verifica si el término de búsqueda no está vacío
-    if (searchTerm.length) { // Ajusta según necesidad
+    if (searchTerm.length) {
         fetch(`/buscar-productos?search_term=${searchTerm}`)
         .then(response => response.json())
         .then(data => {
@@ -208,7 +215,7 @@ document.getElementById('search-product').addEventListener('input', function(e) 
                                                     <a class="card-img-top d-block overflow-hidden" href="#" previewlistener="true">
                                                         <img src="${product.featured_url}" alt="${product.name}">
                                                     </a>
-                                                    <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">Paneles</a>
+                                                    <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">stock: ${product.netsuite_stock}</a>
                                                         <h3 class="product-title fs-sm fw-bold">
                                                             <a href="#" previewlistener="true">
                                                                 ${product.name}
