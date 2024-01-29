@@ -111,10 +111,10 @@
         <!-- Content  -->
         <section class="col-lg-8">
             <!-- Toolbar-->
-            <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
-                <form action="{{route('account.orders')}}" method="get">
-                    <div class="d-flex flex-wrap align-items-center">
-                        <div class="d-flex align-items-center me-2 mb-2 mb-lg-0">
+            <div class="d-flex flex-wrap justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+                <form action="{{route('account.orders')}}" method="get" class="w-100">
+                    <div class="row">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="fs-sm text-light text-nowrap opacity-75 me-2" for="status">Status de pago:</label>
                             <select class="form-select" name="status" id="status">
                                 <option value=""> Elige una opción </option>
@@ -124,17 +124,21 @@
                                 <option value="cancelled" @selected($status == 'cancelled')>Cancelado</option>
                             </select>
                         </div>
-                        <div class="d-flex align-items-center">
+                        <div class="col-12 col-md-4 mb-3">
                             <label class="fs-sm text-light text-nowrap opacity-75 me-2" for="delivery-status">Status de envío:</label>
                             <select class="form-select" name="delivery_status" id="delivery-status">
                                 <option value=""> Elige una opción </option>
-                                <option value="transit" @selected($delivery_status == 'transit')>En tránsito</option>
-                                <option value="delivered" @selected($delivery_status == 'delivered')>Entregado</option>
+                                <option value="InTransit" @selected($delivery_status == 'InTransit')>En tránsito</option>
+                                <option value="Delivered" @selected($delivery_status == 'Delivered')>Entregado</option>
                             </select>
+                        </div>
+                        <div class="col-12 col-md-4 mb-3">
+                            <label class="fs-sm text-light text-nowrap opacity-75 me-2" for="delivery-status">Fecha:</label>
+                            <input type="date" class="form-control" name="created_at" id="created-at" value="{{$created_at}}">
                         </div>
                     </div>
                 </form>
-                
+
                 <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html">
                     <i class="ci-sign-out me-2"></i>Cerrar sesión
                 </a>
@@ -223,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Obtén los elementos select por su ID
         var statusPaymentSelect = document.getElementById('status');
         var statusDeliverySelect = document.getElementById('delivery-status');
+        var createdAtInput = document.getElementById('created-at');
 
         // Función para enviar el formulario
         function submitForm() {
@@ -232,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Añade el evento change a los elementos select
         statusPaymentSelect.addEventListener('change', submitForm);
         statusDeliverySelect.addEventListener('change', submitForm);
+        createdAtInput.addEventListener('change', submitForm);
     });
 </script>
 

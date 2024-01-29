@@ -33,6 +33,10 @@ class CustomerAccountController extends Controller
         if ($request->filled('delivery_status')) {
             $query->where('delivery_status', $request->input('delivery_status'));
         }
+        if ($request->filled('created_at')) {
+            $date = $request->input('created_at');
+            $query->whereDate('created_at', $date);
+        }
 
         // Pagina el resultado
         $orders = $query->paginate(3);
@@ -41,22 +45,22 @@ class CustomerAccountController extends Controller
             $latest_status = null;
 
             // Obtiene el estado de entrega actualizado
-            if($order->tracking_number && $order->courier_code) {
-                $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            }
+            // if($order->tracking_number && $order->courier_code) {
+            //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            // }
 
             // Actualiza el estado en la base de datos si es diferente
-            if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
-                $order->update(['delivery_status' => $latest_status['status']]);
+            // if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
+            //     $order->update(['delivery_status' => $latest_status['status']]);
 
-                //TODO: enviar correo desde un cron-job.
-                if( $latest_status == 'Delivered' ) {
-                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+            //     //TODO: enviar correo desde un cron-job.
+            //     if( $latest_status == 'Delivered' ) {
+            //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
 
-                    //TODO: enviar correo también al operador:
-                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
-                }
-            }
+            //         //TODO: enviar correo también al operador:
+            //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
+            //     }
+            // }
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
@@ -66,7 +70,8 @@ class CustomerAccountController extends Controller
             'customer' => $customer,
             'orders' => $orders,
             'status' => $request->has('status')? $request->status: null,
-            'delivery_status' => $request->has('delivery_status')? $request->delivery_status: null
+            'delivery_status' => $request->has('delivery_status')? $request->delivery_status: null,
+            'created_at' => $request->has('created_at')? $request->created_at: null
         ]);
     }
 
