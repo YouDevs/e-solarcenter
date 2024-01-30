@@ -33,7 +33,7 @@
 <div class="container pb-5 mb-2 mb-md-4">
     <div class="row">
         <!-- Sidebar-->
-        <aside class="col-lg-4 pt-4 pt-lg-0 pe-xl-5">
+        <aside class="col-lg-3 pt-4 pt-lg-0 pe-xl-5">
             <div class="bg-white rounded-3 shadow-lg pt-1 mb-5 mb-lg-0">
                 <div class="d-md-flex justify-content-between align-items-center text-center text-md-start p-4">
                 <div class="d-md-flex align-items-center">
@@ -109,7 +109,7 @@
             </div>
         </aside>
         <!-- Content  -->
-        <section class="col-lg-8">
+        <section class="col-lg-9">
             <!-- Toolbar-->
             <div class="d-flex flex-wrap justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
                 <form action="{{route('account.orders')}}" method="get" class="w-100">
@@ -139,9 +139,9 @@
                     </div>
                 </form>
 
-                <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html">
+                {{-- <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="account-signin.html">
                     <i class="ci-sign-out me-2"></i>Cerrar sesión
-                </a>
+                </a> --}}
             </div>
             <!-- Orders list-->
             <div class="table-responsive fs-md mb-4">
@@ -192,6 +192,17 @@
                         </td>
                         <td>
                             <a class="btn btn-primary btn-sm mt-2" href="#order-details-{{$order->id}}" data-bs-toggle="modal">Ver detalle</a>
+                            <form
+                                action="{{route('account.orders.delete', $order)}}"
+                                method="POST"
+                                class="inline"
+                            >
+                            @method('DELETE')
+                                @csrf
+                                <button type="button" onclick="confirmDelete(this)" class="btn btn-danger btn-sm mt-2">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
 
@@ -212,33 +223,51 @@
 
 @if (session('message'))
 <script>
-    Swal.fire({
-        position: "center",
-        icon: "{{ session('icon') }}",
-        title: "{{ session('message') }}",
-        showConfirmButton: false,
-        timer: 3000,
-    });
+Swal.fire({
+    position: "center",
+    icon: "{{ session('icon') }}",
+    title: "{{ session('message') }}",
+    showConfirmButton: false,
+    timer: 3000,
+});
 </script>
 @endif
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-        // Obtén los elementos select por su ID
-        var statusPaymentSelect = document.getElementById('status');
-        var statusDeliverySelect = document.getElementById('delivery-status');
-        var createdAtInput = document.getElementById('created-at');
+    // Obtén los elementos select por su ID
+    var statusPaymentSelect = document.getElementById('status');
+    var statusDeliverySelect = document.getElementById('delivery-status');
+    var createdAtInput = document.getElementById('created-at');
 
-        // Función para enviar el formulario
-        function submitForm() {
-            this.form.submit();
+    // Función para enviar el formulario
+    function submitForm() {
+        this.form.submit();
+    }
+
+    // Añade el evento change a los elementos select
+    statusPaymentSelect.addEventListener('change', submitForm);
+    statusDeliverySelect.addEventListener('change', submitForm);
+    createdAtInput.addEventListener('change', submitForm);
+});
+
+function confirmDelete(button) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, envía el formulario
+            button.closest('form').submit();
         }
-
-        // Añade el evento change a los elementos select
-        statusPaymentSelect.addEventListener('change', submitForm);
-        statusDeliverySelect.addEventListener('change', submitForm);
-        createdAtInput.addEventListener('change', submitForm);
     });
+}
 </script>
 
 @endsection

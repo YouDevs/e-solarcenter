@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
     Route::get('cuenta/ordenes', [CustomerAccountController::class, 'orders'])->name('account.orders');
+    Route::delete('cuenta/ordenes/{order}/delete', [CustomerAccountController::class, 'orderDelete'])->name('account.orders.delete');
     Route::get('cuenta/contacto', [CustomerAccountController::class, 'contact'])->name('account.contact');
     Route::post('cuenta/contacto', [CustomerAccountController::class, 'sendCustomerContact'])->name('account.send-contact');
 });

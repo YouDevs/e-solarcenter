@@ -28,6 +28,8 @@ return new class extends Migration
 
             $table->string('method', 50)->nullable(); //Transferencia Bancaria, PayPal, Stripe, Etc.
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

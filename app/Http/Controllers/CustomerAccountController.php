@@ -10,6 +10,7 @@ use App\Mail\OrderDelivered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerContact;
+use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class CustomerAccountController extends Controller
@@ -98,6 +99,16 @@ class CustomerAccountController extends Controller
             Log::error('Error al encolar correo: ' . $e->getMessage());
         }
 
+        return redirect()->back();
+    }
+
+    public function orderDelete(Request $request, Order $order)
+    {
+        $order->items()->delete();
+        $order->delete();
+
+        session()->flash('message', 'La orden ha sido eliminada con éxito.');
+        session()->flash('icon', 'success');
         return redirect()->back();
     }
 
