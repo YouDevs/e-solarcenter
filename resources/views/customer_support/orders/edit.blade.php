@@ -8,7 +8,7 @@
                 <div class="d-flex flex-row p-2">
                     <div class="mt-2 text-end">
                         <span class="fw-bold me-2">Status</span>
-                        @if ($order->status == 'pending')
+                        @if ($order->status == 'payment_submitted')
                             <span class="badge rounded-pill text-bg-warning">
                                 {{ ucfirst("Pendiente de Aprobación") }}
                             </span>
@@ -134,16 +134,16 @@
                                                     >
                                                         <option value="">Selecciona una opción</option>
                                                         <option
+                                                            value="payment_submitted"
+                                                            @selected($order->status == 'payment_submitted')
+                                                        >
+                                                            Pendiente de Aproación
+                                                        </option>
+                                                        <option
                                                             value="pending_payment"
                                                             @selected($order->status == 'pending_payment')
                                                         >
                                                             Pendiente de Pago
-                                                        </option>
-                                                        <option
-                                                            value="pending"
-                                                            @selected($order->status == 'pending')
-                                                        >
-                                                            Pendiente de Aproación
                                                         </option>
                                                         <option
                                                             value="approved"

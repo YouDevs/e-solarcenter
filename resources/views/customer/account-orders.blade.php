@@ -118,8 +118,8 @@
                             <label class="fs-sm text-light text-nowrap opacity-75 me-2" for="status">Status de pago:</label>
                             <select class="form-select" name="status" id="status">
                                 <option value=""> Elige una opción </option>
+                                <option value="payment_submitted" @selected($status == 'payment_submitted')>Pendiente de aprobación</option>
                                 <option value="pending_payment" @selected($status == 'pending_payment')>Pago pendiente</option>
-                                <option value="pending" @selected($status == 'pending')>Pendiente de aprobación</option>
                                 <option value="approved" @selected($status == 'approved')>Aprobado</option>
                                 <option value="cancelled" @selected($status == 'cancelled')>Cancelado</option>
                             </select>
@@ -166,7 +166,7 @@
                         </td>
                         <td class="py-3">{{ $order->created_at->format('m/d/y H:i') }}</td>
                         <td class="py-3">
-                            @if ($order->status == 'pending')
+                            @if ($order->status == 'payment_submitted')
                                 <span class="badge rounded-pill text-bg-warning">
                                     {{ ucfirst("Pendiente de Aprobación") }}
                                 </span>
@@ -191,18 +191,37 @@
                             <x-amount-formatter :amount="$order->total" />
                         </td>
                         <td>
-                            <a class="btn btn-primary btn-sm mt-2" href="#order-details-{{$order->id}}" data-bs-toggle="modal">Ver detalle</a>
-                            <form
-                                action="{{route('account.orders.delete', $order)}}"
-                                method="POST"
-                                class="inline"
-                            >
-                            @method('DELETE')
-                                @csrf
-                                <button type="button" onclick="confirmDelete(this)" class="btn btn-danger btn-sm mt-2">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-info btn-sm me-2" href="#order-details-{{$order->id}}" data-bs-toggle="modal">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                @if ($order->status == 'pending_payment' || $order->delivery_status == 'delivered' )
+                                    <form
+                                        action="{{route('account.orders.delete', $order)}}"
+                                        method="POST"
+                                        class="inline"
+                                    >
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="button" onclick="confirmDelete(this)" class="btn btn-danger btn-sm me-2">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                @endif
+
+                                @if ($order->status == 'pending_payment')
+                                    <form action="{{ route('checkout.update', $order->id) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="payment_submitted" value="1" >
+                                        <input type="hidden" name="payment_concept" value="{{$order->payment_concept}}" >
+                                        <button type="button" onclick="confirmPaymentSubmitted(this, '{{$order->payment_concept}}')" class="btn btn-primary btn-sm">
+                                            <span class="d-none d-sm-inline">Ya Realicé Mi Pago</span>
+                                            <span class="d-inline d-sm-none">Pago realizado</span>
+                                            <i class="ci-arrow-right mt-sm-0 ms-1"></i>
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </td>
                     </tr>
 
@@ -264,6 +283,28 @@ function confirmDelete(button) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Si el usuario confirma, envía el formulario
+            button.closest('form').submit();
+        }
+    });
+}
+
+function confirmPaymentSubmitted(button, paymentConcept) {
+    Swal.fire({
+        title: 'Antes de continuar:',
+        html: `<ul class='mx-auto text-start fs-5' style='max-width: 80%;'>
+                    <li>Abre <b>aplicación bancaria</b></li>
+                    <li>Ingresa el concepto de pago <b>${paymentConcept}</b></li>
+                    <li>Debes ingresar el <b>monto exacto</b> de la operación</li>
+                    <li>Una vez realizado el pago presiona el botón <b>"Ya Realicé Mi Pago"</b></li>
+                </ul>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya Realicé Mi Pago',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
             button.closest('form').submit();
         }
     });

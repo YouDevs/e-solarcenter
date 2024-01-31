@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('checkout-payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
     Route::get('checkout-complete', [CheckoutController::class, 'complete'])->name('checkout.complete');
     Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::post('checkout/{order}/update', [CheckoutController::class, 'update'])->name('checkout.update');
 
     Route::get('cuenta/ordenes', [CustomerAccountController::class, 'orders'])->name('account.orders');
     Route::delete('cuenta/ordenes/{order}/delete', [CustomerAccountController::class, 'orderDelete'])->name('account.orders.delete');

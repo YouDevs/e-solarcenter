@@ -44,7 +44,7 @@
                                         <x-amount-formatter :amount="$order->total" />
                                     </th>
                                     <th scope="row" class="text-accent">
-                                        @if ($order->status == 'pending')
+                                        @if ($order->status == 'payment_submitted')
                                             <span class="badge rounded-pill text-bg-warning">
                                                 {{ ucfirst("Pendiente de Aprobación") }}
                                             </span>

@@ -40,7 +40,12 @@ class CustomerAccountController extends Controller
         }
 
         // Pagina el resultado
-        $orders = $query->paginate(3);
+        $orders = $query->paginate(5);
+
+        // Para generar el concepto de pago:
+        $customer = auth()->user()->customer;
+        $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
+        $last_order_id = !is_null($last_order) ? $last_order->id: 1;
 
         foreach ($orders as $order) {
             $latest_status = null;
@@ -62,6 +67,8 @@ class CustomerAccountController extends Controller
             //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
             //     }
             // }
+
+            $order->payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
@@ -110,6 +117,19 @@ class CustomerAccountController extends Controller
         session()->flash('message', 'La orden ha sido eliminada con éxito.');
         session()->flash('icon', 'success');
         return redirect()->back();
+    }
+
+
+    private function generatePaymentConcept($last_order_id, $company_name)
+    {
+        $folio = sprintf('%04d', $last_order_id);
+
+        // Divide el nombre de la empresa en palabras y toma la primera palabra
+        $company_words = explode(' ', $company_name);
+        // $first_word_of_company_name = $company_words[0];
+
+        // return  Auth::user()->customer->netsuite_key .' '. $folio .' '. $first_word_of_company_name .' '. date('y-m-d');
+        return  Auth::user()->customer->netsuite_key .' '. $folio .' '. date('y-m-d');
     }
 
 }

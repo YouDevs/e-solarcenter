@@ -19,13 +19,7 @@ class CartController extends Controller
             return redirect()->back();
         }
 
-        $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
-
-        $last_order_id = !is_null($last_order) ? $last_order->id: 1;
-
-        // $payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
-
-        return view('cart', compact('cart_items', 'payment_concept'));
+        return view('cart', compact('cart_items'));
     }
 
     public function addToCart(Request $request)

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->string('payment_concept', 30)->nullable();
 
-            $table->enum('status', ['pending_payment', 'pending', 'approved', 'cancelled'])->default('pending');
+            $table->enum('status', ['payment_submitted', 'pending_payment', 'pending', 'approved', 'cancelled'])->default('pending');
             $table->string('cancellation_reason', 100)->nullable(); // ¿Por qué razón se cancela el pedido.?
             $table->string('courier_code', 40)->nullable();
             $table->string('delivery_status', 50)->nullable(); //NOTA: almacena el status obtenido de la paquetería.
