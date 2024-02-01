@@ -16,7 +16,10 @@ class Customer extends Model
         'company_name',
         'netsuite_key',
         'rfc',
-        'delivery_address',
+        'delivery_address_1',
+        'delivery_address_2',
+        'delivery_address_3',
+        'default_address'
     ];
 
     public function user() : BelongsTo

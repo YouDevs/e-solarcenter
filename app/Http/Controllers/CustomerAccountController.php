@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Enums\DeliveryStatusEnum;
 use App\Services\TrackingService;
 use App\Http\Requests\CustomerContactRequest;
+use App\Http\Requests\UpdateCustomerProfileRequest;
 use App\Mail\OrderDelivered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 use App\Mail\CustomerContact;
+use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
@@ -20,6 +23,46 @@ class CustomerAccountController extends Controller
     public function __construct(TrackingService $trackingService)
     {
         $this->trackingService = $trackingService;
+    }
+
+    public function profile()
+    {
+        $customer = auth()->user()->customer;
+
+        $delivery_addresses = collect([$customer->delivery_address_1, $customer->delivery_address_2, $customer->delivery_address_3])
+                                ->filter()
+                                ->values()
+                                ->all();
+
+        $orders = Order::all();
+        return view('customer.account-profile', [
+            'customer' => $customer,
+            'orders' => $orders,
+            'delivery_addresses' => $delivery_addresses
+        ]);
+    }
+
+    public function profileUpdate(UpdateCustomerProfileRequest $request, Customer $customer)
+    {
+
+        // Actualizar nombre y correo electrónico
+        $customer->user->name = $request->name;
+        $customer->user->email = $request->email;
+        $customer->default_address = $request->default_address + 1;
+        $customer->user->save();
+        $customer->save();
+
+        // Actualizar contraseña si se proporcionó una nueva
+        if (!empty($request->password)) {
+            $customer->user->password = Hash::make($request->password);
+            $customer->save();
+            $customer->user->save();
+        }
+
+        session()->flash('message', 'Perfil actualizado con éxito');
+        session()->flash('icon', 'success');
+
+        return redirect()->back();
     }
 
     public function orders(Request $request)

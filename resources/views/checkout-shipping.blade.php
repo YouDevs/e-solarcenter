@@ -42,8 +42,8 @@
                         <tr>
                             <td>
                                 <div class="form-check mb-4">
-                                <input class="form-check-input" type="radio" id="courier" name="shipping-method" checked="">
-                                <label class="form-check-label" for="courier"></label>
+                                    <input class="form-check-input" type="radio" id="courier" name="shipping-method" checked="">
+                                    <label class="form-check-label" for="courier"></label>
                                 </div>
                             </td>
                             <td class="align-middle"><span class="text-dark fw-medium">Courier</span><br><span class="text-muted">All addresses (default zone), United States &amp; Canada</span></td>
@@ -81,7 +81,7 @@
                     <span>botón editar dirección.</span> //
                     <span>botón agregar dirección.</span>
                 </p> --}}
-              </div>
+            </div>
             <!-- Navigation (desktop)-->
             <div class="d-none d-lg-flex pt-4 mt-3">
                 <div class="w-50 pe-3">

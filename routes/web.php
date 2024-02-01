@@ -58,8 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::post('checkout/{order}/update', [CheckoutController::class, 'update'])->name('checkout.update');
 
+    Route::get('cuenta/perfil', [CustomerAccountController::class, 'profile'])->name('account.profile');
+    Route::put('cuenta/perfil/{customer}/update', [CustomerAccountController::class, 'profileUpdate'])->name('account.profile-update');
+
     Route::get('cuenta/ordenes', [CustomerAccountController::class, 'orders'])->name('account.orders');
     Route::delete('cuenta/ordenes/{order}/delete', [CustomerAccountController::class, 'orderDelete'])->name('account.orders.delete');
+
     Route::get('cuenta/contacto', [CustomerAccountController::class, 'contact'])->name('account.contact');
     Route::post('cuenta/contacto', [CustomerAccountController::class, 'sendCustomerContact'])->name('account.send-contact');
 });
