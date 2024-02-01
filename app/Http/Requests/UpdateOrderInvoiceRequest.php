@@ -22,7 +22,7 @@ class UpdateOrderInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice' => 'required|file|mimes:pdf',
+            'invoice' => 'required|file|mimes:pdf,xml',
         ];
     }
 

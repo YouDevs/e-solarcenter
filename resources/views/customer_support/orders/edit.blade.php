@@ -137,7 +137,7 @@
                                                             value="payment_submitted"
                                                             @selected($order->status == 'payment_submitted')
                                                         >
-                                                            Pendiente de Aproación
+                                                            Pendiente de Aprobación
                                                         </option>
                                                         <option
                                                             value="pending_payment"
@@ -259,8 +259,8 @@
                                                 <a
                                                     href="{{Storage::url($order->invoice)}}"
                                                     class="btn btn-outline-accent float-end"
-                                                    target="_blank">
-                                                    Ver factura
+                                                    download="">
+                                                    Descargar
                                                 </a>
                                             @endif
                                         </div>

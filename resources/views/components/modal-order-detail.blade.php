@@ -44,8 +44,8 @@
                             <a
                                 href="{{Storage::url($order->invoice)}}"
                                 class="btn btn-outline-accent float-end"
-                                target="_blank">
-                                Ver factura
+                                download="">
+                                Descargar Factura
                             </a>
                         </span>
                     @endif
