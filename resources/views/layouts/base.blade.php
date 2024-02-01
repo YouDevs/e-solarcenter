@@ -306,7 +306,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Mi Cuenta</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="docs/dev-setup.html" previewlistener="true">
+                                        <a class="dropdown-item" href="{{route('account.profile')}}" previewlistener="true">
                                             <div class="d-flex">
                                                 <div class="lead text-muted pt-1"><i class="ci-book"></i></div>
                                                 <div class="ms-2">
