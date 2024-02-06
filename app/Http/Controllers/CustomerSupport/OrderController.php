@@ -97,7 +97,7 @@ class OrderController extends Controller
                 $order->update([
                     'courier_code' => $request->courier_code,
                     'tracking_number' => $request->tracking_number,
-                    'delivery_status' => $latestDeliveryStatus['status'],
+                    'delivery_status' => isset($latestDeliveryStatus['status']) ? $latestDeliveryStatus['status']: '',
                 ]);
                 return $this->successRedirect('Número de guía guardado exitosamente');
             } else {
