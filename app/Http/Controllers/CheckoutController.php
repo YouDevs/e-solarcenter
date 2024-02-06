@@ -25,7 +25,26 @@ class CheckoutController extends Controller
     public function shipping()
     {
         $cart_items = \Cart::getContent();
-        return view('checkout-shipping', compact('cart_items'));
+        $customer = auth()->user()->customer;
+
+        $delivery_addresses = collect([$customer->delivery_address_1, $customer->delivery_address_2, $customer->delivery_address_3])
+                                ->filter()
+                                ->values()
+                                ->all();
+
+        return view('checkout-shipping', compact('cart_items', 'customer','delivery_addresses'));
+    }
+
+    public function selectedAddress(Request $request)
+    {
+        $validated = $request->validate([
+            'default_address' => 'required|numeric',
+        ]);
+
+        // Almacenar la selección en la sesión
+        session(['default_address' => $request->default_address + 1]);
+
+        return redirect()->route('checkout.payment');
     }
 
     public function payment()
@@ -43,22 +62,26 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // Obtener el ID del cliente autenticado
-        $customer_id = auth()->user()->customer->id; // Asegúrate de que este sea el campo correcto para el ID del cliente
+        $customer = auth()->user()->customer;
+        $customer_id = $customer->id;
 
-        // Comenzar una transacción
+        // Código para obtener la dirección de envío del cliente basado en el índice seleccionado por el cliente o default.
+        $index = session('default_address');
+        $addressPropertyName = "delivery_address_$index";
+        $deliveryAddress = $customer->{$addressPropertyName};
+
         DB::beginTransaction();
-
         try {
-            // Crear la orden
             $order = Order::create([
                 'customer_id' => $customer_id,
                 'total' => \Cart::getTotal(),
                 'payment_concept' => $request->payment_concept,
                 'status' => $request->has('payment_submitted') ? 'payment_submitted' : 'pending_payment',
+                'delivery_address' => $deliveryAddress,
             ]);
 
-            // Iterar sobre los artículos del carrito y crear order_items
+            session()->forget('default_address');
+
             foreach (\Cart::getContent() as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,

@@ -15,6 +15,7 @@ class Order extends Model
         'total',
         'payment_concept',
         'status',
+        'delivery_address',
         'courier_code',
         'delivery_status',
         'tracking_number',

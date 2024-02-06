@@ -105,7 +105,9 @@ class UsersSeeder extends Seeder
             'company_name' => 'SUNE',
             'netsuite_key' => '1234567890',
             'rfc' => '0101010101011',
-            'delivery_address' => 'Calle Eléctrica #3000',
+            'delivery_address_1' => 'Av. Industria Eléctrica 43-A',
+            'delivery_address_2' => 'Av. Industria Eléctrica 43-B',
+            'delivery_address_3' => 'Av. Industria Eléctrica 43-C',
             'status' => 'active'
         ]);
 

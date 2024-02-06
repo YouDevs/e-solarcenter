@@ -23,82 +23,68 @@
 <div class="container pb-5 mb-2 mb-md-4">
     <div class="row">
         <section class="col-lg-8">
-            <!-- Steps-->
-            <x-payment-steps step="3" />
+            <form action="{{route('checkout.selected-address')}}" method="post" class="col-lg-8">
+                @csrf
+                <!-- Steps-->
+                <x-payment-steps step="3" />
 
-            <!-- Shipping address-->
-            <h2 class="h6 pb-3 mb-2">Elige una dirección de envío</h2>
-            <div class="table-responsive">
-                <table class="table table-hover fs-sm border-top">
-                    <thead>
-                        <tr>
-                            <th class="align-middle"></th>
-                            <th class="align-middle">Dirección de envío</th>
-                            {{-- <th class="align-middle">Tiempo de envío</th>
-                            <th class="align-middle">Costo de envío</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div class="form-check mb-4">
-                                    <input class="form-check-input" type="radio" id="courier" name="shipping-method" checked="">
-                                    <label class="form-check-label" for="courier"></label>
-                                </div>
-                            </td>
-                            <td class="align-middle"><span class="text-dark fw-medium">Courier</span><br><span class="text-muted">All addresses (default zone), United States &amp; Canada</span></td>
-                            {{-- <td class="align-middle">2 - 4 days</td>
-                            <td class="align-middle">$26.50</td> --}}
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check mb-4">
-                                <input class="form-check-input" type="radio" id="local" name="shipping-method">
-                                <label class="form-check-label" for="local"></label>
-                                </div>
-                            </td>
-                            <td class="align-middle">
-                                <span class="text-dark fw-medium">Local Shipping</span><br>
-                                <span class="text-muted">All addresses (default zone), United States &amp; Canada</span>
-                            </td>
-                            {{-- <td class="align-middle">up to one week</td>
-                            <td class="align-middle">$10.00</td> --}}
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-check mb-4">
-                                <input class="form-check-input" type="radio" id="flat" name="shipping-method">
-                                <label class="form-check-label" for="flat"></label>
-                                </div>
-                            </td>
-                            <td class="align-middle"><span class="text-dark fw-medium">Flat Rate</span><br><span class="text-muted">All addresses (default zone)</span></td>
-                            {{-- <td class="align-middle">5 - 7 days</td>
-                            <td class="align-middle">$33.85</td> --}}
-                        </tr>
-                    </tbody>
-                </table>
-                {{-- <p>
-                    <span>botón editar dirección.</span> //
-                    <span>botón agregar dirección.</span>
-                </p> --}}
-            </div>
-            <!-- Navigation (desktop)-->
-            <div class="d-none d-lg-flex pt-4 mt-3">
-                <div class="w-50 pe-3">
-                    <a class="btn btn-secondary d-block w-100" href="{{route('checkout.details')}}">
-                        <i class="ci-arrow-left mt-sm-0 me-1"></i>
-                        <span class="d-none d-sm-inline">Volver</span>
-                        <span class="d-inline d-sm-none">Volver</span>
-                    </a>
+                <!-- Shipping address-->
+                <h2 class="h6 pb-3 mb-2">Elige una dirección de envío</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover fs-sm border-top">
+                        <thead>
+                            <tr>
+                                <th class="align-middle"></th>
+                                <th class="align-middle">Dirección de envío</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($delivery_addresses as $index => $address)
+                                <tr>
+                                    <td>
+                                        <div class="form-check mb-4">
+                                            <input
+                                                class="form-check-input @error('default_address') is-invalid @enderror"
+                                                type="radio"
+                                                id="default-address-{{$index}}"
+                                                name="default_address"
+                                                value="{{$index}}"
+                                                @checked($customer->default_address == $index + 1)
+                                                >
+                                            <label class="form-check-label" for="default-address-{{$index}}"></label>
+                                            @error('default_address')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="text-muted">{{$address}} / {{$index + 1}}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div class="w-50 ps-2">
-                    <a class="btn btn-primary d-block w-100" href="{{route('checkout.payment')}}">
-                        <span class="d-none d-sm-inline">Proceder al pago</span>
-                        <span class="d-inline d-sm-none">Siguiente</span>
-                        <i class="ci-arrow-right mt-sm-0 ms-1"></i>
-                    </a>
+                <!-- Navigation (desktop)-->
+                <div class="d-none d-lg-flex pt-4 mt-3">
+                    <div class="w-50 pe-3">
+                        <a class="btn btn-secondary d-block w-100" href="{{route('checkout.details')}}">
+                            <i class="ci-arrow-left mt-sm-0 me-1"></i>
+                            <span class="d-none d-sm-inline">Volver</span>
+                            <span class="d-inline d-sm-none">Volver</span>
+                        </a>
+                    </div>
+                    <div class="w-50 ps-2">
+                        <button type="submit" class="btn btn-primary d-block w-100" href="{{route('checkout.selected-address')}}">
+                            <span class="d-none d-sm-inline">Proceder al pago</span>
+                            <span class="d-inline d-sm-none">Siguiente</span>
+                            <i class="ci-arrow-right mt-sm-0 ms-1"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </section>
         <!-- Sidebar-->
         <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
