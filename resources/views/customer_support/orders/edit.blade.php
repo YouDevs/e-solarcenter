@@ -21,7 +21,7 @@
                                 {{ ucfirst("Pago Aprobado") }}
                             </span>
                         @else
-                            <span class="badge rounded-pill text-bg-success">
+                            <span class="badge rounded-pill text-bg-danger">
                                 {{ ucfirst("Cancelada") }}
                             </span>
                         @endif
