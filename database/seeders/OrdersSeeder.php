@@ -20,8 +20,10 @@ class OrdersSeeder extends Seeder
         // Inserta una orden de ejemplo
         Order::create([
             'customer_id' => $customer->id, // Usa el ID del cliente obtenido
+            'folio' => 1, // Usa el ID del cliente obtenido
             'total' => 1150, // Precio total de la orden
-            'delivery_status' => 'processing', // Estado de la entrega
+            'status' => 'pending_payment', // Estado de la entrega
+            'delivery_status' => '', // Estado de la entrega
             'estimated_delivery_date' => now()->addDays(7), // Fecha estimada de entrega
             'method' => 'Transferencia bancaria' // Método de pago
         ]);

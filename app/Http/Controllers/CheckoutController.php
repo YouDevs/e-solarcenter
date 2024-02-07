@@ -52,10 +52,12 @@ class CheckoutController extends Controller
         $cart_items = \Cart::getContent();
 
         $customer = auth()->user()->customer;
-        $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
+        $customerId = $customer->id;
 
-        $last_order_id = !is_null($last_order) ? $last_order->id: 1;
-        $payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
+        // Generar Folio de Orden:
+        $lastFolio = Order::where('customer_id', $customerId)->max('folio');
+        $newFolio = $lastFolio ? $lastFolio + 1 : 1;
+        $payment_concept = $this->generatePaymentConcept($newFolio, $customer->company_name);
 
         return view('checkout-payment', compact('cart_items', 'payment_concept'));
     }
@@ -63,17 +65,22 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $customer = auth()->user()->customer;
-        $customer_id = $customer->id;
+        $customerId = $customer->id;
 
         // Código para obtener la dirección de envío del cliente basado en el índice seleccionado por el cliente o default.
         $index = session('default_address');
         $addressPropertyName = "delivery_address_$index";
         $deliveryAddress = $customer->{$addressPropertyName};
 
+        // Generar Folio de Orden:
+        $lastFolio = Order::where('customer_id', $customerId)->max('folio');
+        $newFolio = $lastFolio ? $lastFolio + 1 : 1;
+
         DB::beginTransaction();
         try {
             $order = Order::create([
-                'customer_id' => $customer_id,
+                'customer_id' => $customerId,
+                'folio' => $newFolio,
                 'total' => \Cart::getTotal(),
                 'payment_concept' => $request->payment_concept,
                 'status' => $request->has('payment_submitted') ? 'payment_submitted' : 'pending_payment',
@@ -164,9 +171,9 @@ class CheckoutController extends Controller
         return view('checkout-complete');
     }
 
-    private function generatePaymentConcept($last_order_id, $company_name)
+    private function generatePaymentConcept($lastFolio, $company_name)
     {
-        $folio = sprintf('%04d', $last_order_id);
+        $folio = sprintf('%04d', $lastFolio);
 
         // Divide el nombre de la empresa en palabras y toma la primera palabra
         $company_words = explode(' ', $company_name);
