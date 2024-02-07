@@ -26,7 +26,7 @@ class CustomerContact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('carlos.develops@gmail.com', 'Solar Center'),
+            from: new Address('contacto@ecommerce.solar-center.mx', 'Solar Center'),
             subject: 'Mensaje de cliente! - Solar Center',
         );
     }
