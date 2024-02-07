@@ -18,29 +18,30 @@ Route::middleware(['auth'])->group(function () {
     //     return 'Migrate fresh successfully!';
     // });
 
-    // Route::get('/migrate-fresh', function () {
-    //     try {
-    //         Artisan::call('migrate:fresh');
+    Route::get('/migrate-fresh', function () {
+        try {
+            Artisan::call('migrate:fresh');
 
-    //         Artisan::call('db:seed');
+            Artisan::call('db:seed');
 
-    //         return 'Migrate fresh successfully!';
-    //     } catch (\Exception $e) {
-    //         return 'Error clearing cache: ' . $e->getMessage();
-    //     }
-    // });
+            return 'Migrate fresh successfully!';
+        } catch (\Exception $e) {
+            return 'Error clearing cache: ' . $e->getMessage();
+        }
+    });
 
-    // Route::get('/clear-cache', function () {
-    //     try {
-    //         Artisan::call('optimize:clear');
-    //         Artisan::call('config:cache');
-    //         Artisan::call('route:cache');
-    //         Artisan::call('view:cache');
-    //         return 'Cache cleared successfully!';
-    //     } catch (\Exception $e) {
-    //         return 'Error clearing cache: ' . $e->getMessage();
-    //     }
-    // });
+    Route::get('/clear-cache', function () {
+        try {
+            Artisan::call('optimize:clear');
+            Artisan::call('config:cache');
+            Artisan::call('route:cache');
+            Artisan::call('view:clear');
+            Artisan::call('view:cache');
+            return 'Cache cleared successfully!';
+        } catch (\Exception $e) {
+            return 'Error clearing cache: ' . $e->getMessage();
+        }
+    });
 
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');

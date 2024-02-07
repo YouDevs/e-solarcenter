@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('netsuite_item_txt')->nullable(); //NOTA: en netsuite está como: itemTxt
             $table->integer('netsuite_stock')->nullable(); //NOTA: es el stock total obtenido de todas las ubicaciones desde netsuite.
             $table->string('data_sheet', 100)->nullable();
+            $table->decimal('price_1', 8, 2)->nullable();
+            $table->decimal('price_2', 8, 2)->nullable();
+            $table->decimal('price_3', 8, 2)->nullable();
             $table->string('featured', 100)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
 
             $table->boolean('status')->default(1); // 1 Activo, 0 Inactivo

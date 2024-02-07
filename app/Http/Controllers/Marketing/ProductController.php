@@ -128,7 +128,7 @@ class ProductController extends Controller
     public function getProductsFromNetsuite()
     {
         $endpoint = 'https://5874559-sb1.restlets.api.netsuite.com/app/';
-        Log::info("endpoint");
+
         $client = $this->createOAuth1Client(
             $endpoint,
             config('app.consumer_key'),
@@ -139,7 +139,7 @@ class ProductController extends Controller
         );
 
         $response = $client->get('site/hosting/restlet.nl', [
-            'query' => ['script' => '2377', 'deploy' => '1'],
+            'query' => ['script' => '2375', 'deploy' => '1'],
             'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json']
         ]);
 

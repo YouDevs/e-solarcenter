@@ -52,29 +52,39 @@ class SyncStock extends Command
         );
 
         $response = $client->get('site/hosting/restlet.nl', [
-            'query' => ['script' => '2377', 'deploy' => '1'],
+            'query' => ['script' => '2375', 'deploy' => '1'],
             'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json']
         ]);
 
         $products = json_decode($response->getBody(), true);
+
         // Agrupa productos por ID
         $groupedProducts = [];
         foreach ($products as $product) {
-            $itemId = $product['item'];
+            $itemId = $product['ID'];
+
             if (!isset($groupedProducts[$itemId])) {
                 $groupedProducts[$itemId] = $product;
-                $groupedProducts[$itemId]['quantityavailable'] = 0;
+                $groupedProducts[$itemId]['stock'] = 0;
             }
-            $groupedProducts[$itemId]['quantityavailable'] += $product['quantityavailable'];
+            $groupedProducts[$itemId]['stock'] += $product['EXISTENCIA'][0]['quantityavailable'];
         }
 
         // Actualiza el stock de cada producto si existe y si es diferente del stock de netsuite.
         foreach ($groupedProducts as $product) {
-            $dbProduct = Product::firstWhere('netsuite_item', $product['item']);
+            $dbProduct = Product::firstWhere('netsuite_item', $product['ID']);
 
-            if ($dbProduct && $dbProduct->netsuite_stock != $product['quantityavailable']) {
+            if ($dbProduct && $dbProduct->netsuite_stock != $product['stock']) {
                 $dbProduct->update([
-                    'netsuite_stock' => $product['quantityavailable'],
+                    // 'name' => $product['NOMBRE'],
+                    // 'name' => $product['NOMBRE_PARA_MOSTRAR_EN_LA_TIENDA_WEB'],
+                    // 'netsuite_item_txt' => $product['DESCRIPCION_DETALLADA'],
+                    // 'price' => $product['PRECIOS'][0]['PRECIO'],
+                    'netsuite_stock' => $product['stock'],
+                    // 'data_sheet' => $product['FICHA_TECNICA_SOLAR_CENTER_URL'],
+                    'price_1' => $product['PRECIOS'][0]['PRECIO'],
+                    'price_2' => $product['PRECIOS'][1]['PRECIO'],
+                    'price_3' => $product['PRECIOS'][2]['PRECIO'],
                 ]);
             }
         }

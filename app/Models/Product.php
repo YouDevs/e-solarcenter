@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'brand', 'netsuite_item', 'netsuite_item_txt', 'netsuite_stock', 'slug'];
+    protected $fillable = ['name', 'brand', 'netsuite_item', 'netsuite_item_txt', 'netsuite_stock', 'data_sheet', 'price_1', 'price_2', 'price_3', 'slug'];
 
     public function category()
     {
