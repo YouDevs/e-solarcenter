@@ -68,53 +68,57 @@ class CustomerAccountController extends Controller
     public function orders(Request $request)
     {
         $customer = Auth::user()->customer;
-        $query = $customer->orders()->orderBy('id', 'desc');
 
-        // Aplica filtros
-        if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
+        if( $customer->orders()->exists() ) {
+            $query = $customer->orders()->orderBy('id', 'desc');
+
+            // Aplica filtros
+            if ($request->filled('status')) {
+                $query->where('status', $request->input('status'));
+            }
+            if ($request->filled('delivery_status')) {
+                $query->where('delivery_status', $request->input('delivery_status'));
+            }
+            if ($request->filled('created_at')) {
+                $date = $request->input('created_at');
+                $query->whereDate('created_at', $date);
+            }
+
+            // Pagina el resultado
+            $orders = $query->paginate(5);
+
+            // Para generar el concepto de pago:
+            $customer = auth()->user()->customer;
+            $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
+            $last_order_id = !is_null($last_order) ? $last_order->id: 1;
+
+            foreach ($orders as $order) {
+                $latest_status = null;
+
+                // Obtiene el estado de entrega actualizado
+                // if($order->tracking_number && $order->courier_code) {
+                //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+                // }
+
+                // Actualiza el estado en la base de datos si es diferente
+                // if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
+                //     $order->update(['delivery_status' => $latest_status['status']]);
+
+                //     //TODO: enviar correo desde un cron-job.
+                //     if( $latest_status == 'Delivered' ) {
+                //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+
+                //         //TODO: enviar correo también al operador:
+                //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
+                //     }
+                // }
+
+                $order->payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
+
+                // Traduce el estado para mostrarlo en la vista
+                $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
+
         }
-        if ($request->filled('delivery_status')) {
-            $query->where('delivery_status', $request->input('delivery_status'));
-        }
-        if ($request->filled('created_at')) {
-            $date = $request->input('created_at');
-            $query->whereDate('created_at', $date);
-        }
-
-        // Pagina el resultado
-        $orders = $query->paginate(5);
-
-        // Para generar el concepto de pago:
-        $customer = auth()->user()->customer;
-        $last_order = Order::where('customer_id', $customer->id)->orderBy('created_at','DESC')->first();
-        $last_order_id = !is_null($last_order) ? $last_order->id: 1;
-
-        foreach ($orders as $order) {
-            $latest_status = null;
-
-            // Obtiene el estado de entrega actualizado
-            // if($order->tracking_number && $order->courier_code) {
-            //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            // }
-
-            // Actualiza el estado en la base de datos si es diferente
-            // if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
-            //     $order->update(['delivery_status' => $latest_status['status']]);
-
-            //     //TODO: enviar correo desde un cron-job.
-            //     if( $latest_status == 'Delivered' ) {
-            //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
-
-            //         //TODO: enviar correo también al operador:
-            //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
-            //     }
-            // }
-
-            $order->payment_concept = $this->generatePaymentConcept($last_order_id, $customer->company_name);
-
-            // Traduce el estado para mostrarlo en la vista
-            $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
         }
 
         return view('customer.account-orders', [
