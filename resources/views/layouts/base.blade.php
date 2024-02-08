@@ -30,7 +30,6 @@
         'resources/sass/base.scss',
         'resources/js/app.js',
         'resources/js/theme.js',
-        'resources/js/autocomplete.js'
     ])
     <style>
         .filter-products {
@@ -1199,7 +1198,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
             // Filter by Product:
             document.getElementById('search-products').addEventListener('input', (e) => {
                 const searchTerm = e.target.value
@@ -1256,7 +1254,6 @@
                     window.location.href = `/productos/${categoryId}`;
                 }
             });
-
         })
     </script>
     @yield('scripts')
