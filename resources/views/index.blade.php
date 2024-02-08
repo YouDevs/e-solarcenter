@@ -103,7 +103,7 @@
                 </a>
                 <div class="card-body py-2">
                     <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->netsuite_stock }}</a>
-                    <h3 class="product-title fs-sm fw-bold">
+                    <h3 class="product-title fs-sm">
                         <a href="#" previewlistener="true">
                             {{$product->name}}
                         </a>
@@ -280,7 +280,7 @@ document.getElementById('search-product').addEventListener('input', function(e) 
                                                         <img src="${product.featured_url}" alt="${product.name}">
                                                     </a>
                                                     <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#">stock: ${product.netsuite_stock}</a>
-                                                        <h3 class="product-title fs-sm fw-bold">
+                                                        <h3 class="product-title fs-sm">
                                                             <a href="#" previewlistener="true">
                                                                 ${product.name}
                                                             </a>
