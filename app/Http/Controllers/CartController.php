@@ -69,7 +69,7 @@ class CartController extends Controller
         session()->flash('message', 'Elemento eliminado del carrito exitosamente!');
         session()->flash('icon', 'success');
 
-        return redirect()->route('cart.list');
+        return redirect()->back();
     }
 
     public function clearAllCart()
