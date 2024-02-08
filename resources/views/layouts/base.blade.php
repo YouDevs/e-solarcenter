@@ -29,8 +29,32 @@
     @vite([
         'resources/sass/base.scss',
         'resources/js/app.js',
-        'resources/js/theme.js'
+        'resources/js/theme.js',
+        'resources/js/autocomplete.js'
     ])
+    <style>
+        .filter-products {
+            position: relative; /* Hace que el posicionamiento absoluto del hijo se base en este contenedor */
+        }
+        #autocomplete-list {
+            position: absolute;
+            top: 100%; /* Sitúa el div justo debajo del input */
+            left: 0;
+            width: 100%; /* Iguala el ancho del input */
+            z-index: 1000; /* Asegura que se muestre sobre otros elementos */
+            background-color: white; /* O cualquier color de fondo que prefieras */
+            border: 1px solid #ccc; /* Opcional: añade un borde */
+            border-top: none; /* Elimina el borde superior para una transición suave desde el input */
+        }
+
+        .list-group-item {
+            padding: 10px; /* Ajusta el padding según sea necesario */
+            cursor: pointer; /* Indica que los elementos son clicable */
+        }
+        .list-group-item:hover {
+            background-color: #f8f9fa; /* Cambia el color de fondo al pasar el ratón por encima para mejorar la interactividad */
+        }
+    </style>
 </head>
 <body class="bg-white">
     <div id="app" style="flex: 1 0 auto;">
@@ -51,16 +75,15 @@
                             <img src="{{asset('images/logo.webp')}}" width="74" alt="Solar Center">
                         </a>
                         <!-- Search-->
-                        <div class="input-group d-none d-lg-flex flex-nowrap mx-4">
+                        <div class="input-group d-none d-lg-flex flex-nowrap mx-4" class="filter-products">
                             <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                            <input class="form-control rounded-start w-100" type="text" placeholder="Buscar productos">
-                            <select class="form-select flex-shrink-0" style="width: 10.5rem;">
+                            <input class="form-control rounded-start w-100" type="text" id="search-products" placeholder="Buscar productos">
+                            <div class="position-absolute" id="autocomplete-list" style="z-index: 1000; width: 100%;"></div>
+                            <select class="form-select flex-shrink-0" id="category-id" name="category_id" style="width: 10.5rem;">
                                 <option>Categorías</option>
-                                <option>Paneles</option>
-                                <option>Inversores</option>
-                                <option>Microinversores</option>
-                                <option>Monitores</option>
-                                <option>Estructuras</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <!-- Toolbar-->
@@ -1174,6 +1197,68 @@
         </footer>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Filter by Product:
+            document.getElementById('search-products').addEventListener('input', (e) => {
+                const searchTerm = e.target.value
+
+                if (searchTerm.length) {
+                    fetch(`/buscar-productos?search_term=${searchTerm}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const autocompleteList = document.getElementById('autocomplete-list');
+                        // Asegura que la lista esté vacía antes de agregar nuevos resultados
+                        autocompleteList.innerHTML = '';
+                        autocompleteList.classList.remove('invisible');
+
+                        // Asegúrate de que data.products exista y tenga elementos
+                        if (data.products && data.products.length > 0) {
+                            const list = document.createElement('ul');
+                            list.classList.add('list-group');
+                            data.products.forEach(product => {
+                                const item = document.createElement('li');
+                                item.classList.add('list-group-item');
+                                item.textContent = `${product.name} - ${product.brand}`;
+                                item.style.cursor = 'pointer';
+
+                                // Evento click para cada ítem
+                                item.addEventListener('click', () => {
+                                    // Redirigir al usuario. Modifica según la lógica de tu aplicación.
+                                    window.location.href = `/producto/${product.id}`;
+                                });
+
+                                list.appendChild(item);
+                            });
+
+                            autocompleteList.appendChild(list);
+                        } else {
+                            autocompleteList.classList.add('invisible');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    document.getElementById('autocomplete-list').classList.add('invisible');
+                }
+            })
+
+            // Selecciona el elemento <select> por su ID
+            const categorySelect = document.getElementById('category-id');
+            // Escucha el evento 'change'
+            categorySelect.addEventListener('change', function() {
+                // Obtiene el valor del <option> seleccionado
+                const categoryId = this.value;
+
+                // Verifica si el valor es válido (por ejemplo, que no sea el placeholder de "Categorías")
+                if(categoryId) {
+                    // Construye la URL y redirige al usuario
+                    window.location.href = `/productos/${categoryId}`;
+                }
+            });
+
+        })
+    </script>
     @yield('scripts')
 </body>
 </html>

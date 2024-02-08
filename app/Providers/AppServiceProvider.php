@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+use App\View\Composers\CategoriesComposer;
+
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Paginator::useBootstrapFive();
+
+        View::composer('layouts.base', CategoriesComposer::class);
     }
 }

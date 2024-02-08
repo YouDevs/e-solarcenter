@@ -260,6 +260,7 @@
 @endif
 
 <script>
+/*
 document.getElementById('search-product').addEventListener('input', function(e) {
     const searchTerm = e.target.value
 
@@ -379,6 +380,7 @@ document.getElementById('search-product').addEventListener('input', function(e) 
         .catch(error => console.error('Error:', error));
     }
 });
+*/
 
 function formattedAmount(amount) {
     const formatter = new Intl.NumberFormat('es-ES', {
