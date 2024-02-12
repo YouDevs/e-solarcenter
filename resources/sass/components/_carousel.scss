@@ -32,7 +32,6 @@
 
 .tns-carousel {
 
-
   .tns-controls:focus { outline: none; }
 
   [data-controls] {
@@ -51,7 +50,7 @@
     z-index: 10;
     &[disabled] { opacity: 0 !important; }
   }
-  
+
   [data-controls='prev'] { left: 1.75rem; }
   [data-controls='next'] { right: 1.75rem; }
 

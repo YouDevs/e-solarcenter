@@ -47,8 +47,9 @@ class HomeController extends Controller
 
     public function productByFilter(Request $request, Product $product)
     {
-
-        return view('product', compact('product'));
+        $related_products = Product::all();
+        // dd($related_products);
+        return view('product', compact('product', 'related_products'));
 
         // $searchTerm = $request->search_term;
 
