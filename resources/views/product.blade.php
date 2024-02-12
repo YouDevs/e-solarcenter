@@ -180,7 +180,7 @@
     <h2 class="h3 text-center pb-4">Productos Relacionados</h2>
     <div class="tns-carousel pt-3">
         <div class="tns-carousel-inner">
-        @foreach ($related_products as $product)
+        @foreach ($relatedProducts as $product)
             <div class="card product-card card-static">
                 <a href="/producto/{{$product->id}}" class="d-block bg-white py-4 py-sm-5 px-2">
                     <img src="{{Storage::url($product->featured)}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">

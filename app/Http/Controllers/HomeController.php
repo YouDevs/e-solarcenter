@@ -47,9 +47,23 @@ class HomeController extends Controller
 
     public function productByFilter(Request $request, Product $product)
     {
-        $related_products = Product::all();
-        // dd($related_products);
-        return view('product', compact('product', 'related_products'));
+        // Obtener productos de la misma marca y categoría excluyendo el producto actual
+        $relatedByBrand = Product::where('brand', $product->brand)
+        ->where('id', '!=', $product->id)
+        ->take(5)
+        ->get();
+
+        $relatedByCategory = Product::where('category_id', $product->category_id)
+        ->where('id', '!=', $product->id)
+        ->take(5)
+        ->get();
+
+        // Combina las colecciones y elimina duplicados
+        $relatedProducts = $relatedByBrand->merge($relatedByCategory)->unique('id');
+        // Mezcla los productos aleatoriamente
+        $relatedProducts = $relatedProducts->shuffle();
+
+        return view('product', compact('product', 'relatedProducts'));
 
         // $searchTerm = $request->search_term;
 
