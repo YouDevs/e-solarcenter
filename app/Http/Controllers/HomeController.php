@@ -25,10 +25,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        // session()->flush();
         $products = Product::query();
+
+        // Filtra los productos por categoría si se proporciona category_id
+        if ($request->has('category_id')) {
+            $products->where('category_id', $request->category_id);
+        }
+
         $products->orderBy('id', 'DESC');
 
         $products = $products->get()->map(function ($product) {

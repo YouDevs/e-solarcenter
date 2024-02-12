@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
     Route::get('/producto/{product}', [HomeController::class, 'productByFilter'])->name('products-by-filter');
-    Route::get('/productos/{category}', [HomeController::class, 'productsByCategory'])->name('products-by-category');
+    // Route::get('/productos/{category}', [HomeController::class, 'productsByCategory'])->name('products-by-category');
 
 
     Route::get('cart', [CartController::class, 'cartList'])->name('cart.list');

@@ -1244,17 +1244,14 @@
                 }
             })
 
-            // Selecciona el elemento <select> por su ID
             const categorySelect = document.getElementById('category-id');
-            // Escucha el evento 'change'
+
             categorySelect.addEventListener('change', function() {
-                // Obtiene el valor del <option> seleccionado
                 const categoryId = this.value;
 
                 // Verifica si el valor es válido (por ejemplo, que no sea el placeholder de "Categorías")
                 if(categoryId) {
-                    // Construye la URL y redirige al usuario
-                    window.location.href = `/productos/${categoryId}`;
+                    window.location.href = `/?category_id=${categoryId}`;
                 }
             });
 
