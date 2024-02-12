@@ -89,10 +89,20 @@
         </div>
         -->
     </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
+        <h2 class="h3 mb-0 pt-3 me-2">Productos en Tendencia</h2>
+        <div class="pt-3">
+            <a class="btn btn-outline-accent btn-sm" href="shop-grid-ls.html">
+                Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>
+            </a>
+        </div>
+    </div>
+
     <div class="row justify-content-center align-items-md-center" id="grid-products">
         <!-- 2do PRODUCT ORIGINAL DEL TEMPLATE (para referencia) -->
         @foreach ($products as $product)
-        <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4 pt-3">
             <div class="card product-card">
                 {{-- <span class="badge badge-danger badge-shadow">Sale</span> --}}
                 {{-- <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Add to wishlist" data-bs-original-title="Add to wishlist">
@@ -238,9 +248,57 @@
                 </div>
             </div>
         </div>
-
         @endforeach
     </div>
+
+    <div class="row justify-content-center">
+        <div class="tns-carousel pt-3">
+            <div class="tns-carousel-inner">
+              <!-- Carousel slides here -->
+              <div>
+                <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
+                    <img src="{{asset('brands/solar-center-fronius_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                </a>
+              </div>
+              <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-growatt_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+              <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-hoymiles_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+              <div>
+                    <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-risen_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+              <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-longi_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+              <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-seraphim_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+              <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-solis_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+              <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-srne_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+              </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @endsection

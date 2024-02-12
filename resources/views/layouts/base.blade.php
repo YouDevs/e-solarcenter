@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
 
     <!-- Scripts -->
     @vite([
@@ -1196,6 +1197,8 @@
         </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Filter by Product:
@@ -1254,6 +1257,26 @@
                     window.location.href = `/productos/${categoryId}`;
                 }
             });
+
+            // Tiny Slider:
+            var slider = tns({
+                container: '.tns-carousel-inner',
+                nav: false, // Desactiva los puntos de navegación inferiores
+                controls: false, // Desactiva los botones de anterior/siguiente
+                mouseDrag: true,
+                autoplay: true, // Activa el autoplay
+                autoplayButtonOutput: false,
+                autoplayTimeout: 3000, // Establece el intervalo de autoplay a 4000ms (4 segundos)
+                loop: true, // Permite que el slider se repita infinitamente
+                responsive: {
+                    "0": {"items": 1},
+                    "360": {"items": 2},
+                    "600": {"items": 3},
+                    "991": {"items": 4},
+                    "1200": {"items": 4} // A partir de 1200px, muestra 4 elementos
+                }
+            });
+
         })
     </script>
     @yield('scripts')
