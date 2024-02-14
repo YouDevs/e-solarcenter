@@ -14,7 +14,7 @@ class TrackingService
     public function __construct()
     {
         $this->client = new Client();
-        $this->apiKey = env("17TRACK_API_KEY");
+        $this->apiKey = config("services.tracking.key");
     }
 
     public function createTracking($trackingNumber, $courierCode)
@@ -64,13 +64,13 @@ class TrackingService
             ]);
 
             $responseArray = json_decode($response->getBody(), true);
-            Log::info("responseArray::::: ");
-            Log::info($responseArray);
+            Log::info("responseArray", ['res' => $responseArray]);
 
             // Asumiendo que el código de respuesta es 0 para éxito
-            if ($response->getStatusCode() === 200 && $responseArray['code'] === 0) {
+            if ($responseArray['code'] === 0) {
                 $latestStatus = $responseArray['data']['accepted'][0]['track_info']['latest_status']['status'] ?? null;
                 $latestEvent = $responseArray['data']['accepted'][0]['track_info']['latest_event']['description'] ?? null;
+                Log::info("latestStatus: $latestStatus");
 
                 if ($latestStatus) {
                     return ['status' => $latestStatus, 'event' => $latestEvent];

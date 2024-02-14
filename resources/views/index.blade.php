@@ -91,7 +91,7 @@
     </div>
 
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
-        <h2 class="h3 mb-0 pt-3 me-2">Productos en Tendencia</h2>
+        <h2 class="h3 mb-0 pt-3 me-2">{{$categoryId ? 'Productos': 'Productos en Tendencia'}}</h2>
         <div class="pt-3">
             <a class="btn btn-outline-accent btn-sm" href="shop-grid-ls.html">
                 Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>
@@ -261,12 +261,12 @@
                 </a>
               </div>
               <div>
-                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                    <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-growatt_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
               </div>
               <div>
-                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                    <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-hoymiles_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
               </div>
@@ -276,7 +276,7 @@
                     </a>
               </div>
               <div>
-                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                    <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-longi_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
               </div>

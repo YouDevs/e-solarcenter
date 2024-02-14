@@ -30,8 +30,10 @@ class HomeController extends Controller
         $products = Product::query();
 
         // Filtra los productos por categoría si se proporciona category_id
+        $categoryId = null;
         if ($request->has('category_id')) {
-            $products->where('category_id', $request->category_id);
+            $categoryId = $request->category_id;
+            $products->where('category_id', $categoryId);
         }
 
         $products->orderBy('id', 'DESC');
@@ -42,7 +44,7 @@ class HomeController extends Controller
             return $product;
         });
 
-        return view('index', compact('products'));
+        return view('index', compact('products', 'categoryId'));
     }
 
     public function productByFilter(Request $request, Product $product)
