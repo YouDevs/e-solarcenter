@@ -8,7 +8,7 @@
 
 .tns-carousel {
   position: relative;
-  .tns-carousel-inner {
+  .tns-carousel-inner, .tns-carousel-brands, .tns-carousel-hero  {
     position: relative;
     display: flex;
     overflow: hidden;

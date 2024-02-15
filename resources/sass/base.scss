@@ -23,6 +23,21 @@
 @import 'components/pagination';
 @import 'components/carousel';
 
+// .bg-faded-info {
+//     --cz-bg-opacity: 0.09;
+//     background-color: rgba(var(--cz-info-rgb), var(--cz-bg-opacity)) !important;
+// }
+
+// .bg-faded-warning {
+//     --cz-bg-opacity: 0.09;
+//     background-color: rgba(var(--cz-warning-rgb), var(--cz-bg-opacity)) !important;
+// }
+
+// .bg-faded-success {
+//     --cz-bg-opacity: 0.09;
+//     background-color: rgba(var(--cz-success-rgb), var(--cz-bg-opacity)) !important;
+// }
+
 @keyframes girar {
     from {
         transform: rotate(0deg);

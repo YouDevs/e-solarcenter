@@ -55,6 +55,10 @@
             background-color: #f8f9fa; /* Cambia el color de fondo al pasar el ratón por encima para mejorar la interactividad */
         }
     </style>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"
+    />
 </head>
 <body class="bg-white">
     <div id="app" style="flex: 1 0 auto;">
@@ -998,7 +1002,7 @@
             @endif
         </header>
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
 
@@ -1198,6 +1202,9 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

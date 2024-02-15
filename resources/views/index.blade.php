@@ -1,6 +1,80 @@
 @extends('layouts.base')
 
 @section('content')
+
+<section class="bg-secondary py-4 pt-md-5">
+<div class="container py-xl-2">
+    <div class="row">
+        <!-- Slider     -->
+        <div class="col-xl-9 pt-xl-4 order-xl-2">
+            <div class="tns-carousel">
+                <div class="tns-carousel-hero">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6 order-md-2">
+                                <img class="d-block mx-auto" src="{{asset('images/test3.png')}}" alt="VR Collection">
+                            </div>
+                            <div class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-start">
+                                <h2 class="fw-light pb-1 from-bottom">Transforma México con</h2>
+                                <h1 class="display-4 from-bottom delay-1">Energía Solar</h1>
+                                <h5 class="fw-light pb-3 from-bottom delay-2">Elige entre las mejores marcas</h5>
+                                <div class="d-table scale-up delay-4 mx-auto mx-md-0">
+                                    <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">Comprar Ahora<i class="bi bi-chevron-right ms-2 me-n1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6 order-md-2">
+                                <img class="d-block mx-auto" src="{{asset('images/inverter_test.png')}}" alt="VR Collection">
+                            </div>
+                            <div class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-start">
+                                <h2 class="fw-light pb-1 from-start">Las mejores</h2>
+                                <h1 class="display-4 from-start delay-1">Soluciones Fotovoltaicas</h1>
+                                <h5 class="fw-light pb-3 from-start delay-2">del mercado</h5>
+                                <div class="d-table scale-up delay-4 mx-auto mx-md-0">
+                                    <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">Comprar Ahora<i class="bi ci-chevron-right ms-2 me-n1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Banner group-->
+        <div class="col-xl-3 order-xl-1 pt-4 mt-3 mt-xl-0 pt-xl-0">
+            <div class="table-responsive" data-simplebar>
+                <div class="d-flex d-xl-block">
+                    <a class="d-flex align-items-center bg-info rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem;">
+                        <img src="{{asset('images/is_new_1.png')}}" width="125" alt="Banner">
+                        <div class="py-4 px-2">
+                            {{-- <h5 class="mb-2"><span class="fw-light">Panel</span><br>LonGi</h5> --}}
+                            <h5 class="mb-2"><span class="fw-light">Panel LonGi</span><br>Hi-MO <span class="fw-light">X6</span><br>Explorer</h5>
+                            <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
+                        </div>
+                    </a>
+                    <a class="d-flex align-items-center bg-warning rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem;">
+                        <img src="{{asset('images/is_new_2.png')}}" width="125" alt="Banner">
+                        <div class="py-4 px-2">
+                            <h5 class="mb-2"><span class="fw-light">Inversor</span><br>Residencial <span class="fw-light">MIC</span> 1000</h5>
+                            <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
+                        </div>
+                    </a>
+                    <a class="d-flex align-items-center bg-success rounded-3 pt-2 ps-2 mb-4" href="#" style="min-width: 16rem;">
+                        <img src="{{asset('images/is_new_3.png')}}" width="125" alt="Banner">
+                        <div class="py-4 px-2">
+                            <h5 class="mb-2"><span class="fw-light">Hoymiles</span><br>Microinversor <span class="fw-light">HTM</span> 2000-4T</h5>
+                            <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
 <div class="container">
     <div class="row justify-content-center mb-4">
         {{-- <h2 class="text-center mb-4">Familias de productos</h2>
@@ -251,50 +325,50 @@
         @endforeach
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
         <div class="tns-carousel pt-3">
-            <div class="tns-carousel-inner">
-              <!-- Carousel slides here -->
-              <div>
-                <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
-                    <img src="{{asset('brands/solar-center-fronius_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
-                </a>
-              </div>
-              <div>
+            <div class="tns-carousel-brands">
+                <!-- Carousel slides here -->
+                <div>
+                    <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/solar-center-fronius_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-growatt_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
-              <div>
+                </div>
+                <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-hoymiles_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
-              <div>
+                </div>
+                <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-risen_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
-              <div>
+                </div>
+                <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-longi_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
-              <div>
+                </div>
+                <div>
                     <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-seraphim_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
-              <div>
+                </div>
+                <div>
                     <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-solis_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
-              <div>
+                </div>
+                <div>
                     <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
                         <img src="{{asset('brands/solar-center-srne_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
-              </div>
+                </div>
             </div>
         </div>
     </div>
@@ -308,8 +382,26 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Tiny Slider:
-    var slider = tns({
-        container: '.tns-carousel-inner',
+    var sliderHero = tns({
+        container: '.tns-carousel-hero',
+        nav: true, // Desactiva los puntos de navegación inferiores
+        controls: false, // Desactiva los botones de anterior/siguiente
+        mouseDrag: true,
+        autoplay: true, // Activa el autoplay
+        autoplayButtonOutput: false,
+        autoplayTimeout: 3000, // Establece el intervalo de autoplay a 4000ms (4 segundos)
+        loop: true, // Permite que el slider se repita infinitamente
+        // responsive: {
+        //     "0": {"items": 1},
+        //     "360": {"items": 2},
+        //     "600": {"items": 3},
+        //     "991": {"items": 4},
+        //     "1200": {"items": 4} // A partir de 1200px, muestra 4 elementos
+        // }
+    });
+
+    var sliderBrands = tns({
+        container: '.tns-carousel-brands',
         nav: false, // Desactiva los puntos de navegación inferiores
         controls: false, // Desactiva los botones de anterior/siguiente
         mouseDrag: true,
@@ -325,6 +417,8 @@ document.addEventListener('DOMContentLoaded', function () {
             "1200": {"items": 4} // A partir de 1200px, muestra 4 elementos
         }
     });
+
+    window.ResizeObserver = ResizeObserver;
 })
 </script>
 
