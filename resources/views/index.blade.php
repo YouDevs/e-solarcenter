@@ -2,7 +2,7 @@
 
 @section('content')
 
-@if (!$categoryId)
+@if (!$request->has('category_id') && !$request->has('brand'))
 <section class="bg-secondary py-4 pt-md-5">
     <div class="container py-xl-2">
         <div class="row">
@@ -167,7 +167,7 @@
     </div>
 
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
-        <h2 class="h3 mb-0 pt-3 me-2">{{$categoryId ? 'Productos': 'Productos en Tendencia'}}</h2>
+        <h2 class="h3 mb-0 pt-3 me-2">{{$request->has('category_id') || $request->has('brand') ? 'Productos': 'Productos más comprados'}}</h2>
         <div class="pt-3">
             <a class="btn btn-outline-accent btn-sm" href="shop-grid-ls.html">
                 Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>

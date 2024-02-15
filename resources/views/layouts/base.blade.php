@@ -87,14 +87,17 @@
                                 <option>Categorías</option>
                                 <option value="">Todos</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option
+                                        value="{{$category->id}}"
+                                        @selected( isset($request) && $request->has('category_id') && $request->category_id == $category->id ? $category->id: '' )
+                                        >{{$category->name}}</option>
                                 @endforeach
                             </select>
                             <select class="form-select flex-shrink-0" id="brand" name="brand" style="width: 10.5rem;">
-                                <option>Categorías</option>
+                                <option>Marcas</option>
                                 <option value="">Todos</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @foreach ($brands as $brand)
+                                    <option value="{{$brand->value}}" @selected(isset($request) && $request->has('brand') && $request->brand == $brand->value? $brand->value: '' )>{{$brand->value}} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -1303,14 +1306,34 @@
                 }
             })
 
+            // Filter By Category
             const categorySelect = document.getElementById('category-id');
-
             categorySelect.addEventListener('change', function() {
                 const categoryId = this.value;
+                const searchParams = new URLSearchParams(window.location.search);
+                
+                // Actualiza o añade category_id a los parámetros de búsqueda
+                searchParams.set('category_id', categoryId);
+                
+                // Redirige manteniendo el parámetro de marca si ya estaba establecido
+                window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+            });
 
-                if(categoryId) {
-                    window.location.href = `/?category_id=${categoryId}`;
+            // Filter By Brand (Asegúrate de corregir esto para que funcione con la lógica de filtro actualizada)
+            const brandSelect = document.getElementById('brand');
+            brandSelect.addEventListener('change', function() {
+                const brand = this.value;
+                const searchParams = new URLSearchParams(window.location.search);
+                
+                // Actualiza o añade brand a los parámetros de búsqueda
+                if(brand) {
+                    searchParams.set('brand', brand);
+                } else {
+                    searchParams.delete('brand'); // Remueve el parámetro si "Todos" es seleccionado
                 }
+                
+                // Redirige manteniendo los parámetros existentes
+                window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
             });
 
         })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Enums\BrandsEnum;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -30,10 +31,15 @@ class HomeController extends Controller
         $products = Product::query();
 
         // Filtra los productos por categoría si se proporciona category_id
-        $categoryId = null;
         if ($request->has('category_id')) {
-            $categoryId = $request->category_id;
+            $categoryId = $request->input('category_id');
             $products->where('category_id', $categoryId);
+        }
+
+        // Filtra los productos por marca si se proporciona brand
+        if ($request->has('brand')) { // Corregido para usar 'brand' en lugar de '$brand'
+            $brand = $request->input('brand'); // Corregido para obtener correctamente el valor de 'brand'
+            $products->where('brand', $brand);
         }
 
         $products->orderBy('id', 'DESC');
@@ -44,7 +50,7 @@ class HomeController extends Controller
             return $product;
         });
 
-        return view('index', compact('products', 'categoryId'));
+        return view('index', compact('request', 'products'));
     }
 
     public function productByFilter(Request $request, Product $product)

@@ -7,6 +7,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use App\View\Composers\CategoriesComposer;
+use App\View\Composers\BrandsComposer;
 
 
 
@@ -29,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
 
         View::composer('layouts.base', CategoriesComposer::class);
+        View::composer('layouts.base', BrandsComposer::class);
     }
 }
