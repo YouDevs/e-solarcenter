@@ -32,12 +32,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/clear-cache', function () {
         try {
-            Artisan::call('optimize:clear');
             Artisan::call('config:cache');
             Artisan::call('config:clear');
             Artisan::call('route:cache');
             Artisan::call('view:clear');
             Artisan::call('view:cache');
+            Artisan::call('optimize:clear');
             return 'Cache cleared successfully!';
         } catch (\Exception $e) {
             return 'Error clearing cache: ' . $e->getMessage();
