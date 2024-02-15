@@ -36,14 +36,14 @@
         .filter-products {
             position: relative; /* Hace que el posicionamiento absoluto del hijo se base en este contenedor */
         }
-        #autocomplete-list {
+        #autocomplete-list, #autocomplete-list-m  {
             position: absolute;
             top: 100%; /* Sitúa el div justo debajo del input */
             left: 0;
             width: 100%; /* Iguala el ancho del input */
             z-index: 1000; /* Asegura que se muestre sobre otros elementos */
             background-color: white; /* O cualquier color de fondo que prefieras */
-            border: 1px solid #ccc; /* Opcional: añade un borde */
+            /* border: 1px solid #ccc; */
             border-top: none; /* Elimina el borde superior para una transición suave desde el input */
         }
 
@@ -85,6 +85,14 @@
                             <div class="position-absolute" id="autocomplete-list" style="z-index: 1000; width: 100%;"></div>
                             <select class="form-select flex-shrink-0" id="category-id" name="category_id" style="width: 10.5rem;">
                                 <option>Categorías</option>
+                                <option value="">Todos</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                            <select class="form-select flex-shrink-0" id="brand" name="brand" style="width: 10.5rem;">
+                                <option>Categorías</option>
+                                <option value="">Todos</option>
                                 @foreach ($categories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
@@ -179,9 +187,10 @@
                     <div class="container">
                         <div class="collapse navbar-collapse" id="navbarCollapse">
                             <!-- Search-->
-                            <div class="input-group d-lg-none my-3">
+                            <div class="input-group d-lg-none my-3 filter-products">
                                 <i class="ci-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
-                                <input class="form-control rounded-start" type="text" placeholder="Search for products">
+                                <input class="form-control rounded-start w-100" type="text" id="search-products-m" placeholder="Buscar productos m">
+                                <div class="position-absolute" id="autocomplete-list-m" style="z-index: 1000; width: 100%;"></div>
                             </div>
                             <!-- Departments menu-->
                             @role('operator')
@@ -1208,7 +1217,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Filter by Product:
+            // Filter by Product (Desktop):
             document.getElementById('search-products').addEventListener('input', (e) => {
                 const searchTerm = e.target.value
 
@@ -1251,12 +1260,54 @@
                 }
             })
 
+            // Filter by Product (Mobile):
+            document.getElementById('search-products-m').addEventListener('input', (e) => {
+                const searchTerm = e.target.value
+
+                if (searchTerm.length) {
+                    fetch(`/buscar-productos?search_term=${searchTerm}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const autocompleteList = document.getElementById('autocomplete-list-m');
+                        // Asegura que la lista esté vacía antes de agregar nuevos resultados
+                        autocompleteList.innerHTML = '';
+                        autocompleteList.classList.remove('invisible');
+
+                        // Asegúrate de que data.products exista y tenga elementos
+                        if (data.products && data.products.length > 0) {
+                            const list = document.createElement('ul');
+                            list.classList.add('list-group');
+                            data.products.forEach(product => {
+                                const item = document.createElement('li');
+                                item.classList.add('list-group-item');
+                                item.textContent = `${product.name} - ${product.brand}`;
+                                item.style.cursor = 'pointer';
+
+                                // Evento click para cada ítem
+                                item.addEventListener('click', () => {
+                                    // Redirigir al usuario. Modifica según la lógica de tu aplicación.
+                                    window.location.href = `/producto/${product.id}`;
+                                });
+
+                                list.appendChild(item);
+                            });
+
+                            autocompleteList.appendChild(list);
+                        } else {
+                            autocompleteList.classList.add('invisible');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    document.getElementById('autocomplete-list').classList.add('invisible');
+                }
+            })
+
             const categorySelect = document.getElementById('category-id');
 
             categorySelect.addEventListener('change', function() {
                 const categoryId = this.value;
 
-                // Verifica si el valor es válido (por ejemplo, que no sea el placeholder de "Categorías")
                 if(categoryId) {
                     window.location.href = `/?category_id=${categoryId}`;
                 }
