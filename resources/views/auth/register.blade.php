@@ -45,7 +45,7 @@
                             <label for="company-name" class="col-md-4 col-form-label text-md-end">Razón Social</label>
 
                             <div class="col-md-6">
-                                <input id="company-name" type="text" class="form-control bg-white @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name">
+                                <input id="company-name" type="text" class="form-control bg-white @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" autocomplete="company_name">
 
                                 @error('company_name')
                                     <span class="invalid-feedback" role="alert">
@@ -62,20 +62,6 @@
                                 <input id="rfc" type="text" class="form-control bg-white @error('rfc') is-invalid @enderror" name="rfc" value="{{ old('rfc') }}" required autocomplete="rfc">
 
                                 @error('rfc')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="delivery-address" class="col-md-4 col-form-label text-md-end">Dirección de Entrega</label>
-
-                            <div class="col-md-6">
-                                <input id="delivery-address" type="text" class="form-control bg-white @error('delivery_address') is-invalid @enderror" name="delivery_address" value="{{ old('delivery_address') }}" required autocomplete="delivery_address">
-
-                                @error('delivery_address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

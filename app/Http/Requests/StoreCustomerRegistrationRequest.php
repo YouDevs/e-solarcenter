@@ -24,8 +24,9 @@ class StoreCustomerRegistrationRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'company_name' => 'required',
-            'rfc' => 'required|numeric|regex:/^\d{12,13}$/',
+            // 'company_name' => 'required',
+            'rfc' => 'required',
+            // 'rfc' => 'required|numeric|regex:/^\d{12,13}$/',
             // 'delivery_address' => 'required',
         ];
     }
@@ -38,10 +39,10 @@ class StoreCustomerRegistrationRequest extends FormRequest
             'email.required' => 'El correo electrónico es un campo obligatorio',
             'email.email' => 'El correo electrónico debe ser uno valido',
 
-            'company_name' => 'La razón social es un campo obligatorio',
+            // 'company_name' => 'La razón social es un campo obligatorio',
 
             'rfc.required' => 'El RFC un campo obligatorio',
-            'rfc.numeric' => 'El RFC debe tener solo números',
+            // 'rfc.numeric' => 'El RFC debe tener solo números',
             'rfc.regex' => 'El RFC debe tener entre 12 y 13 digitos.',
 
             // 'delivery_address' => 'La dirección de entrega es un campo obligatorio',
