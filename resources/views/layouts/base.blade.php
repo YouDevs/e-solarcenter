@@ -651,6 +651,11 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#">Integradores</a>
                                 </li>
+                                @if (!Auth::check())
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="{{route('register')}}">Regístrate</a>
+                                </li>
+                                @endif
                                 {{-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Solar Center</a>
                                     <div class="dropdown-menu p-0">

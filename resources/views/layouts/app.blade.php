@@ -117,7 +117,7 @@
                 icon: "{{ session('icon') }}",
                 title: "{{ session('message') }}",
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 4000,
             });
         </script>
     @endif
