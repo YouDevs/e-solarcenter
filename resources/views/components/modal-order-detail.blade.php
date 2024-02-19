@@ -18,7 +18,6 @@
                                     <a>{{$item->product->name}}</a>
                                 </h3>
                                 <div class="fs-sm"><span class="text-muted me-2">Marca:</span>8.5</div>
-                                <div class="fs-sm"><span class="text-muted me-2">SKU:</span>{{$item->product->sku}}</div>
                                 <div class="fs-lg text-accent pt-2">
                                     <x-amount-formatter :amount="$item->price" />
                                 </div>

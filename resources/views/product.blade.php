@@ -45,7 +45,6 @@
                                 <input type="hidden" value="{{ $product->name }}" name="name">
                                 <input type="hidden" value="{{ $product->brand }}" name="brand">
                                 <input type="hidden" value="{{ $product->price }}" name="price">
-                                <input type="hidden" value="{{ $product->sku }}" name="sku">
                                 <input type="hidden" value="{{ $product->featured }}"  name="featured">
                                 <button class="btn btn-solar btn-shadow d-block w-100" type="submit"><i class="bi bi-cart fs-lg me-2"></i>Agregar al Carrito</button>
                             </div>

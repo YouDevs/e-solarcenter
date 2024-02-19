@@ -33,7 +33,6 @@ class CartController extends Controller
             'attributes' => array(
                 'featured' => $request->featured,
                 'brand' => $request->brand,
-                'sku' => $request->sku,
             )
         ]);
 

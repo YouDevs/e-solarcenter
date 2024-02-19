@@ -41,7 +41,6 @@
                                 <div class="pt-2">
                                     <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html" previewlistener="true">{{$item->name}}</a></h3>
                                     <div class="fs-sm"><span class="text-muted me-2">Marca:</span>{{$item->attributes->brand}}</div>
-                                    <div class="fs-sm"><span class="text-muted me-2">SKU:</span> {{$item->attributes->sku}}</div>
 
                                     <div class="fs-lg text-accent pt-2">
                                         <x-amount-formatter :amount="$item->price" />

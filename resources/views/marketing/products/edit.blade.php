@@ -125,19 +125,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-floating">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="sku"
-                                            name="sku"
-                                            placeholder=""
-                                            value="{{ old('sku', $product->sku) }}"
-                                        >
-                                        <label for="name">SKU</label>
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </div>

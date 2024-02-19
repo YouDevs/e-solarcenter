@@ -56,7 +56,6 @@ class ProductController extends Controller
         $product->brand = $request->brand;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
-        $product->sku = $request->sku;
         $product->save();
 
         return redirect()->route('admin.products.index');
@@ -102,7 +101,6 @@ class ProductController extends Controller
         $product->brand = $request->brand;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
-        $product->sku = $request->sku;
         $product->save();
 
         session()->flash('message', 'Producto actualizado exitosamente');

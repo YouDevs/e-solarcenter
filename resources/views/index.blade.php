@@ -243,7 +243,6 @@
                             <input type="hidden" value="{{ $product->name }}" name="name">
                             <input type="hidden" value="{{ $product->brand }}" name="brand">
                             <input type="hidden" value="{{ $product->price }}" name="price">
-                            <input type="hidden" value="{{ $product->sku }}" name="sku">
                             <input type="hidden" value="{{ $product->featured }}"  name="featured">
                             {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
                             <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
@@ -302,7 +301,6 @@
                                             <input type="hidden" value="{{ $product->name }}" name="name">
                                             <input type="hidden" value="{{ $product->brand }}" name="brand">
                                             <input type="hidden" value="{{ $product->price }}" name="price">
-                                            <input type="hidden" value="{{ $product->sku }}" name="sku">
                                             <input type="hidden" value="{{ $product->featured }}"  name="featured">
                                             <button class="btn btn-solar btn-shadow d-block w-100" type="submit">
                                                 <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito

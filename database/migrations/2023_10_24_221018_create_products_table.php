@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('brand', 40);
             $table->decimal('price', 10, 2)->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('sku')->nullable();
             $table->string('netsuite_item')->nullable();
             $table->string('netsuite_item_txt')->nullable(); //NOTA: en netsuite está como: itemTxt
             $table->integer('netsuite_stock')->nullable(); //NOTA: es el stock total obtenido de todas las ubicaciones desde netsuite.
