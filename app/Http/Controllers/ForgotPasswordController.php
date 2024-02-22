@@ -32,7 +32,6 @@ class ForgotPasswordController extends Controller
         ]);
 
         Mail::send('mails.forget-password', ['token' => $token], function($message) use($request){
-            $message->from('contacto@ecommerce.solar-center.mx');
             $message->to($request->email);
             $message->subject('Reestablecer contraseña');
         });
