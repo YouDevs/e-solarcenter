@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerRegistrationController;
 use App\Http\Controllers\CustomerAccountController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\CustomerSupport\CustomerController;
 use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
@@ -108,3 +109,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Custom Forgot & Reset Password
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
