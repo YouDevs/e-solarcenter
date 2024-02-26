@@ -2,43 +2,56 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="login-form">
-    <div class="cotainer">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Reestablecer Contraseña</div>
-                    <div class="card-body">
+<div class="container vh-100">
+    <div class="row h-75 justify-content-center align-items-md-center">
+        <div class="col-md-6">
+            <div class="card border border-0 shadow-sm">
+                <div class="card-body bg-white">
 
-                        @if (Session::has('message'))
-                            <div class="alert alert-success" role="alert">
-                                {{ Session::get('message') }}
-                            </div>
-                        @endif
-
-                        <form action="{{ route('forget.password.post') }}" method="POST">
-                            @csrf
-                            <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">Email</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="email" required autofocus>
-                                    @if ($errors->has('email'))
-                                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="row mb-0 mt-2">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary text-white">
-                                        Enviar enlace para restablecer contraseña
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="row mb-3">
+                        <div class="col text-center">
+                            <img src="{{asset('images/logo.webp')}}" class="img-fluid text-center" alt="Solar Center" width="180">
+                        </div>
                     </div>
+
+                    <form action="{{ route('forget.password.post') }}" method="POST">
+                        @csrf
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <div class="form-floating @error ('email') @enderror">
+                                            <input
+                                                id="email"
+                                                type="email"
+                                                class="form-control bg-white @error('email') is-invalid @enderror"
+                                                name="email"
+                                                value="{{ old('email') }}"
+                                                required
+                                                autocomplete="email"
+                                                placeholder=""
+                                                autofocus
+                                            >
+                                            <label for="email">Email</label>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            @error('email')
+                                                <strong>{{$message}}</strong>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-solar text-white">Inciar Sesión</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div>
 @endsection

@@ -60,7 +60,7 @@
                                     </div>
 
                                     <div class="d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-solar">Actualizar</button>
+                                        <button type="submit" class="btn btn-solar">Inciar Sesión</button>
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         @if (Route::has('reset.password.get'))
