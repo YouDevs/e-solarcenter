@@ -444,6 +444,23 @@
                                                     </div>
                                                 </a>
                                             </li>
+                                            <li class="dropdown mega-dropdown">
+                                                <a
+                                                    class="dropdown-item"
+                                                    href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                                    <div class="d-flex">
+                                                        <div class="lead text-muted pt-1"><i class="ci-help"></i></div>
+                                                        <div class="ms-2">
+                                                            <span class="d-block text-heading">Cerrar Sesión</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    @csrf
+                                                </form>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
