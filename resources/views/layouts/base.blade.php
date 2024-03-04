@@ -1338,7 +1338,7 @@
                 searchParams.set('category_id', categoryId);
                 
                 // Redirige manteniendo el parámetro de marca si ya estaba establecido
-                window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+                window.location.href = `${window.location.origin}?${searchParams.toString()}`;
             });
 
             // Filter By Brand (Asegúrate de corregir esto para que funcione con la lógica de filtro actualizada)
@@ -1346,16 +1346,16 @@
             brandSelect.addEventListener('change', function() {
                 const brand = this.value;
                 const searchParams = new URLSearchParams(window.location.search);
-                
+
                 // Actualiza o añade brand a los parámetros de búsqueda
                 if(brand) {
                     searchParams.set('brand', brand);
                 } else {
                     searchParams.delete('brand'); // Remueve el parámetro si "Todos" es seleccionado
                 }
-                
+
                 // Redirige manteniendo los parámetros existentes
-                window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+                window.location.href = `${window.location.origin}?${searchParams.toString()}`;
             });
 
         })
