@@ -34,16 +34,20 @@ class TrackingService
             ]);
 
             $responseArray = json_decode($response->getBody(), true);
+            Log::info("17track register:", $responseArray);
 
             if ($response->getStatusCode() === 200 && isset($responseArray['code']) && $responseArray['code'] === 0) {
-                return true;
+                return ['success' => true, 'message' => 'Tracking registrado exitosamente.'];
             }
 
-            return false;
+            return ['success' => false, 'message' => 'La API de 17track retornó un error o una respuesta inesperada.', 'details' => $responseArray];
 
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             Log::error("Error al crear el seguimiento: " . $e->getMessage());
-            return 'unknown';
+            return ['success' => false, 'message' => 'Ocurrió un error de cliente al intentar registrar el tracking.', 'error' => $e->getMessage()];
+        } catch (\Exception $e) {
+            Log::error("Error general al crear el seguimiento: " . $e->getMessage());
+            return ['success' => false, 'message' => 'Ocurrió un error general al intentar registrar el tracking.', 'error' => $e->getMessage()];
         }
     }
 
@@ -64,21 +68,19 @@ class TrackingService
             ]);
 
             $responseArray = json_decode($response->getBody(), true);
-            Log::info("responseArray", ['res' => $responseArray]);
+            Log::info("17track gettrackinfo:", ['res' => $responseArray]);
 
             // Asumiendo que el código de respuesta es 0 para éxito
-            if ($responseArray['code'] === 0) {
-                $latestStatus = $responseArray['data']['accepted'][0]['track_info']['latest_status']['status'] ?? null;
-                $latestEvent = $responseArray['data']['accepted'][0]['track_info']['latest_event']['description'] ?? null;
-                Log::info("latestStatus: $latestStatus");
+            if ($responseArray['code'] === 0 && !empty($responseArray['data']['accepted'])) {
+                $accepted = $responseArray['data']['accepted'][0]; // Asumiendo que trabajamos con el primer resultado aceptado
+                $latestStatus = $accepted['track_info']['latest_status']['status'] ?? 'STATUS_NOT_PROVIDED';
+                $latestEvent = $accepted['track_info']['latest_event']['description'] ?? 'EVENT_NOT_PROVIDED';
 
-                if ($latestStatus) {
-                    return ['status' => $latestStatus, 'event' => $latestEvent];
-                } else {
-                    return null;
-                }
+                return ['status' => $latestStatus, 'event' => $latestEvent];
+
             } else {
-                Log::error("Respuesta no exitosa al obtener el estado de entrega.");
+                // Manejar casos en que no se acepta el número de seguimiento o hay errores
+                Log::error("Tracking number rejected or error received.", ['response' => $responseArray]);
                 return null;
             }
 

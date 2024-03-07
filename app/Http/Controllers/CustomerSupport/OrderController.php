@@ -36,22 +36,22 @@ class OrderController extends Controller
             $latest_status = null;
 
             // Obtiene el estado de entrega actualizado
-            if($order->tracking_number && $order->courier_code) {
-                $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
-            }
+            // if($order->tracking_number && $order->courier_code) {
+            //     $latest_status = $this->trackingService->getLatestDeliveryStatus($order->tracking_number, $order->courier_code);
+            // }
 
             // Actualiza el estado en la base de datos si es diferente
-            if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
-                $order->update(['delivery_status' => $latest_status['status']]);
+            // if (isset($latest_status['status']) && ($order->delivery_status && $order->delivery_status !== $latest_status)) {
+            //     $order->update(['delivery_status' => $latest_status['status']]);
 
-                //TODO: enviar correo desde un cron-job.
-                if( $latest_status == 'Delivered' ) {
-                    Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
+            //     //TODO: enviar correo desde un cron-job.
+            //     if( $latest_status == 'Delivered' ) {
+            //         Mail::to( $order->customer->user->email )->send(new OrderDelivered($order) );
 
-                    //TODO: enviar correo también al operador:
-                    // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
-                }
-            }
+            //         //TODO: enviar correo también al operador:
+            //         // Mail::to( 'carlos.hernandez@solar-center.mx' )->send( new OrderDeliveredAdmin($order) );
+            //     }
+            // }
 
             // Traduce el estado para mostrarlo en la vista
             $order->translated_delivery_status = DeliveryStatusEnum::getTranslatedStatus($order->delivery_status);
@@ -85,28 +85,35 @@ class OrderController extends Controller
     public function updateTrankingNumber(UpdateOrderGuideNumberRequest $request, Order $order)
     {
         try {
-
             $result = $this->trackingService->createTracking($request->tracking_number, $request->courier_code);
 
-            if($result) {
+            if($result['success']) {
 
-                // Después de crear el tracking hay que volver hacer una petición para obtener el status actual.
                 $latestDeliveryStatus = $this->trackingService->getLatestDeliveryStatus($request->tracking_number, $request->courier_code);
-                Log::info("latestDeliveryStatus: ");
-                Log::info($latestDeliveryStatus);
-                $order->update([
-                    'courier_code' => $request->courier_code,
-                    'tracking_number' => $request->tracking_number,
-                    'delivery_status' => isset($latestDeliveryStatus['status']) ? $latestDeliveryStatus['status']: '',
-                ]);
-                return $this->successRedirect('Número de guía guardado exitosamente');
+                Log::info("Latest delivery status: ", ['lds' => $latestDeliveryStatus]);
+
+                if ($latestDeliveryStatus) {
+                    $order->update([
+                        'courier_code' => $request->courier_code,
+                        'tracking_number' => $request->tracking_number,
+                        'delivery_status' => $latestDeliveryStatus['status'],
+                        'delivery_event' => $latestDeliveryStatus['event'], // Asegúrate de tener este campo en tu base de datos
+                    ]);
+
+                    return $this->successRedirect('Número de guía guardado exitosamente.');
+                } else {
+                    // Manejar el caso de que no se obtenga el estado del pedido
+                    return $this->errorRedirect('No se pudo obtener el estado actual del pedido.');
+                }
+
             } else {
-                return $this->successRedirect('Ups! algo salió mal... intenta de nuevo');
+                Log::info("Error or unexpected response: ", $result);
+                return $this->errorRedirect('Ups! algo salió mal... intenta de nuevo. ' . $result['message']);
             }
 
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            Log::error("Error al crear el seguimiento: " . $e->getMessage());
-            return 'unknown';
+        } catch (\Exception $e) {
+            Log::error("Exception caught: " . $e->getMessage());
+            return $this->errorRedirect('Ocurrió un error inesperado. Por favor, inténtelo de nuevo.');
         }
     }
 

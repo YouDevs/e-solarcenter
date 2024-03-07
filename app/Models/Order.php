@@ -18,8 +18,10 @@ class Order extends Model
         'status',
         'delivery_address',
         'courier_code',
-        'delivery_status',
         'tracking_number',
+        'delivery_status',
+        'delivery_event',
+        'estimated_delivery_date',
     ];
 
     public function customer()
