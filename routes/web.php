@@ -10,6 +10,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\CustomerSupport\CustomerController;
 use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
+use App\Http\Controllers\FedexController;
 
 
 Route::middleware(['auth'])->group(function () {
@@ -18,6 +19,8 @@ Route::middleware(['auth'])->group(function () {
     //     Artisan::call('storage:link');
     //     return 'Migrate fresh successfully!';
     // });
+
+    Route::get('/cotizar-fedex', [FedexController::class, 'index']);
 
     Route::get('/migrate-fresh', function () {
         try {
