@@ -23,14 +23,102 @@
 <div class="container pb-5 mb-2 mb-md-4">
     <div class="row">
         <section class="col-lg-8">
-            <form action="{{route('checkout.selected-address')}}" method="post" class="col-lg-8">
+            <form action="{{route('checkout.selected-address')}}" method="post" class="col-lg-12">
                 @csrf
                 <!-- Steps-->
                 <x-payment-steps step="3" />
 
                 <!-- Shipping address-->
-                <h2 class="h6 pb-3 mb-2">Elige una dirección de envío</h2>
+                <h2 class="h6 pb-3 mb-2">Cotización de Envío</h2>
                 <div class="table-responsive">
+                    <table class="table table-hover fs-sm border-top">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">Sucursal</th>
+                                <th class="align-middle">Tipo de Envío</th>
+                                <th class="align-middle">Dirección</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Guadalajara
+                                </td>
+                                <td>
+                                    <select name="shipping_type" class="form-select">
+                                        <option value="">Enviar a Cliente</option>
+                                        <option value="">Cliente Recoge</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="shipping_type" class="form-select">
+                                        <option value="">Elige una Dirección</option>
+                                        @foreach ($delivery_addresses as $index => $address)
+                                            <option
+                                                value="{{$index}}"
+                                                @selected($customer->default_address == $index + 1)
+                                                >{{$address}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td colspan="3">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Seleccionar Transportista</th>
+                                                <th>Flete</th>
+                                                <th>Seguro</th>
+                                                <th>Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Aquí irían los datos dinámicos de tu subtabla -->
+                                            <tr>
+                                                <td>
+                                                    <input type="radio" name="option-guadalajara">
+                                                    DHL
+                                                </td>
+                                                <td>$800</td>
+                                                <td><input type="checkbox"> $100</td>
+                                                <td>3 días hábiles</td>
+                                            </tr>
+                                            <!-- Repite <tr> por cada opción de envío disponible -->>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Monterrey
+                                </td>
+                                <td>
+                                    <select name="shipping_type" class="form-select">
+                                        <option value="">Enviar a Cliente</option>
+                                        <option value="">Cliente Recoge</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="shipping_type" class="form-select">
+                                        <option value="">Elige una Dirección</option>
+                                        @foreach ($delivery_addresses as $index => $address)
+                                            <option
+                                                value="{{$index}}"
+                                                @selected($customer->default_address == $index + 1)
+                                                >{{$address}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {{-- <div class="table-responsive">
                     <table class="table table-hover fs-sm border-top">
                         <thead>
                             <tr>
@@ -66,7 +154,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div> --}}
+
                 <!-- Navigation (desktop)-->
                 <div class="d-none d-lg-flex pt-4 mt-3">
                     <div class="w-50 pe-3">

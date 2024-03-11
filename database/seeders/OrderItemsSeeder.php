@@ -16,22 +16,22 @@ class OrderItemsSeeder extends Seeder
     public function run(): void
     {
         // Obtén una orden y un producto de ejemplo o crea unos
-        $order = Order::first(); // Asegúrate de que haya al menos una orden en la base de datos
+        $order = Order::first();
         $product = Product::find(1);
         $product_2 = Product::find(2);
 
         OrderItem::create([
-            'order_id' => $order->id, // Usa el ID de la orden obtenida
-            'product_id' => $product->id, // Usa el ID del producto obtenido
-            'quantity' => 2, // Cantidad del producto
-            'price' => $product->price // Precio del producto
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'quantity' => 2,
+            'price' => $product->prices[0]->price
         ]);
 
         OrderItem::create([
-            'order_id' => $order->id, // Usa el ID de la orden obtenida
-            'product_id' => $product_2->id, // Usa el ID del producto obtenido
-            'quantity' => 1, // Cantidad del producto
-            'price' => $product_2->price // Precio del producto
+            'order_id' => $order->id,
+            'product_id' => $product_2->id,
+            'quantity' => 1,
+            'price' => $product_2->prices[0]->price
         ]);
     }
 }

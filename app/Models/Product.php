@@ -10,11 +10,24 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'brand', 'netsuite_item', 'netsuite_item_txt', 'netsuite_stock', 'data_sheet', 'price_1', 'price_2', 'price_3', 'slug'];
+    protected $fillable = [
+        'name',
+        'brand',
+        'category_id',
+        'netsuite_item',
+        'netsuite_item_txt',
+        'data_sheet',
+        'slug'
+    ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function prices()
+    {
+        return $this->hasMany(ProductPrice::class);
     }
 
     // public function getFormattedPrice()
