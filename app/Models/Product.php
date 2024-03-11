@@ -25,17 +25,30 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * ------ Gestión del precio ------
+    */
     public function prices()
     {
         return $this->hasMany(ProductPrice::class);
     }
 
-    // public function getFormattedPrice()
-    // {
-    //     $formattedPrice = number_format($this->price, 2);
+    public function getDefaultPriceAttribute()
+    {
+        $defaultPrice = $this->prices->where('level', 'Lista 1')->first();
+        return $defaultPrice ? $defaultPrice->price : null;
+    }
 
-    //     list($priceWhole, $priceDecimal) = explode('.', $formattedPrice);
+    /**
+     * ------ Gestión del stock ------
+    */
+    public function stocks()
+    {
+        return $this->hasMany(ProductStock::class);
+    }
 
-    //     return ['whole' => $priceWhole, 'decimal' => $priceDecimal];
-    // }
+    public function getTotalAvailableQuantityAttribute()
+    {
+        return $this->stocks->sum('quantity_available');
+    }
 }

@@ -188,7 +188,7 @@
                     <img src="{{Storage::url($product->featured)}}" alt="Product">
                 </a>
                 <div class="card-body py-2">
-                    <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->netsuite_stock }}</a>
+                    <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->totalAvailableQuantity }}</a>
                     <h3 class="product-title fs-sm">
                         <a href="#" previewlistener="true">
                             {{$product->name}}
@@ -196,7 +196,7 @@
                     </h3>
                     <div class="d-flex justify-content-between">
                         <div class="product-price">
-                            <x-amount-formatter :amount="$product->price" />
+                            <x-amount-formatter :amount="$product->defaultPrice" />
                             {{-- TODO: sistema de descuentos. --}}
                             {{-- <del class="fs-sm text-muted">$38.<small>50</small></del> --}}
                         </div>
@@ -242,7 +242,7 @@
                             <input type="hidden" value="{{ $product->id }}" name="id">
                             <input type="hidden" value="{{ $product->name }}" name="name">
                             <input type="hidden" value="{{ $product->brand }}" name="brand">
-                            <input type="hidden" value="{{ $product->price }}" name="price">
+                            <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
                             <input type="hidden" value="{{ $product->featured }}"  name="featured">
                             {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
                             <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
