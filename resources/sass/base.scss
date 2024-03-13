@@ -6,7 +6,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // Variables
-@import 'variables';
+// @import 'variables';
 @import 'variables-base';
 
 // Bootstrap
@@ -22,21 +22,6 @@
 @import 'components/nav';
 @import 'components/pagination';
 @import 'components/carousel';
-
-// .bg-faded-info {
-//     --cz-bg-opacity: 0.09;
-//     background-color: rgba(var(--cz-info-rgb), var(--cz-bg-opacity)) !important;
-// }
-
-// .bg-faded-warning {
-//     --cz-bg-opacity: 0.09;
-//     background-color: rgba(var(--cz-warning-rgb), var(--cz-bg-opacity)) !important;
-// }
-
-// .bg-faded-success {
-//     --cz-bg-opacity: 0.09;
-//     background-color: rgba(var(--cz-success-rgb), var(--cz-bg-opacity)) !important;
-// }
 
 @keyframes girar {
     from {
@@ -72,5 +57,28 @@
         background-color: lighten(#FFBE10, 20%);
         border-color: lighten(#FFBE10, 20%);
     }
+
+}
+
+.btn-primary {
+    @extend .btn;
+
+    background-color: $solar;
+    background-color: #FEBE10 !important;
+    border-color: #FEBE10 !important;
+    color: #3B4752;
+
+    &:hover,
+    &:active,
+    &.active,
+    &:focus {
+        color: #3B4752;
+    }
+
+    // &:disabled,
+    // &.disabled {
+    //     background-color: lighten(#FFBE10, 20%);
+    //     border-color: lighten(#FFBE10, 20%);
+    // }
 
 }

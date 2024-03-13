@@ -1040,10 +1040,20 @@
             @yield('content')
         </main>
 
-        <footer class="footer bg-dark pt-5">
+        <footer class="footer bg-blue-gray pt-5">
             <div class="container">
                 <div class="row pb-2">
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="widget widget-links widget-light pb-2 mb-4">
+                            <a class="d-none d-sm-block me-3 flex-shrink-0" href="/">
+                                <img src="{{asset('images/logo-secundario.webp')}}" width="160" alt="Solar Center">
+                            </a>
+                            <a class="d-sm-none me-2" href="/">
+                                <img src="{{asset('images/logo-secundario.webp')}}" width="74" alt="Solar Center">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
                         <div class="widget widget-links widget-light pb-2 mb-4">
                         <h3 class="widget-title text-light">Familias de productos</h3>
                         <ul class="widget-list">
@@ -1055,7 +1065,7 @@
                         </ul>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="widget widget-links widget-light pb-2 mb-4">
                         <h3 class="widget-title text-light">Cuenta y Información de Envío</h3>
                         <ul class="widget-list">
@@ -1068,7 +1078,7 @@
                         </ul>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-md-3 col-sm-6">
                         <div class="widget widget-links widget-light pb-2 mb-4">
                             <h3 class="widget-title text-light">Sobre nosotros</h3>
                             <ul class="widget-list">

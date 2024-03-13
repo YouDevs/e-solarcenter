@@ -31,7 +31,7 @@ $gray-900:              #2b3445 !default;
 $black:                 #000 !default;
 
 // Brand colors
-$primary:               #fe696a !default;
+$primary:               #f9ce64 !default;
 $accent:                #4e54c8 !default;
 $secondary:             $gray-200 !default;
 $info:		              #69b3fe !default;
@@ -40,6 +40,7 @@ $warning:               #fea569 !default;
 $danger:                #f34770 !default;
 $light:                 $white !default;
 $dark:                  $gray-800 !default;
+$blue-gray:             #3b4752 !default;
 
 // Adding new color to default Bootstrap's $theme-colors map
 $theme-colors: (
@@ -51,7 +52,8 @@ $theme-colors: (
   "warning":    $warning,
   "danger":     $danger,
   "light":      $light,
-  "dark":       $dark
+  "dark":       $dark,
+  "blue-gray":  $blue-gray
 ) !default;
 
 

@@ -16,9 +16,11 @@
                                     <img class="d-block mx-auto" src="{{asset('images/test3.png')}}" alt="VR Collection">
                                 </div>
                                 <div class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-start">
-                                    <h2 class="fw-light pb-1 from-bottom">Transforma México con</h2>
+                                    <h2 class="fw-light pb-1 from-bottom">Transformar a México a Través de la </h2>
                                     <h1 class="display-4 from-bottom delay-1">Energía Solar</h1>
-                                    <h5 class="fw-light pb-3 from-bottom delay-2">Elige entre las mejores marcas</h5>
+                                    <h5 class="fw-light pb-3 from-bottom delay-2">
+                                        Elige Entre las Mejores Marcas
+                                    </h5>
                                     <div class="d-table scale-up delay-4 mx-auto mx-md-0">
                                         <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">Comprar Ahora<i class="bi bi-chevron-right ms-2 me-n1"></i></a>
                                     </div>
@@ -31,11 +33,13 @@
                                     <img class="d-block mx-auto" src="{{asset('images/inverter_test.png')}}" alt="VR Collection">
                                 </div>
                                 <div class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-start">
-                                    <h2 class="fw-light pb-1 from-start">Las mejores</h2>
-                                    <h1 class="display-4 from-start delay-1">Soluciones Fotovoltaicas</h1>
-                                    <h5 class="fw-light pb-3 from-start delay-2">del mercado</h5>
+                                    <h2 class="fw-light pb-1 from-start">Somos el Centro de</h2>
+                                    <h1 class="display-4 from-start delay-1">Distribución Solar</h1>
+                                    <h5 class="fw-light pb-3 from-start delay-2">Más Completo del País</h5>
                                     <div class="d-table scale-up delay-4 mx-auto mx-md-0">
-                                        <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">Comprar Ahora<i class="bi ci-chevron-right ms-2 me-n1"></i></a>
+                                        <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">
+                                            Comprar Ahora<i class="bi ci-chevron-right ms-2 me-n1"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -47,22 +51,22 @@
             <div class="col-xl-3 order-xl-1 pt-4 mt-3 mt-xl-0 pt-xl-0">
                 <div class="table-responsive" data-simplebar>
                     <div class="d-flex d-xl-block">
-                        <a class="d-flex align-items-center bg-info rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem;">
+                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem; background-color: #d1d2d3;">
                             <img src="{{asset('images/is_new_1.png')}}" width="125" alt="Banner">
                             <div class="py-4 px-2">
                                 {{-- <h5 class="mb-2"><span class="fw-light">Panel</span><br>LonGi</h5> --}}
-                                <h5 class="mb-2"><span class="fw-light">Panel LonGi</span><br>Hi-MO <span class="fw-light">X6</span><br>Explorer</h5>
+                                <h5 class="mb-2 "><span class="fw-light">Panel LonGi</span><br>Hi-MO <span class="fw-light">X6</span><br>Explorer</h5>
                                 <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
                             </div>
                         </a>
-                        <a class="d-flex align-items-center bg-warning rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem;">
+                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem; background-color: #d1d2d3;">
                             <img src="{{asset('images/is_new_2.png')}}" width="125" alt="Banner">
                             <div class="py-4 px-2">
                                 <h5 class="mb-2"><span class="fw-light">Inversor</span><br>Residencial <span class="fw-light">MIC</span> 1000</h5>
                                 <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
                             </div>
                         </a>
-                        <a class="d-flex align-items-center bg-success rounded-3 pt-2 ps-2 mb-4" href="#" style="min-width: 16rem;">
+                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4" href="#" style="min-width: 16rem; background-color: #d1d2d3;">
                             <img src="{{asset('images/is_new_3.png')}}" width="125" alt="Banner">
                             <div class="py-4 px-2">
                                 <h5 class="mb-2"><span class="fw-light">Hoymiles</span><br>Microinversor <span class="fw-light">HTM</span> 2000-4T</h5>
@@ -169,7 +173,7 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
         <h2 class="h3 mb-0 pt-3 me-2">{{$request->has('category_id') || $request->has('brand') ? 'Productos': 'Productos más comprados'}}</h2>
         <div class="pt-3">
-            <a class="btn btn-outline-accent btn-sm" href="shop-grid-ls.html">
+            <a class="btn btn-outline-blue-gray btn-sm" href="shop-grid-ls.html">
                 Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>
             </a>
         </div>
@@ -243,9 +247,11 @@
                             <input type="hidden" value="{{ $product->name }}" name="name">
                             <input type="hidden" value="{{ $product->brand }}" name="brand">
                             <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
-                            <input type="hidden" value="{{ $product->featured }}"  name="featured">
+                            <input type="hidden" value="{{ $product->location }}"  name="location">
                             {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
-                            <button class="btn btn-solar btn-sm" type="submit"><i class="ci-cart fs-sm me-1"></i>Agregar al Carrito</button>
+                            <button class="btn btn-solar btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
+                                <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
+                            </button>
                         </form>
                         {{-- TODO: botón comprar ahora para ahorrar el proceso de agregar al carrito. --}}
                         {{-- <a class="btn btn-solar btn-sm" type="button"><i class="ci-cart fs-sm me-1"></i>Comprar Ahora</a> --}}
@@ -331,48 +337,143 @@
                 <!-- Carousel slides here -->
                 <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-fronius_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/longi.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-growatt_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/solis.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-hoymiles_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/risen.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-risen_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/s5.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="#" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-longi_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/huawei.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-seraphim_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/victron.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-solis_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/trina.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
                 <div>
                     <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
-                        <img src="{{asset('brands/solar-center-srne_large.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                        <img src="{{asset('brands/growatt.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/znshine.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/unirac.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/tw-solar.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/fronius.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/soluna.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/gosolar.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/pylontech.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/srne.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/yassion.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/zbeny.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/parts-master.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/xpower.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/ultrastart.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/yassion.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
+                    </a>
+                </div>
+                <div>
+                    <a href="" class="d-block bg-white border py-4 py-sm-5 px-2">
+                        <img src="{{asset('brands/zbeny.webp')}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                     </a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Modal de Selección de Sucursal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="selectQuantityModal" aria-labelledby="selectQuantityModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectQuantityModalLabel">Selecciona una Sucursal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="quantitySelectionForm">
+                <div class="modal-body">
+                    <!-- El formulario se generará dinámicamente aquí -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-md" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-md">Agregar al Carrito</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -380,9 +481,9 @@
 @section('scripts')
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', (e) => {
     // Tiny Slider:
-    var sliderHero = tns({
+    let sliderHero = tns({
         container: '.tns-carousel-hero',
         nav: true, // Desactiva los puntos de navegación inferiores
         controls: false, // Desactiva los botones de anterior/siguiente
@@ -400,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // }
     });
 
-    var sliderBrands = tns({
+    let sliderBrands = tns({
         container: '.tns-carousel-brands',
         nav: false, // Desactiva los puntos de navegación inferiores
         controls: false, // Desactiva los botones de anterior/siguiente
@@ -419,6 +520,70 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     window.ResizeObserver = ResizeObserver;
+
+    //
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+
+            fetch(`/cart/product/${productId}/stock`)
+                .then( response => response.json() )
+                .then( data => {
+                    // Llenar el modal:
+                    const modalBody = document.querySelector('#selectQuantityModal .modal-body');
+                    modalBody.innerHTML = '';
+
+                    // Generar campos del formulario para cada sucursal
+                    data.stocks.forEach(location => {
+                        const label = document.createElement('label');
+                        label.textContent = `${location.name} (cantidad ${location.quantity} )`;
+                        label.className = `mt-2`;
+                        label.htmlFor = `quantity-${location.id}`;
+
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.id = `quantity-${location.id}`;
+                        input.name = `quantity[${location.name}]`;
+                        input.min = 0;
+                        input.max = location.quantity;
+                        input.value = 1;
+                        input.className = 'form-control';
+
+                        modalBody.appendChild(label);
+                        modalBody.appendChild(input);
+                    });
+                })
+
+            let modalElement = document.getElementById('selectQuantityModal');
+            let modalInstance = new bootstrap.Modal(modalElement);
+            modalInstance.show();
+        });
+    });
+
+    document.getElementById('quantitySelectionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const selectedQuantities = {};
+        document.querySelectorAll('#selectQuantityModal input[type="number"]').forEach(input => {
+            const locationName = input.name.replace('quantity[', '').replace(']', '');
+            selectedQuantities[locationName] = input.value;
+        });
+
+        // Agrega el objeto de cantidades seleccionadas al formulario como antes
+        const quantitiesInput = document.querySelector('input[name="quantities"]') || document.createElement('input');
+        quantitiesInput.type = 'hidden';
+        quantitiesInput.name = 'quantities';
+        quantitiesInput.value = JSON.stringify(selectedQuantities);
+        const form = document.querySelector('form[action="{{ route('cart.store') }}"]');
+        form.appendChild(quantitiesInput);
+
+        new bootstrap.Modal(document.getElementById('selectQuantityModal')).hide();
+
+        form.submit();
+    });
+
+
 })
 </script>
 
