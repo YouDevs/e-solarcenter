@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductStock;
 
 class CartController extends Controller
 {
@@ -24,6 +26,8 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+        dd($request->all());
+
         \Cart::add([
             'id' => $request->id,
             'name' => $request->name,
@@ -80,14 +84,21 @@ class CartController extends Controller
         return redirect()->route('cart.list');
     }
 
-    // private function generatePaymentConcept($last_order_id, $company_name)
-    // {
-    //     $folio = sprintf('%04d', $last_order_id);
+    public function getProductStock(Request $request, $productId)
+    {
+        $product = Product::with(['stocks.location'])->findOrFail($productId);
 
-    //     // Divide el nombre de la empresa en palabras y toma la primera palabra
-    //     $company_words = explode(' ', $company_name);
-    //     $first_word_of_company_name = $company_words[0];
+        $stocks = $product->stocks->map(function ($stock) {
+            return [
+                'id' => $stock->location->id,
+                'name' => $stock->location->name,
+                'quantity' => $stock->quantity_available,
+            ];
+        });
 
-    //     return 'Orden ' . $folio .' '. $first_word_of_company_name .' '. date('Y');
-    // }
+        return response()->json([
+            'stocks' => $stocks,
+        ]);
+    }
+
 }

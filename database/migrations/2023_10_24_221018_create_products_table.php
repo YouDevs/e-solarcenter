@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name', 120);
             $table->string('brand', 40);
-            // $table->decimal('price', 10, 2)->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('netsuite_item')->nullable();
             $table->string('netsuite_item_txt')->nullable(); //NOTA: en netsuite está como: itemTxt
