@@ -13,6 +13,11 @@ use App\Http\Controllers\Marketing\ProductController;
 use App\Http\Controllers\FedexController;
 
 
+
+Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
+Route::get('/producto/{product}', [HomeController::class, 'productByFilter'])->name('products-by-filter');
+
 Route::middleware(['auth'])->group(function () {
     // Delete this routes when deploy is fucking ready!
     // Route::get('/symlink', function () {
@@ -52,9 +57,6 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::get('/', [HomeController::class, 'index'])->name('index');
-    Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
-    Route::get('/producto/{product}', [HomeController::class, 'productByFilter'])->name('products-by-filter');
     // Route::get('/productos/{category}', [HomeController::class, 'productsByCategory'])->name('products-by-category');
 
 

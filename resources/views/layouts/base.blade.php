@@ -112,77 +112,77 @@
                                     <i class="navbar-tool-icon ci-menu"></i>
                                 </div>
                             </a>
-                            <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
-                                <div class="navbar-tool-icon-box">
-                                    <i class="navbar-tool-icon ci-user"></i>
-                                </div>
-                                <div class="navbar-tool-text ms-n3">
-                                    @if (Auth::check())
+                            @auth
+                                <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="#signin-modal" data-bs-toggle="modal">
+                                    <div class="navbar-tool-icon-box">
+                                        <i class="navbar-tool-icon ci-user"></i>
+                                    </div>
+                                    <div class="navbar-tool-text ms-n3">
                                         <small>Hola</small>
                                         {{auth()->user()->name}}
-                                    @endif
-                                </div>
-                            </a>
-                            <div class="navbar-tool dropdown ms-3">
-                                <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('cart.list')}}">
-                                    @if (Cart::getTotalQuantity() > 0)
-                                        <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
-                                    @endif
-                                    <i class="navbar-tool-icon bi bi-cart3"></i>
+                                    </div>
                                 </a>
-                                <a class="navbar-tool-text" href="{{route('cart.list')}}">
-                                    <small>Carrito</small>${{ Cart::getTotal() }}
-                                </a>
-                                <!-- Cart dropdown-->
-                                @if (count( Cart::getContent() ))
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
-                                            <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
-                                                @foreach (Cart::getContent() as $item)
-                                                    <div class="widget-cart-item pb-2 border-bottom">
-                                                        <form action="{{route('cart.remove')}}" method="post">
-                                                            @csrf
-                                                            <input type="hidden" name="item_id" value="{{$item->id}}">
-                                                            <button class="btn-close text-danger" type="submit" aria-label="Remove">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </form>
-                                                        <div class="d-flex align-items-center">
-                                                            <a class="d-block flex-shrink-0" href="shop-single-v2.html">
-                                                                <img src="{{Storage::url($item->attributes->featured)}}" width="64" alt="Product">
-                                                            </a>
-                                                            <div class="ps-2">
-                                                                <h6 class="widget-product-title">
-                                                                    <a href="shop-single-v2.html">{{$item->name}}</a>
-                                                                </h6>
-                                                                <div class="widget-product-meta">
-                                                                    <x-amount-formatter :amount="$item->price" />
-                                                                    <span class="text-muted">x {{$item->quantity}}</span>
+                                <div class="navbar-tool dropdown ms-3">
+                                    <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('cart.list')}}">
+                                        @if (Cart::getTotalQuantity() > 0)
+                                            <span class="navbar-tool-label">{{ Cart::getTotalQuantity() }}</span>
+                                        @endif
+                                        <i class="navbar-tool-icon bi bi-cart3"></i>
+                                    </a>
+                                    <a class="navbar-tool-text" href="{{route('cart.list')}}">
+                                        <small>Carrito</small>${{ Cart::getTotal() }}
+                                    </a>
+                                    <!-- Cart dropdown-->
+                                    @if (count( Cart::getContent() ))
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+                                                <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+                                                    @foreach (Cart::getContent() as $item)
+                                                        <div class="widget-cart-item pb-2 border-bottom">
+                                                            <form action="{{route('cart.remove')}}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="item_id" value="{{$item->id}}">
+                                                                <button class="btn-close text-danger" type="submit" aria-label="Remove">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </form>
+                                                            <div class="d-flex align-items-center">
+                                                                <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                                                                    <img src="{{Storage::url($item->attributes->featured)}}" width="64" alt="Product">
+                                                                </a>
+                                                                <div class="ps-2">
+                                                                    <h6 class="widget-product-title">
+                                                                        <a href="shop-single-v2.html">{{$item->name}}</a>
+                                                                    </h6>
+                                                                    <div class="widget-product-meta">
+                                                                        <x-amount-formatter :amount="$item->price" />
+                                                                        <span class="text-muted">x {{$item->quantity}}</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                            <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
-                                                <div class="fs-sm me-2 py-2">
-                                                    <span class="text-muted">Subtotal:</span>
-                                                    <span class="text-accent fs-base ms-1">
-                                                        <x-amount-formatter :amount="Cart::getTotal()" />
-                                                    </span>
+                                                    @endforeach
                                                 </div>
-                                                <a class="btn btn-outline-secondary btn-sm" href="{{route('cart.list')}}">
-                                                    Expandir carrito<i class="ci-arrow-right ms-1 me-n1"></i>
+                                                <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                                                    <div class="fs-sm me-2 py-2">
+                                                        <span class="text-muted">Subtotal:</span>
+                                                        <span class="text-accent fs-base ms-1">
+                                                            <x-amount-formatter :amount="Cart::getTotal()" />
+                                                        </span>
+                                                    </div>
+                                                    <a class="btn btn-outline-secondary btn-sm" href="{{route('cart.list')}}">
+                                                        Expandir carrito<i class="ci-arrow-right ms-1 me-n1"></i>
+                                                    </a>
+                                                </div>
+                                                <a class="btn btn-primary btn-sm d-block w-100" href="{{route('checkout.details')}}">
+                                                    <i class="ci-card me-2 fs-base align-middle"></i>
+                                                    Proceso de Compra
                                                 </a>
                                             </div>
-                                            <a class="btn btn-primary btn-sm d-block w-100" href="{{route('checkout.details')}}">
-                                                <i class="ci-card me-2 fs-base align-middle"></i>
-                                                Proceso de Compra
-                                            </a>
                                         </div>
-                                    </div>
-                                @endif
-                            </div>
+                                    @endif
+                                </div>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -668,11 +668,11 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#">Integradores</a>
                                 </li>
-                                @if (!Auth::check())
+                                @guest
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="{{route('register')}}">Regístrate</a>
                                 </li>
-                                @endif
+                                @endguest
                                 {{-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Solar Center</a>
                                     <div class="dropdown-menu p-0">

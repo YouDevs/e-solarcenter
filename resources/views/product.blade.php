@@ -32,6 +32,7 @@
                 <!-- Product details-->
                 <div class="col-lg-5 pt-4 pt-lg-0">
                     <div class="product-details ms-auto pb-3">
+                        @auth
                         <div class="mb-3">
                             <span class="h3 fw-normal text-accent me-1">
                                 <x-amount-formatter :amount="$product->price" />
@@ -49,6 +50,7 @@
                                 <button class="btn btn-solar btn-shadow d-block w-100" type="submit"><i class="bi bi-cart fs-lg me-2"></i>Agregar al Carrito</button>
                             </div>
                         </form>
+                        @endauth
                         <!-- Product panels-->
                         <div class="accordion mb-4" id="productPanels">
                             <div class="accordion-item">
@@ -185,15 +187,19 @@
                     <img src="{{Storage::url($product->featured)}}" class="d-block mx-auto" style="width: 165px;" alt="Alt text">
                 </a>
                 <div class="card-body py-2">
-                    <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{$product->netsuite_stock}}</a>
+                    @auth
+                        <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{$product->netsuite_stock}}</a>
+                    @endauth
                     <h3 class="product-title fs-sm">
                         <a href="#">{{$product->name}}</a>
                     </h3>
+                    @auth
                     <div class="d-flex justify-content-between">
                         <div class="product-price text-accent">
                             <x-amount-formatter :amount="$product->price" />
                         </div>
                     </div>
+                    @endauth
                 </div>
             </div>
         @endforeach

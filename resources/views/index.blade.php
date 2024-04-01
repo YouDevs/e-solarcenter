@@ -192,28 +192,32 @@
                     <img src="{{Storage::url($product->featured)}}" alt="Product">
                 </a>
                 <div class="card-body py-2">
-                    <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->totalAvailableQuantity }}</a>
+                    @auth
+                        <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->totalAvailableQuantity }}</a>
+                    @endauth
                     <h3 class="product-title fs-sm">
                         <a href="#" previewlistener="true">
                             {{$product->name}}
                         </a>
                     </h3>
-                    <div class="d-flex justify-content-between">
-                        <div class="product-price">
-                            <x-amount-formatter :amount="$product->defaultPrice" />
-                            {{-- TODO: sistema de descuentos. --}}
-                            {{-- <del class="fs-sm text-muted">$38.<small>50</small></del> --}}
+                    @auth
+                        <div class="d-flex justify-content-between">
+                            <div class="product-price">
+                                <x-amount-formatter :amount="$product->defaultPrice" />
+                                {{-- TODO: sistema de descuentos. --}}
+                                {{-- <del class="fs-sm text-muted">$38.<small>50</small></del> --}}
+                            </div>
+                            {{-- <div class="star-rating">
+                                <i class="star-rating-icon bi bi-star-fill active"></i>
+                                <i class="star-rating-icon bi bi-star-fill active"></i>
+                                <i class="star-rating-icon bi bi-star-fill active"></i>
+                                <i class="star-rating-icon bi-star-half active"></i>
+                                <i class="star-rating-icon bi bi-star"></i>
+                            </div> --}}
                         </div>
-                    {{-- <div class="star-rating">
-                            <i class="star-rating-icon bi bi-star-fill active"></i>
-                            <i class="star-rating-icon bi bi-star-fill active"></i>
-                            <i class="star-rating-icon bi bi-star-fill active"></i>
-                            <i class="star-rating-icon bi-star-half active"></i>
-                            <i class="star-rating-icon bi bi-star"></i>
-                        </div> --}}
-                    </div>
+                    @endauth
                 </div>
-                <div class="card-body card-body-hidden">
+                <div class="card-body {{Auth::check()? 'card-body-hidden': ''}}">
                     {{-- <div class="text-center pb-2">
                         <div class="form-check form-option form-check-inline mb-2">
                             <input class="form-check-input" type="radio" name="color1" id="white" checked="">
@@ -240,19 +244,21 @@
                             <option>L</option>
                             <option>XL</option>
                         </select> --}}
-                        <form action="{{ route('cart.store') }}" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
-                            <input type="hidden" value="{{ $product->id }}" name="id">
-                            <input type="hidden" value="{{ $product->name }}" name="name">
-                            <input type="hidden" value="{{ $product->brand }}" name="brand">
-                            <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
-                            <input type="hidden" value="{{ $product->location }}"  name="location">
-                            {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
-                            <button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
-                                <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
-                            </button>
-                        </form>
+                        @auth
+                            <form action="{{ route('cart.store') }}" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
+                                <input type="hidden" value="{{ $product->id }}" name="id">
+                                <input type="hidden" value="{{ $product->name }}" name="name">
+                                <input type="hidden" value="{{ $product->brand }}" name="brand">
+                                <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
+                                <input type="hidden" value="{{ $product->location }}"  name="location">
+                                {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
+                                <button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
+                                    <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
+                                </button>
+                            </form>
+                        @endauth
                         {{-- TODO: botón comprar ahora para ahorrar el proceso de agregar al carrito. --}}
                         {{-- <a class="btn btn-solar btn-sm" type="button"><i class="ci-cart fs-sm me-1"></i>Comprar Ahora</a> --}}
                     {{-- </div> --}}
@@ -292,27 +298,29 @@
                             <!-- Product details-->
                             <div class="col-lg-5 pt-4 pt-lg-0 image-zoom-pane">
                                 <div class="product-details ms-auto pb-3">
-                                    <div class="mb-3">
-                                        <x-amount-formatter :amount="$product->price" />
-                                    </div>
-                                    <div class="fs-sm mb-4">
-                                        <span class="text-heading fw-medium me-1">Stock:</span>
-                                        <span class="text-muted" id="colorOptionText">1</span>
-                                    </div>
-                                    <form action="{{ route('cart.store') }}" class="mb-grid-gutter" method="POST" enctype="multipart/form-data">
-                                        <div class="mb-3 d-flex align-items-center">
-                                            @csrf
-                                            <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1">
-                                            <input type="hidden" value="{{ $product->id }}" name="id">
-                                            <input type="hidden" value="{{ $product->name }}" name="name">
-                                            <input type="hidden" value="{{ $product->brand }}" name="brand">
-                                            <input type="hidden" value="{{ $product->price }}" name="price">
-                                            <input type="hidden" value="{{ $product->featured }}"  name="featured">
-                                            <button class="btn btn-solar btn-shadow d-block w-100" type="submit">
-                                                <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
-                                            </button>
+                                    @auth
+                                        <div class="mb-3">
+                                            <x-amount-formatter :amount="$product->price" />
                                         </div>
-                                    </form>
+                                        <div class="fs-sm mb-4">
+                                            <span class="text-heading fw-medium me-1">Stock:</span>
+                                            <span class="text-muted" id="colorOptionText">1</span>
+                                        </div>
+                                        <form action="{{ route('cart.store') }}" class="mb-grid-gutter" method="POST" enctype="multipart/form-data">
+                                            <div class="mb-3 d-flex align-items-center">
+                                                @csrf
+                                                <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1">
+                                                <input type="hidden" value="{{ $product->id }}" name="id">
+                                                <input type="hidden" value="{{ $product->name }}" name="name">
+                                                <input type="hidden" value="{{ $product->brand }}" name="brand">
+                                                <input type="hidden" value="{{ $product->price }}" name="price">
+                                                <input type="hidden" value="{{ $product->featured }}"  name="featured">
+                                                <button class="btn btn-solar btn-shadow d-block w-100" type="submit">
+                                                    <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
+                                                </button>
+                                            </div>
+                                        </form>
+                                    @endauth
                                     @if (!is_null($product->data_sheet_url))
                                         <a
                                             href="{{$product->data_sheet_url}}"
