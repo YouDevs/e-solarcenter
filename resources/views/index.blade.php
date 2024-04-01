@@ -249,7 +249,7 @@
                             <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
                             <input type="hidden" value="{{ $product->location }}"  name="location">
                             {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
-                            <button class="btn btn-solar btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
+                            <button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
                                 <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
                             </button>
                         </form>

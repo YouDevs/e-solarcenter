@@ -662,9 +662,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item dropdown">
+                                {{-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#">Blog</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#">Integradores</a>
                                 </li>
@@ -1085,7 +1085,7 @@
                                 <li class="widget-list-item"><a class="widget-list-link" href="#">Sobre Solar Center</a></li>
                                 <li class="widget-list-item"><a class="widget-list-link" href="#">Nuestro equipo</a></li>
                                 {{-- <li class="widget-list-item"><a class="widget-list-link" href="#">Careers</a></li> --}}
-                                <li class="widget-list-item"><a class="widget-list-link" href="#">Blog</a></li>
+                                {{-- <li class="widget-list-item"><a class="widget-list-link" href="#">Blog</a></li> --}}
                             </ul>
                         </div>
                     </div>
