@@ -13,7 +13,7 @@
                         <div>
                             <div class="row align-items-center">
                                 <div class="col-md-6 order-md-2">
-                                    <img class="d-block mx-auto" src="{{asset('images/test3.png')}}" alt="VR Collection">
+                                    <img class="d-block mx-auto img-fluid" src="{{asset('images/test3.png')}}" alt="VR Collection">
                                 </div>
                                 <div class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-start">
                                     <h2 class="fw-light pb-1 from-bottom">Transformar a México a Través de la </h2>
@@ -51,23 +51,23 @@
             <div class="col-xl-3 order-xl-1 pt-4 mt-3 mt-xl-0 pt-xl-0">
                 <div class="table-responsive" data-simplebar>
                     <div class="d-flex d-xl-block">
-                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem; background-color: #d1d2d3;">
-                            <img src="{{asset('images/is_new_1.png')}}" width="125" alt="Banner">
+                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0 banner-group-item" href="#">
+                            <img src="{{asset('images/is_new_1.png')}}" alt="Banner">
                             <div class="py-4 px-2">
                                 {{-- <h5 class="mb-2"><span class="fw-light">Panel</span><br>LonGi</h5> --}}
                                 <h5 class="mb-2 "><span class="fw-light">Panel LonGi</span><br>Hi-MO <span class="fw-light">X6</span><br>Explorer</h5>
                                 <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
                             </div>
                         </a>
-                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0" href="#" style="min-width: 16rem; background-color: #d1d2d3;">
-                            <img src="{{asset('images/is_new_2.png')}}" width="125" alt="Banner">
+                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0 banner-group-item" href="#">
+                            <img src="{{asset('images/is_new_2.png')}}" alt="Banner">
                             <div class="py-4 px-2">
                                 <h5 class="mb-2"><span class="fw-light">Inversor</span><br>Residencial <span class="fw-light">MIC</span> 1000</h5>
                                 <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
                             </div>
                         </a>
-                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4" href="#" style="min-width: 16rem; background-color: #d1d2d3;">
-                            <img src="{{asset('images/is_new_3.png')}}" width="125" alt="Banner">
+                        <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 banner-group-item" href="#">
+                            <img src="{{asset('images/is_new_3.png')}}" alt="Banner">
                             <div class="py-4 px-2">
                                 <h5 class="mb-2"><span class="fw-light">Hoymiles</span><br>Microinversor <span class="fw-light">HTM</span> 2000-4T</h5>
                                 <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         nav: true, // Desactiva los puntos de navegación inferiores
         controls: false, // Desactiva los botones de anterior/siguiente
         mouseDrag: true,
-        autoplay: true, // Activa el autoplay
+        autoplay: false,
         autoplayButtonOutput: false,
         autoplayTimeout: 3000, // Establece el intervalo de autoplay a 4000ms (4 segundos)
         loop: true, // Permite que el slider se repita infinitamente

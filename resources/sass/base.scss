@@ -82,3 +82,22 @@
     // }
 
 }
+
+.banner-group-item {
+    min-width: 18rem;
+    background-color: #d1d2d3;
+
+    img {
+        width: 115px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    @media (min-width: 768px) {
+        min-width: 16rem;
+
+        img {
+            width: 125px;
+        }
+    }
+}
