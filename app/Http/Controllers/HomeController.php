@@ -161,9 +161,22 @@ class HomeController extends Controller
 
     public function filterByCategory(Request $request)
     {
-
-
         return view('category', compact('products'));
+    }
+
+    public function aboutUs()
+    {
+        return view('about_us.index');
+    }
+
+    public function branches()
+    {
+        return view('about_us.branches');
+    }
+
+    public function contact()
+    {
+        return view('about_us.contact');
     }
 
 }

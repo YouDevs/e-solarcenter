@@ -59,6 +59,8 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"
     />
+
+    @yield('head')
 </head>
 <body class="bg-white">
     <div id="app" style="flex: 1 0 auto;">
@@ -467,7 +469,7 @@
                             @endif
                             <!-- Primary menu-->
                             <ul class="navbar-nav">
-                                <li class="nav-item dropdown active">
+                                <li class="nav-item dropdown {{request()->routeIs('index')? 'active': ''}}">
                                     {{-- <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Home</a> --}}
                                     <a   class="nav-link" href="/">Inicio</a>
                                     {{-- <ul class="dropdown-menu">
@@ -563,11 +565,14 @@
                                         </li>
                                     </ul> --}}
                                 </li>
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown {{request()->routeIs('about-us.index') || request()->routeIs('about-us.branches') ? 'active': ''}}">
                                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Conócenos</a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="docs/dev-setup.html">
+                                            <a
+                                                href="{{route('about-us.index')}}"
+                                                class="dropdown-item {{request()->routeIs('about-us.index') ? 'active': ''}}"
+                                            >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">
                                                         <i class="ci-book"></i>
@@ -581,7 +586,10 @@
                                         </li>
                                         <li class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item" href="components/typography.html">
+                                            <a
+                                                href="{{route('about-us.branches')}}"
+                                                class="dropdown-item {{request()->routeIs('about-us.branches')? 'active': ''}}"
+                                            >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">
                                                         <i class="ci-server"></i>
@@ -597,7 +605,10 @@
                                         </li>
                                         <li class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item" href="docs/changelog.html">
+                                            <a
+                                                href="{{route('account.send-contact')}}"
+                                                class="dropdown-item {{request()->routeIs('about-us.send-contact')? 'active': ''}}"
+                                            >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">
                                                         <i class="ci-edit"></i>
@@ -606,21 +617,7 @@
                                                         <span class="d-block text-heading">
                                                             Contacto
                                                         </span>
-                                                        <small class="d-block text-muted">Atención a clientes</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" href="mailto:support@createx.studio">
-                                                <div class="d-flex">
-                                                    <div class="lead text-muted pt-1">
-                                                        <i class="ci-help"></i>
-                                                    </div>
-                                                    <div class="ms-2">
-                                                        <span class="d-block text-heading">Bolsa de trabajo</span>
-                                                        <small class="d-block text-muted">Transforma a México</small>
+                                                        <small class="d-block text-muted">Ubicación y Atención</small>
                                                     </div>
                                                 </div>
                                             </a>
@@ -1084,7 +1081,7 @@
                             <ul class="widget-list">
                                 <li class="widget-list-item"><a class="widget-list-link" href="#">Sobre Solar Center</a></li>
                                 <li class="widget-list-item"><a class="widget-list-link" href="#">Nuestro equipo</a></li>
-                                {{-- <li class="widget-list-item"><a class="widget-list-link" href="#">Careers</a></li> --}}
+                                <li class="widget-list-item"><a class="widget-list-link" href="#">Bolsa de Trabajo</a></li>
                                 {{-- <li class="widget-list-item"><a class="widget-list-link" href="#">Blog</a></li> --}}
                             </ul>
                         </div>

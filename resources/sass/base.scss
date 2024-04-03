@@ -32,6 +32,13 @@
     }
 }
 
+.sc-yellow {
+    color: #FEBE10;
+}
+.sc-gray {
+    color: #3B4752;
+}
+
 .girando {
     animation: girar 6s linear infinite !important;
 }
@@ -100,4 +107,20 @@
             width: 125px;
         }
     }
+}
+
+.iframe-full-height-wrap {
+    position: relative;
+    min-height: 18rem;
+    overflow: hidden;
+}
+
+.iframe-full-height {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
