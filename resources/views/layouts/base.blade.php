@@ -624,13 +624,13 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item dropdown {{request()->routeIs('about-us.services') || request()->routeIs('about-us.offer') ? 'active': ''}}">
+                                <li class="nav-item dropdown {{request()->routeIs('services.index') || request()->routeIs('services.offer') ? 'active': ''}}">
                                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Servicios</a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a
-                                                href="{{route('about-us.services')}}"
-                                                class="dropdown-item {{request()->routeIs('about-us.services')? 'active': ''}}"
+                                                href="{{route('services.index')}}"
+                                                class="dropdown-item {{request()->routeIs('services.index')? 'active': ''}}"
                                             >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">
@@ -646,8 +646,8 @@
                                         <li class="dropdown-divider"></li>
                                         <li>
                                             <a
-                                                href="{{route('about-us.offer')}}"
-                                                class="dropdown-item {{request()->routeIs('about-us.offer')? 'active': ''}}"
+                                                href="{{route('services.offer')}}"
+                                                class="dropdown-item {{request()->routeIs('services.offer')? 'active': ''}}"
                                             >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">

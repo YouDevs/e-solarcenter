@@ -206,12 +206,17 @@ class HomeController extends Controller
 
     public function services()
     {
-        return view('about_us.services');
+        return view('services.index');
     }
 
     public function offer()
     {
-        return view('about_us.offer');
+        return view('services.offer');
+    }
+
+    public function integrators()
+    {
+        return view('integrators.index');
     }
 
 }
