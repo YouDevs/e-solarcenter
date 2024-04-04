@@ -624,7 +624,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item dropdown {{request()->routeIs('about-us.services') || request()->routeIs('about-us.services') ? 'active': ''}}">
+                                <li class="nav-item dropdown {{request()->routeIs('about-us.services') || request()->routeIs('about-us.offer') ? 'active': ''}}">
                                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Servicios</a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -639,14 +639,16 @@
                                                     <div class="ms-2">
                                                         <span class="d-block text-heading">Servicios Fundamentales</span>
                                                         <small class="d-block text-muted">Crecemos juntos</small>
-                                                        {{-- <small class="d-block text-muted">Transformemos Juntos</small> --}}
                                                     </div>
                                                 </div>
                                             </a>
                                         </li>
                                         <li class="dropdown-divider"></li>
                                         <li>
-                                            <a class="dropdown-item" href="components/typography.html">
+                                            <a
+                                                href="{{route('about-us.offer')}}"
+                                                class="dropdown-item {{request()->routeIs('about-us.offer')? 'active': ''}}"
+                                            >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">
                                                         <i class="ci-server"></i>

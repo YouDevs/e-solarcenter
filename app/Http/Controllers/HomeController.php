@@ -209,4 +209,9 @@ class HomeController extends Controller
         return view('about_us.services');
     }
 
+    public function offer()
+    {
+        return view('about_us.offer');
+    }
+
 }

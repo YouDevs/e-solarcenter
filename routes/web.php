@@ -20,6 +20,7 @@ Route::get('/sucursales', [HomeController::class, 'branches'])->name('about-us.b
 Route::get('/contacto', [HomeController::class, 'contact'])->name('about-us.contact');
 Route::post('/contacto', [HomeController::class, 'sendContact'])->name('about-us.send-contact');
 Route::get('/servicios', [HomeController::class, 'services'])->name('about-us.services');
+Route::get('/oferta-especializada', [HomeController::class, 'offer'])->name('about-us.offer');
 
 Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
 Route::get('/producto/{product}', [HomeController::class, 'productByFilter'])->name('products-by-filter');
