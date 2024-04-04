@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Enums\BrandsEnum;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CustomerContactRequest;
+use App\Http\Requests\IntegratorContactRequest;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerContact;
@@ -217,6 +218,29 @@ class HomeController extends Controller
     public function integrators()
     {
         return view('integrators.index');
+    }
+
+    public function sendIntegratorContact(IntegratorContactRequest $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $state = $request->state;
+        $company = $request->company;
+        $rfc = $request->rfc;
+        $message_body = $request->message;
+
+        try {
+            Mail::to( $email )->send( new CustomerContact( $name, $email, $phone, $state, $company, $rfc, $message_body ) );
+            session()->flash('message', 'Tu mensaje ha sido enviado con éxito!');
+            session()->flash('icon', 'success');
+        } catch (\Exception $e) {
+            session()->flash('message', 'Hubo un error al enviar tu mensaje. Por favor, intenta de nuevo más tarde.');
+            session()->flash('icon', 'error');
+            Log::error('Error al encolar correo: ' . $e->getMessage());
+        }
+
+        return redirect()->back();
     }
 
 }

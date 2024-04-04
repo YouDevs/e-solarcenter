@@ -21,7 +21,8 @@ Route::get('/contacto', [HomeController::class, 'contact'])->name('about-us.cont
 Route::post('/contacto', [HomeController::class, 'sendContact'])->name('about-us.send-contact');
 Route::get('/servicios', [HomeController::class, 'services'])->name('services.index');
 Route::get('/oferta-especializada', [HomeController::class, 'offer'])->name('services.offer');
-Route::get('/integradores', [HomeController::class, 'integrators'])->name('services.integrators');
+Route::get('/integradores', [HomeController::class, 'integrators'])->name('integrators.index');
+Route::post('/integradores', [HomeController::class, 'sendIntegratorContact'])->name('integrators.send-contact');
 
 Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
 Route::get('/producto/{product}', [HomeController::class, 'productByFilter'])->name('products-by-filter');

@@ -668,7 +668,10 @@
                                     <a class="nav-link dropdown-toggle" href="#">Blog</a>
                                 </li> --}}
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#">Integradores</a>
+                                    <a
+                                        href="{{route('integrators.index')}}"
+                                        class="nav-link dropdown-toggle {{request()->routeIs('integrators.index')? 'active': ''}}"
+                                    >Integradores</a>
                                 </li>
                                 @guest
                                 <li class="nav-item dropdown">
