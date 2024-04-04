@@ -7,6 +7,10 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Enums\BrandsEnum;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CustomerContactRequest;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CustomerContact;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
@@ -177,6 +181,27 @@ class HomeController extends Controller
     public function contact()
     {
         return view('about_us.contact');
+    }
+
+    public function sendContact(CustomerContactRequest $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $subject = $request->subject;
+        $message_body = $request->message;
+
+        try {
+            Mail::to( $email )->send( new CustomerContact( $name, $email, $phone, $subject, $message_body ) );
+            session()->flash('message', 'Tu mensaje ha sido enviado con éxito!');
+            session()->flash('icon', 'success');
+        } catch (\Exception $e) {
+            session()->flash('message', 'Hubo un error al enviar tu mensaje. Por favor, intenta de nuevo más tarde.');
+            session()->flash('icon', 'error');
+            Log::error('Error al encolar correo: ' . $e->getMessage());
+        }
+
+        return redirect()->back();
     }
 
 }

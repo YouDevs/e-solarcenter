@@ -606,8 +606,8 @@
                                         <li class="dropdown-divider"></li>
                                         <li>
                                             <a
-                                                href="{{route('account.send-contact')}}"
-                                                class="dropdown-item {{request()->routeIs('about-us.send-contact')? 'active': ''}}"
+                                                href="{{route('about-us.contact')}}"
+                                                class="dropdown-item {{request()->routeIs('about-us.contact')? 'active': ''}}"
                                             >
                                                 <div class="d-flex">
                                                     <div class="lead text-muted pt-1">
@@ -617,7 +617,7 @@
                                                         <span class="d-block text-heading">
                                                             Contacto
                                                         </span>
-                                                        <small class="d-block text-muted">Ubicación y Atención</small>
+                                                        <small class="d-block text-muted">Ubicación y atención</small>
                                                     </div>
                                                 </div>
                                             </a>
@@ -668,6 +668,9 @@
                                 @guest
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="{{route('register')}}">Regístrate</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="{{route('login')}}">Iniciar Sesión</a>
                                 </li>
                                 @endguest
                                 {{-- <li class="nav-item dropdown">

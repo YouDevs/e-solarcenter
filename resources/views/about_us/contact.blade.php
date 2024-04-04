@@ -80,7 +80,7 @@
         </div>
         <div class="col-lg-6 px-4 px-xl-5 py-5">
             <h2 class="h4 mb-4">Escríbanos</h2>
-            <form method="POST" action="{{ route('account.send-contact') }}" >
+            <form method="POST" action="{{ route('about-us.send-contact') }}" >
                 @csrf
                 <div class="row g-3">
                     <div class="col-sm-6">
@@ -174,4 +174,20 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+
+@if (session('message'))
+<script>
+    Swal.fire({
+        position: "center",
+        icon: "{{ session('icon') }}",
+        title: "{{ session('message') }}",
+        showConfirmButton: false,
+        timer: 3000,
+    });
+</script>
+@endif
+
 @endsection
