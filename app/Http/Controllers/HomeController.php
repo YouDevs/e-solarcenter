@@ -204,4 +204,9 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function services()
+    {
+        return view('about_us.services');
+    }
+
 }
