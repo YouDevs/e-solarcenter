@@ -27,6 +27,8 @@ Route::post('/integradores', [HomeController::class, 'sendIntegratorContact'])->
 Route::get('/buscar-productos', [HomeController::class, 'searchProducts'])->name('search-products');
 Route::get('/producto/{product}', [HomeController::class, 'productByFilter'])->name('products-by-filter');
 
+Route::get('/productos', [HomeController::class, 'productFilter'])->name('product-filter');
+
 Route::middleware(['auth'])->group(function () {
     // Delete this routes when deploy is fucking ready!
     // Route::get('/symlink', function () {

@@ -86,20 +86,25 @@
                             <input class="form-control rounded-start w-100" type="text" id="search-products" placeholder="Buscar productos">
                             <div class="position-absolute" id="autocomplete-list" style="z-index: 1000; width: 100%;"></div>
                             <select class="form-select flex-shrink-0" id="category-id" name="category_id" style="width: 10.5rem;">
-                                <option>Categorías</option>
-                                <option value="">Todos</option>
+                                <option value="">Categoría</option>
                                 @foreach ($categories as $category)
                                     <option
                                         value="{{$category->id}}"
-                                        @selected( isset($request) && $request->has('category_id') && $request->category_id == $category->id ? $category->id: '' )
-                                        >{{$category->name}}</option>
+                                        @selected(request('category_id') == $category->id)
+                                    >
+                                        {{$category->name}}
+                                    </option>
                                 @endforeach
                             </select>
                             <select class="form-select flex-shrink-0" id="brand" name="brand" style="width: 10.5rem;">
-                                <option>Marcas</option>
-                                <option value="">Todos</option>
+                                <option value="">Marca</option>
                                 @foreach ($brands as $brand)
-                                    <option value="{{$brand->value}}" @selected(isset($request) && $request->has('brand') && $request->brand == $brand->value? $brand->value: '' )>{{$brand->value}} </option>
+                                    <option
+                                        value="{{$brand->value}}"
+                                        @selected(request('brand') == $brand->value)
+                                    >
+                                        {{$brand->value}}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -1351,12 +1356,12 @@
             categorySelect.addEventListener('change', function() {
                 const categoryId = this.value;
                 const searchParams = new URLSearchParams(window.location.search);
-                
+
                 // Actualiza o añade category_id a los parámetros de búsqueda
                 searchParams.set('category_id', categoryId);
-                
+
                 // Redirige manteniendo el parámetro de marca si ya estaba establecido
-                window.location.href = `${window.location.origin}?${searchParams.toString()}`;
+                window.location.href = `${window.location.origin}/productos/?${searchParams.toString()}`;
             });
 
             // Filter By Brand (Asegúrate de corregir esto para que funcione con la lógica de filtro actualizada)
@@ -1373,7 +1378,7 @@
                 }
 
                 // Redirige manteniendo los parámetros existentes
-                window.location.href = `${window.location.origin}?${searchParams.toString()}`;
+                window.location.href = `${window.location.origin}/productos/?${searchParams.toString()}`;
             });
 
         })

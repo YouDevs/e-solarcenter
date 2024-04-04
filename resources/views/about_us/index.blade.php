@@ -1,6 +1,14 @@
 @extends('layouts.base')
 
 @section('content')
+<div class="bg-secondary py-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+        <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <h1 class="h3 mb-0">Nosotros</h1>
+        </div>
+    </div>
+</div>
+
 <section class="row g-0">
     <div
         class="col-md-6 bg-position-center bg-size-cover bg-secondary"

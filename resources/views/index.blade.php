@@ -2,7 +2,7 @@
 
 @section('content')
 
-@if (!$request->has('category_id') && !$request->has('brand'))
+@if (!request()->has('category_id') && !request()->has('brand'))
 <section class="bg-secondary py-4 pt-md-5">
     <div class="container py-xl-2">
         <div class="row">
@@ -54,7 +54,6 @@
                         <a class="d-flex align-items-center rounded-3 pt-2 ps-2 mb-4 me-4 me-xl-0 banner-group-item" href="#">
                             <img src="{{asset('images/is_new_1.png')}}" alt="Banner">
                             <div class="py-4 px-2">
-                                {{-- <h5 class="mb-2"><span class="fw-light">Panel</span><br>LonGi</h5> --}}
                                 <h5 class="mb-2 "><span class="fw-light">Panel LonGi</span><br>Hi-MO <span class="fw-light">X6</span><br>Explorer</h5>
                                 <div class="text-white fs-sm">Ver<i class="bi bi-plus fs-xs ms-1"></i></div>
                             </div>
@@ -171,7 +170,7 @@
     </div>
 
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
-        <h2 class="h3 mb-0 pt-3 me-2">{{$request->has('category_id') || $request->has('brand') ? 'Productos': 'Productos más comprados'}}</h2>
+        <h2 class="h3 mb-0 pt-3 me-2">{{ request()->has('category_id') || request()->has('brand') ? 'Productos': 'Productos más comprados'}}</h2>
         <div class="pt-3">
             <a class="btn btn-outline-blue-gray btn-sm" href="shop-grid-ls.html">
                 Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>

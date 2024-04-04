@@ -35,15 +35,13 @@ class HomeController extends Controller
     {
         $products = Product::query();
 
-        // Filtra los productos por categoría si se proporciona category_id
         if ($request->has('category_id')) {
             $categoryId = $request->input('category_id');
             $products->where('category_id', $categoryId);
         }
 
-        // Filtra los productos por marca si se proporciona brand
-        if ($request->has('brand')) { // Corregido para usar 'brand' en lugar de '$brand'
-            $brand = $request->input('brand'); // Corregido para obtener correctamente el valor de 'brand'
+        if ($request->has('brand')) {
+            $brand = $request->input('brand');
             $products->where('brand', $brand);
         }
 
@@ -56,6 +54,28 @@ class HomeController extends Controller
         });
 
         return view('index', compact('request', 'products'));
+    }
+
+    public function productFilter(Request $request)
+    {
+        $products = Product::query();
+
+        if ($request->has('category_id') && !is_null($request->category_id)) {
+            $categoryId = $request->input('category_id');
+            $products->where('category_id', $categoryId);
+        }
+
+        if ($request->has('brand') && !is_null($request->brand)) {
+            $brand = $request->input('brand');
+            $products->where('brand', $brand);
+        }
+
+        $products->orderBy('id', 'DESC');
+
+        // Ejecuta la consulta y obtiene los resultados
+        $products = $products->get();
+
+        return view('products.index', compact('products'));
     }
 
     public function productByFilter(Request $request, Product $product)
