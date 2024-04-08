@@ -6,7 +6,7 @@
 <section class="bg-secondary py-4 pt-md-5">
     <div class="container py-xl-2">
         <div class="row">
-            <!-- Slider     -->
+            <!-- Slider -->
             <div class="col-xl-9 pt-xl-4 order-xl-2">
                 <div class="tns-carousel">
                     <div class="tns-carousel-hero">
@@ -22,7 +22,7 @@
                                         Elige Entre las Mejores Marcas
                                     </h5>
                                     <div class="d-table scale-up delay-4 mx-auto mx-md-0">
-                                        <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">Comprar Ahora<i class="bi bi-chevron-right ms-2 me-n1"></i></a>
+                                        <a class="btn btn-primary btn-shadow" href="{{route('product-filter')}}">Comprar Ahora<i class="bi bi-chevron-right ms-2 me-n1"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                     <h1 class="display-4 from-start delay-1">Distribución Solar</h1>
                                     <h5 class="fw-light pb-3 from-start delay-2">Más Completo del País</h5>
                                     <div class="d-table scale-up delay-4 mx-auto mx-md-0">
-                                        <a class="btn btn-primary btn-shadow" href="shop-grid-ls.html">
+                                        <a class="btn btn-primary btn-shadow" href="{{route('product-filter')}}">
                                             Comprar Ahora<i class="bi ci-chevron-right ms-2 me-n1"></i>
                                         </a>
                                     </div>
@@ -170,9 +170,10 @@
     </div>
 
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
-        <h2 class="h3 mb-0 pt-3 me-2">{{ request()->has('category_id') || request()->has('brand') ? 'Productos': 'Productos más comprados'}}</h2>
+        <h2 class="h3 mb-0 pt-3 me-2">Productos</h2>
         <div class="pt-3">
-            <a class="btn btn-outline-blue-gray btn-sm" href="shop-grid-ls.html">
+            <!-- Multiple items + Static controls outside + No dots + Loop (Responsive) -->
+            <a class="btn btn-outline-blue-gray btn-sm" href="{{route('product-filter')}}">
                 Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>
             </a>
         </div>
@@ -192,7 +193,7 @@
                 </a>
                 <div class="card-body py-2">
                     @auth
-                        <a class="product-meta d-block fs-xs pb-1" href="#">stock: {{ $product->totalAvailableQuantity }}</a>
+                        <a class="product-meta d-block fs-xs pb-1" href="#">Stock: {{ $product->totalAvailableQuantity }}</a>
                     @endauth
                     <h3 class="product-title fs-sm">
                         <a href="#" previewlistener="true">
@@ -203,66 +204,29 @@
                         <div class="d-flex justify-content-between">
                             <div class="product-price">
                                 <x-amount-formatter :amount="$product->defaultPrice" />
-                                {{-- TODO: sistema de descuentos. --}}
-                                {{-- <del class="fs-sm text-muted">$38.<small>50</small></del> --}}
                             </div>
-                            {{-- <div class="star-rating">
-                                <i class="star-rating-icon bi bi-star-fill active"></i>
-                                <i class="star-rating-icon bi bi-star-fill active"></i>
-                                <i class="star-rating-icon bi bi-star-fill active"></i>
-                                <i class="star-rating-icon bi-star-half active"></i>
-                                <i class="star-rating-icon bi bi-star"></i>
-                            </div> --}}
                         </div>
                     @endauth
                 </div>
                 <div class="card-body {{Auth::check()? 'card-body-hidden': ''}}">
-                    {{-- <div class="text-center pb-2">
-                        <div class="form-check form-option form-check-inline mb-2">
-                            <input class="form-check-input" type="radio" name="color1" id="white" checked="">
-                            <label class="form-option-label rounded-circle" for="white"><span class="form-option-color rounded-circle" style="background-color: #eaeaeb;"></span></label>
-                        </div>
-                        <div class="form-check form-option form-check-inline mb-2">
-                            <input class="form-check-input" type="radio" name="color1" id="blue">
-                            <label class="form-option-label rounded-circle" for="blue"><span class="form-option-color rounded-circle" style="background-color: #d1dceb;"></span></label>
-                        </div>
-                        <div class="form-check form-option form-check-inline mb-2">
-                            <input class="form-check-input" type="radio" name="color1" id="yellow">
-                            <label class="form-option-label rounded-circle" for="yellow"><span class="form-option-color rounded-circle" style="background-color: #f4e6a2;"></span></label>
-                        </div>
-                        <div class="form-check form-option form-check-inline mb-2">
-                            <input class="form-check-input" type="radio" name="color1" id="pink">
-                            <label class="form-option-label rounded-circle" for="pink"><span class="form-option-color rounded-circle" style="background-color: #f3dcff;"></span></label>
-                        </div>
-                    </div>--}}
-                    {{-- <div class="d-flex mb-2"> --}}
-                        {{-- <select class="form-select form-select-sm me-2">
-                            <option>XS</option>
-                            <option>S</option>
-                            <option>M</option>
-                            <option>L</option>
-                            <option>XL</option>
-                        </select> --}}
-                        @auth
-                            <form action="{{ route('cart.store') }}" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
-                                <input type="hidden" value="{{ $product->id }}" name="id">
-                                <input type="hidden" value="{{ $product->name }}" name="name">
-                                <input type="hidden" value="{{ $product->brand }}" name="brand">
-                                <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
-                                <input type="hidden" value="{{ $product->location }}"  name="location">
-                                {{-- <button class="px-4 py-1.5 text-white text-sm bg-blue-800 rounded">Add To Cart</button> --}}
-                                <button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
-                                    <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
-                                </button>
-                            </form>
-                        @endauth
+                    @auth
+                        <form action="{{ route('cart.store') }}" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
+                            <input type="hidden" value="{{ $product->id }}" name="id">
+                            <input type="hidden" value="{{ $product->name }}" name="name">
+                            <input type="hidden" value="{{ $product->brand }}" name="brand">
+                            <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
+                            <input type="hidden" value="{{ $product->location }}"  name="location">
+                            <button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
+                                <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
+                            </button>
+                        </form>
+                    @endauth
                         {{-- TODO: botón comprar ahora para ahorrar el proceso de agregar al carrito. --}}
                         {{-- <a class="btn btn-solar btn-sm" type="button"><i class="ci-cart fs-sm me-1"></i>Comprar Ahora</a> --}}
-                    {{-- </div> --}}
                     <div class="text-center">
-                        <a class="nav-link-style fs-ms" data-bs-toggle="modal" data-bs-target="#quick-view-{{$product->id}}">
+                        <a class="nav-link-style fs-ms" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#quick-view-{{$product->id}}">
                             <i class="bi bi-eye"></i> Vista rápida
                         </a>
                     </div>
@@ -462,6 +426,139 @@
     </div>
 </div>
 
+{{-- <section class="container pb-4 pb-md-5">
+    <div class="row">
+        <!-- Bestsellers-->
+        <div class="col-md-4 col-sm-6 mb-2 py-3">
+            <div class="widget">
+                <h3 class="widget-title">Mejor vendido</h3>
+                <div class="d-flex align-items-center pb-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title">
+                            <a href="shop-single-v2.html">Wireless Bluetooth Headphones</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$259.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Cloud Security Camera</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$122.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Android Smartphone S10</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$799.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Android Smart TV Box</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$67.<small>00</small></span>
+                        <del class="text-muted fs-xs">$90.<small>43</small></del>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-0">...</p><a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+            </div>
+        </div>
+
+        <!-- New arrivals-->
+        <div class="col-md-4 col-sm-6 mb-2 py-3">
+            <div class="widget">
+                <h3 class="widget-title">Recién llegado</h3>
+                <div class="d-flex align-items-center pb-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title">
+                            <a href="shop-single-v2.html">Wireless Bluetooth Headphones</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$259.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Cloud Security Camera</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$122.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Android Smartphone S10</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$799.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Android Smart TV Box</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$67.<small>00</small></span>
+                        <del class="text-muted fs-xs">$90.<small>43</small></del>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-0">...</p><a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+            </div>
+        </div>
+
+        <!-- Top rated-->
+        <div class="col-md-4 col-sm-6 mb-2 py-3">
+            <div class="widget">
+                <h3 class="widget-title">Recién llegado</h3>
+                <div class="d-flex align-items-center pb-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title">
+                            <a href="shop-single-v2.html">Wireless Bluetooth Headphones</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$259.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Cloud Security Camera</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$122.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2 border-bottom">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Android Smartphone S10</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$799.<small>00</small></span></div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center py-2">
+                    <a class="d-block flex-shrink-0" href="shop-single-v2.html">
+                        <img src="images/is_new_1.png" width="64" alt="Product"></a>
+                    <div class="ps-2">
+                        <h6 class="widget-product-title"><a href="shop-single-v2.html">Android Smart TV Box</a></h6>
+                        <div class="widget-product-meta"><span class="text-accent">$67.<small>00</small></span>
+                        <del class="text-muted fs-xs">$90.<small>43</small></del>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-0">...</p><a class="fs-sm" href="shop-grid-ls.html">View more<i class="ci-arrow-right fs-xs ms-1"></i></a>
+            </div>
+        </div>
+    </div>
+</section> --}}
+
 <!-- Modal de Selección de Sucursal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="selectQuantityModal" aria-labelledby="selectQuantityModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -499,13 +596,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
         autoplayButtonOutput: false,
         autoplayTimeout: 3000, // Establece el intervalo de autoplay a 4000ms (4 segundos)
         loop: true, // Permite que el slider se repita infinitamente
-        // responsive: {
-        //     "0": {"items": 1},
-        //     "360": {"items": 2},
-        //     "600": {"items": 3},
-        //     "991": {"items": 4},
-        //     "1200": {"items": 4} // A partir de 1200px, muestra 4 elementos
-        // }
     });
 
     let sliderBrands = tns({
@@ -523,6 +613,21 @@ document.addEventListener('DOMContentLoaded', (e) => {
             "600": {"items": 3},
             "991": {"items": 4},
             "1200": {"items": 4} // A partir de 1200px, muestra 4 elementos
+        }
+    });
+
+    let carouselCategories = tns({
+        container: '.tns-carousel-categories',
+        items: 3,
+        nav: false,
+        controls: true,
+
+        controlsText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
+        responsive: {
+            "0": {"items": 1},
+            "500":{"items":2, "gutter": 18},
+            "768":{"items":3, "gutter": 20},
+            "1100":{"gutter": 24}
         }
     });
 
