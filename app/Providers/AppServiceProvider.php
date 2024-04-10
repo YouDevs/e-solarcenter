@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::useBootstrapFive();
 
-        View::composer('layouts.base', CategoriesComposer::class);
-        View::composer('layouts.base', BrandsComposer::class);
+        View::composer('*', CategoriesComposer::class);
+        View::composer('*', BrandsComposer::class);
     }
 }

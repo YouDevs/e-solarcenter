@@ -1256,11 +1256,25 @@
                 </div>
             </div>
         </footer>
+        {{-- <object
+            style="width: 500px;
+            height: 600px;
+            margin-top: 0;
+            margin-left: 0px;
+            margin-right: 0px;
+            position:fixed;
+            right:20px;
+            bottom:20px;
+            border:0;
+            z-index: 1000;"
+            id="chatObject"
+            class="box-chat-sicrea-objeto" type="text/html"
+            data="https://cwkolob215.nuxiba.com/chatjs/?domain=solarcenter.com"
+            >
+        </object> --}}
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
 
     <script>
@@ -1268,6 +1282,7 @@
             // Filter by Product (Desktop):
             document.getElementById('search-products').addEventListener('input', (e) => {
                 const searchTerm = e.target.value
+                document.body.style.backgroundColor = "transparent";
 
                 if (searchTerm.length) {
                     fetch(`/buscar-productos?search_term=${searchTerm}`)

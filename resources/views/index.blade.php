@@ -172,7 +172,6 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
         <h2 class="h3 mb-0 pt-3 me-2">Productos</h2>
         <div class="pt-3">
-            <!-- Multiple items + Static controls outside + No dots + Loop (Responsive) -->
             <a class="btn btn-outline-blue-gray btn-sm" href="{{route('product-filter')}}">
                 Más Productos <i class="bi bi-chevron-right ms-1 me-n1"></i>
             </a>

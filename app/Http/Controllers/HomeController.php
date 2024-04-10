@@ -33,27 +33,19 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::query();
+        $products = Product::orderBy('id', 'DESC')->paginate(8);
 
-        if ($request->has('category_id')) {
-            $categoryId = $request->input('category_id');
-            $products->where('category_id', $categoryId);
-        }
-
-        if ($request->has('brand')) {
-            $brand = $request->input('brand');
-            $products->where('brand', $brand);
-        }
-
-        $products->orderBy('id', 'DESC');
-
-        $products = $products->get()->map(function ($product) {
+        // Modifica cada producto para añadir las URLs como atributos
+        // Sin perder la instancia de paginador
+        $products->getCollection()->transform(function ($product) {
             $product->featured_url = Storage::url($product->featured);
-            $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet): null;
+            $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet) : null;
             return $product;
         });
 
-        return view('index', compact('request', 'products'));
+        return view('index', [
+            'products' => $products
+        ]);
     }
 
     public function productFilter(Request $request)
@@ -70,10 +62,14 @@ class HomeController extends Controller
             $products->where('brand', $brand);
         }
 
-        $products->orderBy('id', 'DESC');
-
         // Ejecuta la consulta y obtiene los resultados
-        $products = $products->get();
+        $products = $products->orderBy('id', 'DESC')->paginate(4);
+
+        $products->getCollection()->transform(function ($product) {
+            $product->featured_url = Storage::url($product->featured);
+            $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet) : null;
+            return $product;
+        });
 
         return view('products.index', compact('products'));
     }
