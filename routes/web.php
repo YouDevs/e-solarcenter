@@ -14,6 +14,9 @@ use App\Http\Controllers\FedexController;
 
 
 
+Route::get('/test', function() {
+    return view('testing-chat');
+})->name('index');
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/nosotros', [HomeController::class, 'aboutUs'])->name('about-us.index');
 Route::get('/sucursales', [HomeController::class, 'branches'])->name('about-us.branches');

@@ -1255,23 +1255,29 @@
                 </div>
                 </div>
             </div>
-        </footer>
-        {{-- <object
-            style="width: 500px;
-            height: 600px;
-            margin-top: 0;
-            margin-left: 0px;
-            margin-right: 0px;
-            position:fixed;
-            right:20px;
-            bottom:20px;
-            border:0;
-            z-index: 1000;"
-            id="chatObject"
-            class="box-chat-sicrea-objeto" type="text/html"
-            data="https://cwkolob215.nuxiba.com/chatjs/?domain=solarcenter.com"
+            {{-- <iframe
+                id="inlineFrameExample"
+                title="Inline Frame Example"
+                width="500"
+                height="600"
+                src="https://cwkolob215.nuxiba.com/chatjs/?domain=solarcenter.com">
+            </iframe> --}}
+            {{-- <object
+                style="
+                margin-top: 0;
+                margin-left: 0px;
+                margin-right: 0px;
+                position:fixed;
+                right:20px;
+                bottom:20px;
+                border:0;
+                z-index: 1000;"
+                id="chatObject"
+                type="text/html"
+                data="https://cwkolob215.nuxiba.com/chatjs/?domain=solarcenter.com"
             >
-        </object> --}}
+            </object> --}}
+        </footer>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>

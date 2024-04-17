@@ -70,6 +70,7 @@ class FedexController extends Controller
         ];
 
         try {
+            // $response = $this->client->post("https://apis.fedex.com/rate/v1/rates/quotes", [
             $response = $this->client->post("https://apis-sandbox.fedex.com/rate/v1/rates/quotes", [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $accessToken,
