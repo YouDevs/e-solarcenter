@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductStock;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -26,19 +27,25 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        dd($request->all());
+        $quantities = json_decode($request->quantities, true);
 
-        \Cart::add([
-            'id' => $request->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'brand' => $request->brand,
-            'quantity' => $request->quantity,
-            'attributes' => array(
-                'featured' => $request->featured,
-                'brand' => $request->brand,
-            )
-        ]);
+        foreach ($quantities as $location => $quantity) {
+            if ( (int) $quantity !== 0 && (int) $quantity > 0) {
+                $uniqueId = $request->id . '-' . $location;
+
+                \Cart::add([
+                    'id' => $uniqueId,
+                    'name' => $request->name,
+                    'price' => $request->price,
+                    'quantity' => $quantity,
+                    'attributes' => array(
+                        'location' => $location,
+                        'brand' => $request->brand,
+                        'featured' => $request->featured
+                    )
+                ]);
+            }
+        }
 
         session()->flash('success', 'Product is Added to Cart Successfully !');
 
@@ -86,18 +93,32 @@ class CartController extends Controller
 
     public function getProductStock(Request $request, $productId)
     {
+        $locationId = auth()->user()->customer->location_id;
         $product = Product::with(['stocks.location'])->findOrFail($productId);
 
-        $stocks = $product->stocks->map(function ($stock) {
-            return [
-                'id' => $stock->location->id,
-                'name' => $stock->location->name,
-                'quantity' => $stock->quantity_available,
-            ];
-        });
+        $localStock = null;
+        $nationalStockQuantity = 0;
+
+        foreach ($product->stocks as $stock) {
+            if ($stock->location->id == $locationId) {
+                // Este es el stock de la ubicación del usuario
+                $localStock = [
+                    'id' => $stock->location->id,
+                    'name' => $stock->location->name,
+                    'quantity' => $stock->quantity_available,
+                ];
+            } else {
+                // Sumar el stock de otras ubicaciones como stock nacional
+                $nationalStockQuantity += $stock->quantity_available;
+            }
+        }
 
         return response()->json([
-            'stocks' => $stocks,
+            'localStock' => $localStock,
+            'nationalStock' => [
+                'name' => 'Nacional',
+                'quantity' => $nationalStockQuantity,
+            ],
         ]);
     }
 

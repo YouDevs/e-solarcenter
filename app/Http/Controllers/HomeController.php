@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Location;
 use App\Models\Category;
 use App\Enums\BrandsEnum;
 use Illuminate\Support\Facades\Storage;
@@ -33,6 +34,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $locations = Location::orderBy('id', 'DESC')->get();
         $products = Product::orderBy('id', 'DESC')->paginate(8);
 
         // Modifica cada producto para añadir las URLs como atributos
@@ -44,7 +46,8 @@ class HomeController extends Controller
         });
 
         return view('index', [
-            'products' => $products
+            'products' => $products,
+            'locations' => $locations,
         ]);
     }
 

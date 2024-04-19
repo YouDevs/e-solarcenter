@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->integer('location')->nullable();
             $table->string('name', 60)->nullable();
+            $table->integer('netsuite_id')->nullable();
+            $table->string('netsuite_name', 60)->nullable();
             $table->timestamps();
         });
     }

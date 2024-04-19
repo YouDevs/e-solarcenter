@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('cuenta/perfil', [CustomerAccountController::class, 'profile'])->name('account.profile');
     Route::put('cuenta/perfil/{customer}/update', [CustomerAccountController::class, 'profileUpdate'])->name('account.profile-update');
+    Route::post('cuenta/perfil/location/update', [CustomerAccountController::class, 'locationUpdate'])->name('account.location-update');
 
     Route::get('cuenta/ordenes', [CustomerAccountController::class, 'orders'])->name('account.orders');
     Route::delete('cuenta/ordenes/{order}/delete', [CustomerAccountController::class, 'orderDelete'])->name('account.orders.delete');

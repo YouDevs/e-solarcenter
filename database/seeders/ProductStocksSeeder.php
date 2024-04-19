@@ -16,7 +16,7 @@ class ProductStocksSeeder extends Seeder
         // Product id 1
         ProductStock::create([
             'product_id' => 1,
-            'location_id' => 6,
+            'location_id' => 3,
             'quantity_available' => 155,
         ]);
         ProductStock::create([
@@ -26,12 +26,12 @@ class ProductStocksSeeder extends Seeder
         ]);
         ProductStock::create([
             'product_id' => 1,
-            'location_id' => 3,
+            'location_id' => 2,
             'quantity_available' => 2,
         ]);
         ProductStock::create([
             'product_id' => 1,
-            'location_id' => 8,
+            'location_id' => 5,
             'quantity_available' => 87,
         ]);
         ProductStock::create([
@@ -48,7 +48,7 @@ class ProductStocksSeeder extends Seeder
         ]);
         ProductStock::create([
             'product_id' => 2,
-            'location_id' => 6,
+            'location_id' => 3,
             'quantity_available' => 66,
         ]);
 

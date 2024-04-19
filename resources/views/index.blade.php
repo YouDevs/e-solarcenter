@@ -188,13 +188,19 @@
                         @auth
                             <form action="{{ route('cart.store') }}" class="d-flex mb-2" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
                                 <input type="hidden" value="{{ $product->id }}" name="id">
                                 <input type="hidden" value="{{ $product->name }}" name="name">
                                 <input type="hidden" value="{{ $product->brand }}" name="brand">
                                 <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
-                                <input type="hidden" value="{{ $product->location }}"  name="location">
-                                <button class="btn btn-primary btn-sm add-to-cart-btn" data-product-id="{{ $product->id }}" type="submit">
+                                <input type="hidden" value="{{ $product->featured }}" name="featured">
+                                {{-- <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1"> --}}
+                                {{-- <input type="hidden" value="{{ $product->location }}"  name="location"> --}}
+                                <button
+                                    class="btn btn-primary btn-sm add-to-cart-btn"
+                                    data-product-id="{{ $product->id }}"
+                                    data-location-id="{{ auth()->user()->customer->location_id }}"
+                                    type="submit"
+                                    >
                                     <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
                                 </button>
                             </form>
@@ -402,7 +408,34 @@
     </div>
 </div>
 
-<!-- Modal de Selección de Sucursal -->
+<!-- Modal de Selección de Ubicación de Cliente -->
+<div class="modal fade" tabindex="-1" role="dialog" id="selectLocationModal" aria-labelledby="selectLocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectLocationModalLabel">Selecciona la sucursal más cercana a tu ubicación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('account.location-update')}}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <select name="location_id" id="location-id" class="form-select">
+                        <option value="">Selecciona una opción</option>
+                        @foreach ($locations as $location)
+                            <option value="{{$location->id}}">{{$location->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-md" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-md">Agregar al Carrito</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Selección Cantidad x Ubicación -->
 <div class="modal fade" tabindex="-1" role="dialog" id="selectQuantityModal" aria-labelledby="selectQuantityModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -458,59 +491,77 @@ document.addEventListener('DOMContentLoaded', (e) => {
         }
     });
 
-    // let carouselCategories = tns({
-    //     container: '.tns-carousel-categories',
-    //     items: 4,
-    //     nav: false,
-    //     controls: true,
-    //     controlsText: ['<i class="bi bi-chevron-left"></i>', '<i class="bi bi-chevron-right"></i>'],
-    //     responsive: {
-    //         "0": {"items": 1},
-    //         "500":{"items":2, "gutter": 18},
-    //         "768":{"items":3, "gutter": 20},
-    //         "1100":{"gutter": 24}
-    //     }
-    // });
-
     window.ResizeObserver = ResizeObserver;
 
-    //
+    // Seleccionar cantidad por sucursal:
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
+
+            const locationId = this.getAttribute('data-location-id');
             const productId = this.getAttribute('data-product-id');
 
-            fetch(`/cart/product/${productId}/stock`)
-                .then( response => response.json() )
-                .then( data => {
-                    // Llenar el modal:
-                    const modalBody = document.querySelector('#selectQuantityModal .modal-body');
-                    modalBody.innerHTML = '';
+            if( !locationId ) {
+                let modalElement = document.getElementById('selectLocationModal');
+                let modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
+            } else {
+                fetch(`/cart/product/${productId}/stock`)
+                    .then( response => response.json() )
+                    .then( data => {
+                        // Llenar el modal:
+                        const modalBody = document.querySelector('#selectQuantityModal .modal-body');
+                        modalBody.innerHTML = '';
 
-                    // Generar campos del formulario para cada sucursal
-                    data.stocks.forEach(location => {
-                        const label = document.createElement('label');
-                        label.textContent = `${location.name} (cantidad ${location.quantity} )`;
-                        label.className = `mt-2`;
-                        label.htmlFor = `quantity-${location.id}`;
+                        const localStock = data.localStock
+                        if (localStock) {
+                            console.log("localStock: ");
+                            console.log(localStock);
+                            let label = document.createElement('label');
+                            label.textContent = `${localStock.name} (cantidad ${localStock.quantity} )`;
+                            label.className = `mt-2`;
+                            label.htmlFor = `quantity-${localStock.id}`;
+                            let input = document.createElement('input');
+                            input.type = 'number';
+                            input.id = `quantity-${localStock.id}`;
+                            input.name = `quantity[${localStock.name}]`;
+                            input.min = 0;
+                            input.max = localStock.quantity;
+                            input.value = 1;
+                            input.className = 'form-control';
+                            modalBody.appendChild(label);
+                            modalBody.appendChild(input);
+                        }
 
-                        const input = document.createElement('input');
-                        input.type = 'number';
-                        input.id = `quantity-${location.id}`;
-                        input.name = `quantity[${location.name}]`;
-                        input.min = 0;
-                        input.max = location.quantity;
-                        input.value = 1;
-                        input.className = 'form-control';
+                        const nationalStock = data.nationalStock
+                        if (nationalStock) {
+                            console.log("nationalStock")
+                            console.log(nationalStock)
+                            console.log(nationalStock.name)
+                            let label2 = document.createElement('label');
+                            label2.textContent = `${nationalStock.name} (cantidad ${nationalStock.quantity} )`;
+                            label2.className = `mt-2`;
+                            label2.htmlFor = `quantity-${nationalStock.id}`;
+                            let input2 = document.createElement('input');
+                            input2.type = 'number';
+                            input2.id = `quantity-${nationalStock.id}`;
+                            input2.name = `quantity[${nationalStock.name}]`;
+                            input2.min = 0;
+                            input2.max = nationalStock.quantity;
+                            input2.value = 1;
+                            input2.className = 'form-control';
+                            modalBody.appendChild(label2);
+                            modalBody.appendChild(input2);
+                        }
 
-                        modalBody.appendChild(label);
-                        modalBody.appendChild(input);
-                    });
-                })
+                    })
 
-            let modalElement = document.getElementById('selectQuantityModal');
-            let modalInstance = new bootstrap.Modal(modalElement);
-            modalInstance.show();
+                let modalElement = document.getElementById('selectQuantityModal');
+                let modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
+            }
+
+
         });
     });
 

@@ -65,6 +65,14 @@ class CustomerAccountController extends Controller
         return redirect()->back();
     }
 
+    public function locationUpdate(Request $request)
+    {
+        $customer = Auth::user()->customer;
+        $customer->location_id = $request->location_id;
+        $customer->save();
+        return redirect()->back();
+    }
+
     public function orders(Request $request)
     {
         $customer = Auth::user()->customer;
