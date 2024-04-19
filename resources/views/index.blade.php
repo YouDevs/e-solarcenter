@@ -198,7 +198,7 @@
                                 <button
                                     class="btn btn-primary btn-sm add-to-cart-btn"
                                     data-product-id="{{ $product->id }}"
-                                    data-location-id="{{ auth()->user()->customer->location_id }}"
+                                    data-location-id="{{ auth()->user()->customer->location_id ?? null }}"
                                     type="submit"
                                     >
                                     <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito

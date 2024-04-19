@@ -672,18 +672,15 @@
                                 {{-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#">Blog</a>
                                 </li> --}}
-                                <li class="nav-item dropdown">
+                                {{-- <li class="nav-item dropdown">
                                     <a
                                         href="{{route('integrators.index')}}"
                                         class="nav-link dropdown-toggle {{request()->routeIs('integrators.index')? 'active': ''}}"
                                     >Integradores</a>
-                                </li>
+                                </li> --}}
                                 @guest
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{route('register')}}">Regístrate</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{route('login')}}">Iniciar Sesión</a>
+                                    <a class="nav-link dropdown-toggle" href="{{route('login')}}">E-commerce</a>
                                 </li>
                                 @endguest
                                 {{-- <li class="nav-item dropdown">

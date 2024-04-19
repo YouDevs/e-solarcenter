@@ -62,9 +62,10 @@
                                     <div class="d-flex justify-content-center">
                                         <button type="submit" class="btn btn-solar">Inciar Sesión</button>
                                     </div>
-                                    <div class="d-flex justify-content-center">
+                                    <div class="d-flex justify-content-center mt-2">
+                                        <a class="btn btn-link sc-gray text-decoration-none" href="{{route('register')}}">Solicita una cuenta</a>
                                         @if (Route::has('reset.password.get'))
-                                            <a class="btn btn-link text-decoration-none" href="{{ route('forget.password.get') }}">
+                                            <a class="btn btn-link sc-gray text-decoration-none" href="{{ route('forget.password.get') }}">
                                                 {{ __('¿Olvidaste tu contraseña?') }}
                                             </a>
                                         @endif
