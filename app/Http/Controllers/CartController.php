@@ -6,10 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductStock;
+use App\Services\ProductStockService;
 use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
+    protected $productStockService;
+
+    public function __construct(ProductStockService $productStockService)
+    {
+        $this->productStockService = $productStockService;
+    }
+
     public function cartList()
     {
         // \Cart::clear();
@@ -91,35 +99,11 @@ class CartController extends Controller
         return redirect()->route('cart.list');
     }
 
-    public function getProductStock(Request $request, $productId)
+    public function getProductStock(Request $request, Product $product)
     {
         $locationId = auth()->user()->customer->location_id;
-        $product = Product::with(['stocks.location'])->findOrFail($productId);
-
-        $localStock = null;
-        $nationalStockQuantity = 0;
-
-        foreach ($product->stocks as $stock) {
-            if ($stock->location->id == $locationId) {
-                // Este es el stock de la ubicación del usuario
-                $localStock = [
-                    'id' => $stock->location->id,
-                    'name' => $stock->location->name,
-                    'quantity' => $stock->quantity_available,
-                ];
-            } else {
-                // Sumar el stock de otras ubicaciones como stock nacional
-                $nationalStockQuantity += $stock->quantity_available;
-            }
-        }
-
-        return response()->json([
-            'localStock' => $localStock,
-            'nationalStock' => [
-                'name' => 'Nacional',
-                'quantity' => $nationalStockQuantity,
-            ],
-        ]);
+        $stock = $this->productStockService->getProductStockForProduct($product, $locationId);
+        return response()->json($stock);
     }
 
 }

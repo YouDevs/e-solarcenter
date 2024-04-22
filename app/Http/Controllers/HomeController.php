@@ -13,18 +13,22 @@ use App\Http\Requests\IntegratorContactRequest;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerContact;
+use App\Models\ProductStock;
+use App\Services\ProductStockService;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
+    protected $productStockService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ProductStockService $productStockService)
     {
         // $this->middleware('auth');
+        $this->productStockService = $productStockService;
     }
 
     /**
@@ -35,15 +39,24 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $locations = Location::orderBy('id', 'DESC')->get();
-        $products = Product::orderBy('id', 'DESC')->paginate(8);
+        $products = Product::with('stocks.location')->orderBy('id', 'DESC')->paginate(8);
 
-        // Modifica cada producto para añadir las URLs como atributos
-        // Sin perder la instancia de paginador
-        $products->getCollection()->transform(function ($product) {
-            $product->featured_url = Storage::url($product->featured);
-            $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet) : null;
-            return $product;
-        });
+        if (auth()->check()) {
+            $locationId = auth()->user()->customer->location_id;
+            $productStockService = new ProductStockService();
+
+            $products->getCollection()->transform(function ($product) use ($productStockService, $locationId) {
+                $product->featured_url = Storage::url($product->featured);
+                $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet) : null;
+
+                // Aquí agregamos la lógica del stock
+                $stock = $productStockService->getProductStockForProduct($product, $locationId);
+                $product->localStock = $stock['localStock'];
+                $product->nationalStock = $stock['nationalStock'];
+
+                return $product;
+            });
+        }
 
         return view('index', [
             'products' => $products,

@@ -169,7 +169,12 @@
                     </a>
                     <div class="card-body py-2">
                         @auth
-                            <a class="product-meta d-block fs-xs pb-1" href="#">Stock: {{ $product->totalAvailableQuantity }}</a>
+                            @if ($product->localStock)
+                                <a class="product-meta d-block fs-xs pb-1" href="#">Stock {{$product->localStock['name']}}: {{ $product->localStock['quantity'] }} </a>
+                            @endif
+                            @if ($product->nationalStock)
+                                <a class="product-meta d-block fs-xs pb-1" href="#">Stock {{$product->nationalStock['name']}}: {{ $product->nationalStock['quantity'] }}</a>
+                            @endif
                         @endauth
                         <h3 class="product-title fs-sm">
                             <a href="#" previewlistener="true">
@@ -193,7 +198,7 @@
                                 <input type="hidden" value="{{ $product->brand }}" name="brand">
                                 <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
                                 <input type="hidden" value="{{ $product->featured }}" name="featured">
-                                {{-- <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1"> --}}
+                                <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
                                 {{-- <input type="hidden" value="{{ $product->location }}"  name="location"> --}}
                                 <button
                                     class="btn btn-primary btn-sm add-to-cart-btn"
@@ -409,7 +414,7 @@
 </div>
 
 <!-- Modal de Selección de Ubicación de Cliente -->
-<div class="modal fade" tabindex="-1" role="dialog" id="selectLocationModal" aria-labelledby="selectLocationModalLabel" aria-hidden="true">
+{{-- <div class="modal fade" tabindex="-1" role="dialog" id="selectLocationModal" aria-labelledby="selectLocationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -433,28 +438,11 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Modal de Selección Cantidad x Ubicación -->
-<div class="modal fade" tabindex="-1" role="dialog" id="selectQuantityModal" aria-labelledby="selectQuantityModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="selectQuantityModalLabel">Selecciona una Sucursal</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="quantitySelectionForm">
-                <div class="modal-body">
-                    <!-- El formulario se generará dinámicamente aquí -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-md" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary btn-md">Agregar al Carrito</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@include('partials.select-quantity-by-location')
+
 @endsection
 
 @section('scripts')
