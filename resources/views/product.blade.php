@@ -41,7 +41,7 @@
                         <form action="{{ route('cart.store') }}" class="mb-grid-gutter" method="POST" enctype="multipart/form-data">
                             <div class="mb-3 d-flex align-items-center">
                                 @csrf
-                                <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1">
+                                {{-- <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1"> --}}
                                 <input type="hidden" value="{{ $product->id }}" name="id">
                                 <input type="hidden" value="{{ $product->name }}" name="name">
                                 <input type="hidden" value="{{ $product->brand }}" name="brand">

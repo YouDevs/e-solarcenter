@@ -25,6 +25,19 @@ class CheckoutController extends Controller
     public function shipping()
     {
         $cart_items = \Cart::getContent();
+        $locations = [];
+
+        foreach($cart_items as $item) {
+            $location = $item->attributes->location;
+
+            if(!array_key_exists($location, $locations)) {
+                $locations[$location] = [
+                    'items' => [],
+                ];
+            }
+            $locations[$location]['items'][] = $item;
+        }
+
         $customer = auth()->user()->customer;
 
         $delivery_addresses = collect([$customer->delivery_address_1, $customer->delivery_address_2, $customer->delivery_address_3])
@@ -32,7 +45,12 @@ class CheckoutController extends Controller
                                 ->values()
                                 ->all();
 
-        return view('checkout-shipping', compact('cart_items', 'customer','delivery_addresses'));
+        return view('checkout-shipping', compact(
+            'cart_items',
+            'locations',
+            'customer',
+            'delivery_addresses'
+        ));
     }
 
     public function selectedAddress(Request $request)

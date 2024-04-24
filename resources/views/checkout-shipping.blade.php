@@ -35,23 +35,18 @@
                         <thead>
                             <tr>
                                 <th class="align-middle">Sucursal</th>
-                                <th class="align-middle">Tipo de Envío</th>
                                 <th class="align-middle">Dirección</th>
                             </tr>
                         </thead>
                         <tbody>
+
+                            @foreach ($locations as $location => $cart_item)
                             <tr>
                                 <td>
-                                    Guadalajara
+                                    {{$location}}
                                 </td>
                                 <td>
-                                    <select name="shipping_type" class="form-select">
-                                        <option value="">Enviar a Cliente</option>
-                                        <option value="">Cliente Recoge</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select name="shipping_type" class="form-select">
+                                    <select name="shipping_type[{{ $location }}]" class="form-select">
                                         <option value="">Elige una Dirección</option>
                                         @foreach ($delivery_addresses as $index => $address)
                                             <option
@@ -63,8 +58,10 @@
                                 </td>
                             </tr>
 
+                            @endforeach
 
-                            <tr>
+                            <!-- "Subtabla" que se mostraría una vez que el usuario seleccione la dirección de entrega -->
+                            {{-- <tr class="d-none">
                                 <td colspan="3">
                                     <table class="table">
                                         <thead>
@@ -86,21 +83,15 @@
                                                 <td><input type="checkbox"> $100</td>
                                                 <td>3 días hábiles</td>
                                             </tr>
-                                            <!-- Repite <tr> por cada opción de envío disponible -->>
                                         </tbody>
                                     </table>
                                 </td>
-                            </tr>
+                            </tr> --}}
 
-                            <tr>
+                            <!-- Otra locación según los items del carrito de compras -->
+                            {{-- <tr>
                                 <td>
                                     Monterrey
-                                </td>
-                                <td>
-                                    <select name="shipping_type" class="form-select">
-                                        <option value="">Enviar a Cliente</option>
-                                        <option value="">Cliente Recoge</option>
-                                    </select>
                                 </td>
                                 <td>
                                     <select name="shipping_type" class="form-select">
@@ -113,7 +104,8 @@
                                         @endforeach
                                     </select>
                                 </td>
-                            </tr>
+                            </tr> --}}
+                            <!-- Otra "Subtabla"... -->
                         </tbody>
                     </table>
                 </div>
@@ -243,5 +235,36 @@
     });
 </script>
 @endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    alert("Documento cargado!")
+    document.querySelectorAll('select[name^="shipping_type"]').forEach(select => {
+        console.log("petición asincrona")
+        console.log(select)
+        select.addEventListener('change', function() {
+            let location = this.name.split('[')[1].split(']')[0]; // Obtén la locación de la propiedad name
+            let addressId = this.value;
+
+            // let item = event.target;
+            // let itemId = item.getAttribute('data-id');
+            // let quantity = item.value;
+
+            fetch('{{ route('estafeta.quoter') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ location: location, address: addressId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('.subtotal-display').innerHTML = data.newSubtotalFormatted;
+            });
+        });
+    });
+});
+</script>
 
 @endsection

@@ -9,21 +9,22 @@ use Illuminate\Support\Facades\Log;
 
 class EstafetaController extends Controller
 {
-    public function quoter()
+    public function quoter(Request $request)
     {
+
         $estafetaService = new EstafetaApiService();
 
         $data = [
-            "Origin" => "62320",
+            "Origin" => "45645",
             "Destination" => ["01000"],
             "PackagingType" => "Paquete",
-            "IsInsurance" => false,
-            "ItemValue" => 10,
+            // "IsInsurance" => false,
+            // "ItemValue" => 10,
             "Dimensions" => [
-                "Weight" => 10, // peso
-                "Length" => 10, // largo
-                "Width" => 10, // ancho
-                "Height" => 10, // alto
+                "Weight" => 15,
+                "Length" => 200,
+                "Width" => 110,
+                "Height" => 180,
             ]
         ];
 

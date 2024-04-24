@@ -198,7 +198,7 @@
                                 <input type="hidden" value="{{ $product->brand }}" name="brand">
                                 <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
                                 <input type="hidden" value="{{ $product->featured }}" name="featured">
-                                <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1">
+                                {{-- <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1"> --}}
                                 {{-- <input type="hidden" value="{{ $product->location }}"  name="location"> --}}
                                 <button
                                     class="btn btn-primary btn-sm add-to-cart-btn"
@@ -259,7 +259,7 @@
                                             <form action="{{ route('cart.store') }}" class="mb-grid-gutter" method="POST" enctype="multipart/form-data">
                                                 <div class="mb-3 d-flex align-items-center">
                                                     @csrf
-                                                    <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1">
+                                                    {{-- <input type="number" class="form-control me-3" placeholder="cantidad" name="quantity" min="1" value="1"> --}}
                                                     <input type="hidden" value="{{ $product->id }}" name="id">
                                                     <input type="hidden" value="{{ $product->name }}" name="name">
                                                     <input type="hidden" value="{{ $product->brand }}" name="brand">

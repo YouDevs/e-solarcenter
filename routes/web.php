@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     //     return 'Migrate fresh successfully!';
     // });
 
-    Route::get('/cotizar-estafeta', [EstafetaController::class, 'quoter'])->name('estafeta.quoter');
+    Route::post('/cotizar-estafeta', [EstafetaController::class, 'quoter'])->name('estafeta.quoter');
     Route::get('/cotizar-fedex', [FedexController::class, 'index'])->name('fedex.index');
 
     Route::get('/migrate-fresh', function () {
