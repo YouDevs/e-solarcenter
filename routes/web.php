@@ -11,12 +11,13 @@ use App\Http\Controllers\CustomerSupport\CustomerController;
 use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
 use App\Http\Controllers\FedexController;
+use App\Http\Controllers\EstafetaController;
 
 
 
 Route::get('/test', function() {
     return view('testing-chat');
-})->name('index');
+})->name('test.index');
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/nosotros', [HomeController::class, 'aboutUs'])->name('about-us.index');
 Route::get('/sucursales', [HomeController::class, 'branches'])->name('about-us.branches');
@@ -39,7 +40,8 @@ Route::middleware(['auth'])->group(function () {
     //     return 'Migrate fresh successfully!';
     // });
 
-    Route::get('/cotizar-fedex', [FedexController::class, 'index']);
+    Route::get('/cotizar-estafeta', [EstafetaController::class, 'quoter'])->name('estafeta.quoter');
+    Route::get('/cotizar-fedex', [FedexController::class, 'index'])->name('fedex.index');
 
     Route::get('/migrate-fresh', function () {
         try {

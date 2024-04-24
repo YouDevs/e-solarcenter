@@ -35,4 +35,12 @@ return [
         'key' => env('17TRACK_API_KEY'),
     ],
 
+    'estafeta' => [
+        'client_id' => env('ESTAFETA_API_KEY'),
+        'client_secret' => env('ESTAFETA_SHARED_SECRET'),
+        'token_url' => env('ESTAFETA_TOKEN_URL'),
+        'type' => env('ESTAFETA_TYPE'),
+        'scope' => env('ESTAFETA_SCOPE'),
+    ],
+
 ];
