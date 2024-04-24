@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('customer_addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 60)->nullable();
-            $table->integer('netsuite_id')->nullable();
-            $table->string('netsuite_name', 60)->nullable();
-            $table->string('street', 60)->nullable();
+            $table->foreignId('customer_id')->constrained();
+            $table->boolean('is_default')->default(0);
+            $table->string('street')->nullable();
             $table->string('postal_code', 5)->nullable();
             $table->string('neighborhood')->nullable();
             $table->string('country')->nullable();
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('customer_addresses');
     }
 };

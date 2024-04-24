@@ -14,14 +14,14 @@ class LocationsSeeder extends Seeder
     public function run(): void
     {
         $locations = [
-            [1, 'GUADALAJARA', 2, 'GUADALAJARA'],
-            [2, 'MONTERREY', 3, 'MONTERREY'],
-            [3, 'CIUDAD DE MEXICO', 6, 'CIUDAD DE MEXICO'],
-            [4, 'MERIDA', 7, 'MERIDA'],
-            [5, 'CHIHUAHUA', 8, 'CHIHUAHUA'],
-            [6, 'CENTRO LOGISTICO', 9, 'CENTRO LOGISTICO'],
-            [7, 'QUERETARO', 10, 'QUERETARO'],
-            [8, 'GDL SCRAP', 18, 'GDL SCRAP'],
+            [1, 'GUADALAJARA', 2, 'GUADALAJARA', '45645'],
+            [2, 'MONTERREY', 3, 'MONTERREY', '66359'],
+            [3, 'CIUDAD DE MEXICO', 6, 'CIUDAD DE MEXICO', '02300'],
+            [4, 'MERIDA', 7, 'MERIDA', '97300'],
+            [5, 'CHIHUAHUA', 8, 'CHIHUAHUA', '31450'],
+            [6, 'CENTRO LOGISTICO', 9, 'CENTRO LOGISTICO', '45645'],
+            [7, 'QUERETARO', 10, 'QUERETARO', '45645'],
+            [8, 'GDL SCRAP', 18, 'GDL SCRAP', '45645'],
         ];
         foreach ($locations as $location) {
             Location::create([
@@ -29,6 +29,7 @@ class LocationsSeeder extends Seeder
                 'name' => $location[1],
                 'netsuite_id' => $location[2],
                 'netsuite_name' => $location[3],
+                'postal_code' => $location[4],
             ]);
         }
     }

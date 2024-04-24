@@ -14,6 +14,12 @@ class EstafetaController extends Controller
 
         $estafetaService = new EstafetaApiService();
 
+        //TODO: Obtener el CP de la locación de Origen.
+        //TODO: Obtener el CP de la dirección del cliente.
+
+        // "location" => "GUADALAJARA"
+        // "address" => "2"
+
         $data = [
             "Origin" => "45645",
             "Destination" => ["01000"],

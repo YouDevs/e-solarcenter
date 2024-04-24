@@ -17,10 +17,6 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->string('netsuite_key')->nullable();
             $table->string('rfc');
-            $table->string('delivery_address_1')->nullable();
-            $table->string('delivery_address_2')->nullable();
-            $table->string('delivery_address_3')->nullable();
-            $table->boolean('default_address')->default(0);
             $table->enum('status', ['active', 'pending', 'inactive'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
