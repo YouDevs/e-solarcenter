@@ -5,24 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Services\EstafetaApiService;
+use App\Models\Location;
 use Illuminate\Support\Facades\Log;
 
 class EstafetaController extends Controller
 {
     public function quoter(Request $request)
     {
-
         $estafetaService = new EstafetaApiService();
 
-        //TODO: Obtener el CP de la locación de Origen.
-        //TODO: Obtener el CP de la dirección del cliente.
+        $customerAddress = auth()->user()->customer->addresses->find($request->address);
+        $location = Location::where('name', $request->location)->first();
 
-        // "location" => "GUADALAJARA"
-        // "address" => "2"
+        $originPostalCode = $location->postal_code;
+        $destinationPostalCode = $customerAddress->postal_code;
 
         $data = [
-            "Origin" => "45645",
-            "Destination" => ["01000"],
+            "Origin" => $originPostalCode,
+            "Destination" => [$destinationPostalCode],
             "PackagingType" => "Paquete",
             // "IsInsurance" => false,
             // "ItemValue" => 10,
@@ -38,7 +38,7 @@ class EstafetaController extends Controller
             $quoteResponse = $estafetaService->getQuote($data);
             return response()->json($quoteResponse);
         } catch (\Exception $exception) {
-            Log::info("Tronó...");
+            Log::error($exception->getMessage());
             return response()->json(['error' => $exception->getMessage()], 500);
         }
     }

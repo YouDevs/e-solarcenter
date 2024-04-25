@@ -19,4 +19,17 @@ class CustomerAddress extends Model
         'state',
         'city',
     ];
+
+    public function cusomter() : BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    /*
+    */
+    public function getFullAddressAttribute()
+    {
+        $fullAddress = "$this->neighborhood $this->street $this->postal_code";
+        return $fullAddress;
+    }
 }

@@ -39,29 +39,19 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            @foreach ($locations as $location => $cart_item)
+                            @foreach ($locations as $location => $data)
                             <tr>
-                                <td>
-                                    {{$location}}
-                                </td>
+                                <td>{{$location}}</td>
                                 <td>
                                     <select name="shipping_type[{{ $location }}]" class="form-select">
                                         <option value="">Elige una Dirección</option>
-                                        @foreach ($delivery_addresses as $index => $address)
-                                            <option
-                                                value="{{$index}}"
-                                                @selected($customer->default_address == $index + 1)
-                                                >{{$address}}</option>
+                                        @foreach ($delivery_addresses as $address)
+                                            <option value="{{$address->id}}">{{$address->fullAddress}}</option>
                                         @endforeach
                                     </select>
                                 </td>
                             </tr>
-
-                            @endforeach
-
-                            <!-- "Subtabla" que se mostraría una vez que el usuario seleccione la dirección de entrega -->
-                            {{-- <tr class="d-none">
+                            <tr id="subtable-{{ $location }}" class="d-none">
                                 <td colspan="3">
                                     <table class="table">
                                         <thead>
@@ -73,39 +63,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Aquí irían los datos dinámicos de tu subtabla -->
-                                            <tr>
-                                                <td>
-                                                    <input type="radio" name="option-guadalajara">
-                                                    DHL
-                                                </td>
-                                                <td>$800</td>
-                                                <td><input type="checkbox"> $100</td>
-                                                <td>3 días hábiles</td>
-                                            </tr>
+                                            <!-- Los datos dinámicos serán insertados aquí -->
                                         </tbody>
                                     </table>
                                 </td>
-                            </tr> --}}
-
-                            <!-- Otra locación según los items del carrito de compras -->
-                            {{-- <tr>
-                                <td>
-                                    Monterrey
-                                </td>
-                                <td>
-                                    <select name="shipping_type" class="form-select">
-                                        <option value="">Elige una Dirección</option>
-                                        @foreach ($delivery_addresses as $index => $address)
-                                            <option
-                                                value="{{$index}}"
-                                                @selected($customer->default_address == $index + 1)
-                                                >{{$address}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                            </tr> --}}
-                            <!-- Otra "Subtabla"... -->
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -238,17 +201,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    alert("Documento cargado!")
     document.querySelectorAll('select[name^="shipping_type"]').forEach(select => {
-        console.log("petición asincrona")
-        console.log(select)
         select.addEventListener('change', function() {
-            let location = this.name.split('[')[1].split(']')[0]; // Obtén la locación de la propiedad name
+            let location = this.name.split('[')[1].split(']')[0];
             let addressId = this.value;
-
-            // let item = event.target;
-            // let itemId = item.getAttribute('data-id');
-            // let quantity = item.value;
+            let subtableContainer = document.getElementById(`subtable-${location}`);
 
             fetch('{{ route('estafeta.quoter') }}', {
                 method: 'POST',
@@ -260,11 +217,44 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                document.querySelector('.subtotal-display').innerHTML = data.newSubtotalFormatted;
+                let subtableHtml = ''; // Aquí vamos a construir el HTML para la subtabla
+
+                // Asumiendo que quieres mostrar el servicio más económico:
+                const cheapestService = data.Quotation[0].Service.reduce((prev, curr) => {
+                    return (prev.TotalAmount < curr.TotalAmount) ? prev : curr;
+                });
+                console.log("cheapestService")
+                console.log(cheapestService)
+
+                const totalAmount = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(cheapestService.TotalAmount,)
+
+                // Construir la fila para la subtabla con la información de Estafeta
+                subtableHtml += `
+                    <tr>
+                        <td>
+                            <input type="radio" name="option-${location}" class="form-check-input" value="${cheapestService.ServiceCode}">
+                            Estafeta
+                        </td>
+                        <td> ${totalAmount} </td>
+                        <td>
+                            <input type="checkbox" ${cheapestService.CoversWarranty == "True" ? 'checked' : ''}>
+                            ${/* cheapestService.ListPrice */ ""}
+                        </td>
+                        <td> ${ cheapestService.ServiceName } </td>
+                    </tr>
+                `;
+
+                // Asignar el HTML construido al cuerpo de la subtabla correspondiente y mostrarla
+                // Supongamos que tienes un elemento div con un ID que identifique a cada subtabla por locación:
+                let subtableContainer = document.getElementById(`subtable-${location}`);
+                subtableContainer.querySelector('tbody').innerHTML = subtableHtml;
+                subtableContainer.classList.remove('d-none');
             });
+
         });
     });
 });
+
 </script>
 
 @endsection

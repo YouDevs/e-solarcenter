@@ -81,7 +81,7 @@ class EstafetaApiService implements ShippingServiceInterface
 
         try {
             $response = $this->client->post('https://wscotizadorqa.estafeta.com/Cotizacion/rest/Cotizador/Cotizacion', [
-                'debug' => true,
+                'debug' => false,
                 'headers' => [
                     'apiKey' => $this->clientId,
                     'Content-Type' => 'application/json',

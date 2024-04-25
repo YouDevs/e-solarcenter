@@ -39,11 +39,7 @@ class CheckoutController extends Controller
         }
 
         $customer = auth()->user()->customer;
-
-        $delivery_addresses = collect([$customer->delivery_address_1, $customer->delivery_address_2, $customer->delivery_address_3])
-                                ->filter()
-                                ->values()
-                                ->all();
+        $delivery_addresses = $customer->addresses;
 
         return view('checkout-shipping', compact(
             'cart_items',
