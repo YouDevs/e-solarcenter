@@ -42,7 +42,7 @@ class HomeController extends Controller
         $products = Product::with('stocks.location')->orderBy('id', 'DESC')->paginate(8);
 
         if (auth()->check()) {
-            $locationId = auth()->user()->customer->location_id;
+            $locationId = auth()->user()->customer->location_id ?? null;
             $productStockService = new ProductStockService();
 
             $products->getCollection()->transform(function ($product) use ($productStockService, $locationId) {

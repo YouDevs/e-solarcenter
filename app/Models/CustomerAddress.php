@@ -29,7 +29,7 @@ class CustomerAddress extends Model
     */
     public function getFullAddressAttribute()
     {
-        $fullAddress = "$this->neighborhood $this->street $this->postal_code";
+        $fullAddress = "$this->neighborhood $this->street C.P. $this->postal_code";
         return $fullAddress;
     }
 }
