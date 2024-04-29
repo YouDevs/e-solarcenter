@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
         // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $this->call(RolesSeeder::class);
+        $this->call(LocationsSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(CategoriesSeeder::class);
-        $this->call(LocationsSeeder::class);
         $this->call(ProductsSeeder::class);
         $this->call(ProductPricesSeeder::class);
         $this->call(ProductStocksSeeder::class);

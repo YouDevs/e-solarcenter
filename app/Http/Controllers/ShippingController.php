@@ -24,7 +24,8 @@ class ShippingController extends Controller
         $shippingService = $this->shippingServiceFactory->make($carrier);
 
         $destinationPostalCode = auth()->user()->customer->addresses->find($request->address)->postal_code;
-        $originPostalCode = $request->location === 'Nacional' ? $this->getNationalOriginPostalCode() : $this->getLocalOriginPostalCode($request->location);
+        $customerLocationPostalCode = auth()->user()->customer->location->postal_code;
+        $originPostalCode = $request->location === 'Nacional' ? $this->getNationalOriginPostalCode($customerLocationPostalCode) : $this->getLocalOriginPostalCode($request->location);
 
         $data = $this->prepareQuotationData($originPostalCode, $destinationPostalCode);
 
@@ -33,10 +34,15 @@ class ShippingController extends Controller
             $this->getLocalQuote($shippingService, $data);
     }
 
-    protected function getNationalOriginPostalCode()
+    protected function getNationalOriginPostalCode($excludePostalCode)
     {
-        // Define los códigos postales de todas las locaciones excepto la local
-        return ['66359', '76148', '02300', '11910', '31450'];
+        $query = Location::query();
+
+        if ($excludePostalCode) {
+            $query->where('postal_code', '!=', $excludePostalCode);
+        }
+
+        return $query->pluck('postal_code')->all();
     }
 
     protected function getLocalOriginPostalCode($locationName)
@@ -75,6 +81,7 @@ class ShippingController extends Controller
         $cheapestQuote = null;
 
         foreach ($data['Origin'] as $originPostalCode) {
+            Log::info($data['Origin']);
             $data['Origin'] = $originPostalCode; // Reemplazar el origen en los datos de cotización
             try {
                 $quoteResponse = $shippingService->getQuote($data);

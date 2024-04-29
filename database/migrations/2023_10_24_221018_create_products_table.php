@@ -21,7 +21,12 @@ return new class extends Migration
             $table->string('data_sheet', 100)->nullable();
             $table->string('featured', 100)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
 
-            $table->boolean('status')->default(1); // 1 Activo, 0 Inactivo
+            $table->float('weight', 8, 2);
+            $table->float('length', 8, 2);
+            $table->float('width', 8, 2);
+            $table->float('height', 8, 2);
+
+            $table->boolean('status')->default(1);
 
             $table->string('slug', 100)->nullable();
 
