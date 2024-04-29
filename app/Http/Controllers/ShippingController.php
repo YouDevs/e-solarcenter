@@ -5,26 +5,52 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\EstafetaApiService;
 use App\Models\Location;
+use App\Services\ShippingServiceFactory;
 use Illuminate\Support\Facades\Log;
 
 class ShippingController extends Controller
 {
+
+    protected $shippingServiceFactory;
+
+    public function __construct(ShippingServiceFactory $factory)
+    {
+        $this->shippingServiceFactory = $factory;
+    }
+
     public function quoter(Request $request)
     {
-        $estafetaService = new EstafetaApiService();
+        $carrier = 'estafeta';
+        $shippingService = $this->shippingServiceFactory->make($carrier);
 
-        $customerAddress = auth()->user()->customer->addresses->find($request->address);
-        $location = Location::where('name', $request->location)->first();
+        $destinationPostalCode = auth()->user()->customer->addresses->find($request->address)->postal_code;
+        $originPostalCode = $request->location === 'Nacional' ? $this->getNationalOriginPostalCode() : $this->getLocalOriginPostalCode($request->location);
 
-        $originPostalCode = $location->postal_code;
-        $destinationPostalCode = $customerAddress->postal_code;
+        $data = $this->prepareQuotationData($originPostalCode, $destinationPostalCode);
 
-        $data = [
-            "Origin" => $originPostalCode,
-            "Destination" => [$destinationPostalCode],
+        return $request->location === 'Nacional' ?
+            $this->getCheapestNationalQuote($shippingService, $data) :
+            $this->getLocalQuote($shippingService, $data);
+    }
+
+    protected function getNationalOriginPostalCode()
+    {
+        // Define los códigos postales de todas las locaciones excepto la local
+        return ['66359', '76148', '02300', '11910', '31450'];
+    }
+
+    protected function getLocalOriginPostalCode($locationName)
+    {
+        // Obtiene el código postal de la locación local
+        return Location::where('name', $locationName)->first()->postal_code;
+    }
+
+    protected function prepareQuotationData($origin, $destination)
+    {
+        return [
+            "Origin" => $origin,
+            "Destination" => [$destination],
             "PackagingType" => "Paquete",
-            // "IsInsurance" => false,
-            // "ItemValue" => 10,
             "Dimensions" => [
                 "Weight" => 15,
                 "Length" => 200,
@@ -32,13 +58,42 @@ class ShippingController extends Controller
                 "Height" => 180,
             ]
         ];
+    }
 
+    protected function getLocalQuote($shippingService, $data)
+    {
         try {
-            $quoteResponse = $estafetaService->getQuote($data);
-            return response()->json($quoteResponse);
+            return response()->json($shippingService->getQuote($data));
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return response()->json(['error' => $exception->getMessage()], 500);
         }
     }
+
+    protected function getCheapestNationalQuote($shippingService, $data)
+    {
+        $cheapestQuote = null;
+
+        foreach ($data['Origin'] as $originPostalCode) {
+            $data['Origin'] = $originPostalCode; // Reemplazar el origen en los datos de cotización
+            try {
+                $quoteResponse = $shippingService->getQuote($data);
+                if ($this->isCheaperQuote($quoteResponse, $cheapestQuote)) {
+                    $cheapestQuote = $quoteResponse;
+                }
+            } catch (\Exception $exception) {
+                Log::error($exception->getMessage());
+            }
+        }
+
+        return $cheapestQuote ?
+            response()->json($cheapestQuote) :
+            response()->json(['error' => 'No se pudo obtener una cotización económica'], 500);
+    }
+
+    protected function isCheaperQuote($quoteResponse, $cheapestQuote)
+    {
+        return $quoteResponse && (is_null($cheapestQuote) || $quoteResponse['Quotation'][0]['Service'][0]['TotalAmount'] < $cheapestQuote['Quotation'][0]['Service'][0]['TotalAmount']);
+    }
+
 }

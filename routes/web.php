@@ -10,9 +10,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\CustomerSupport\CustomerController;
 use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
-use App\Http\Controllers\FedexController;
 use App\Http\Controllers\ShippingController;
-
 
 
 Route::get('/test', function() {
@@ -40,8 +38,7 @@ Route::middleware(['auth'])->group(function () {
     //     return 'Migrate fresh successfully!';
     // });
 
-    Route::post('/cotizar-estafeta', [ShippingController::class, 'quoter'])->name('estafeta.quoter');
-    Route::get('/cotizar-fedex', [FedexController::class, 'index'])->name('fedex.index');
+    Route::post('/cotizar-envio', [ShippingController::class, 'quoter'])->name('estafeta.quoter');
 
     Route::get('/migrate-fresh', function () {
         try {

@@ -32,4 +32,9 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerAddress::class);
     }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }
