@@ -1,6 +1,9 @@
 @extends('layouts.base')
 
 @section('head')
+@vite([
+    'resources/js/sliders.js',
+])
 <style>
 .background-image-container {
     position: relative;
@@ -20,7 +23,6 @@
     left: 50%;
     transform: translateX(-50%);
 }
-
 </style>
 @endsection
 
@@ -198,6 +200,10 @@
                                 <input type="hidden" value="{{ $product->brand }}" name="brand">
                                 <input type="hidden" value="{{ $product->defaultPrice }}" name="price">
                                 <input type="hidden" value="{{ $product->featured }}" name="featured">
+                                <input type="hidden" value="{{ $product->weight }}" name="weight">
+                                <input type="hidden" value="{{ $product->length }}" name="length">
+                                <input type="hidden" value="{{ $product->width }}" name="width">
+                                <input type="hidden" value="{{ $product->height }}" name="height">
                                 {{-- <input type="number" class="form-control me-2" placeholder="cantidad" name="quantity" min="1" value="1"> --}}
                                 {{-- <input type="hidden" value="{{ $product->location }}"  name="location"> --}}
                                 <button
@@ -264,7 +270,11 @@
                                                     <input type="hidden" value="{{ $product->name }}" name="name">
                                                     <input type="hidden" value="{{ $product->brand }}" name="brand">
                                                     <input type="hidden" value="{{ $product->price }}" name="price">
-                                                    <input type="hidden" value="{{ $product->featured }}"  name="featured">
+                                                    <input type="hidden" value="{{ $product->featured }}" name="featured">
+                                                    <input type="hidden" value="{{ $product->weight }}" name="weight">
+                                                    <input type="hidden" value="{{ $product->length }}" name="length">
+                                                    <input type="hidden" value="{{ $product->width }}" name="width">
+                                                    <input type="hidden" value="{{ $product->height }}" name="height">
                                                     <button class="btn btn-solar btn-shadow d-block w-100" type="submit">
                                                         <i class="ci-cart fs-sm me-1"></i>Agregar al Carrito
                                                     </button>
@@ -422,35 +432,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', (e) => {
-    // Tiny Slider:
-    let sliderHero = tns({
-        container: '.tns-carousel-hero',
-        nav: true, // Desactiva los puntos de navegación inferiores
-        controls: false, // Desactiva los botones de anterior/siguiente
-        mouseDrag: true,
-        autoplay: true,
-        autoplayButtonOutput: false,
-        autoplayTimeout: 4000, // Establece el intervalo de autoplay a 4000ms (4 segundos)
-        loop: true, // Permite que el slider se repita infinitamente
-    });
-
-    let sliderBrands = tns({
-        container: '.tns-carousel-brands',
-        nav: false, // Desactiva los puntos de navegación inferiores
-        controls: false, // Desactiva los botones de anterior/siguiente
-        mouseDrag: true,
-        autoplay: true, // Activa el autoplay
-        autoplayButtonOutput: false,
-        autoplayTimeout: 3000, // Establece el intervalo de autoplay a 4000ms (4 segundos)
-        loop: true, // Permite que el slider se repita infinitamente
-        responsive: {
-            "0": {"items": 1},
-            "360": {"items": 2},
-            "600": {"items": 3},
-            "991": {"items": 4},
-            "1200": {"items": 4} // A partir de 1200px, muestra 4 elementos
-        }
-    });
 
     window.ResizeObserver = ResizeObserver;
 
@@ -461,6 +442,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
             const locationId = this.getAttribute('data-location-id');
             const productId = this.getAttribute('data-product-id');
+            console.log(`productId ${productId}`);
 
             fetch(`/cart/product/${productId}/stock`)
                 .then( response => response.json() )
@@ -469,10 +451,12 @@ document.addEventListener('DOMContentLoaded', (e) => {
                     const modalBody = document.querySelector('#selectQuantityModal .modal-body');
                     modalBody.innerHTML = '';
 
+                    console.log("data: ")
+                    console.log(data)
                     const localStock = data.localStock
+
                     if (localStock) {
-                        console.log("localStock: ");
-                        console.log(localStock);
+
                         let label = document.createElement('label');
                         label.textContent = `${localStock.name} (cantidad ${localStock.quantity} )`;
                         label.className = `mt-2`;
@@ -490,10 +474,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
                     }
 
                     const nationalStock = data.nationalStock
+                    console.log(nationalStock)
                     if (nationalStock) {
-                        console.log("nationalStock")
-                        console.log(nationalStock)
-                        console.log(nationalStock.name)
                         let label2 = document.createElement('label');
                         label2.textContent = `${nationalStock.name} (cantidad ${nationalStock.quantity} )`;
                         label2.className = `mt-2`;
