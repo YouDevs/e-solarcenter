@@ -56,10 +56,10 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Seleccionar Transportista</th>
-                                                <th>Flete</th>
+                                                <th>Selecciona Transportista</th>
+                                                <th>Envío</th>
                                                 <th>Seguro</th>
-                                                <th>Observaciones</th>
+                                                <th>Servicio</th>
                                             </tr>
                                         </thead>
                                         <tbody>
