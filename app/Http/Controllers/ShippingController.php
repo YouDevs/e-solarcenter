@@ -20,19 +20,6 @@ class ShippingController extends Controller
 
     public function quoter(Request $request)
     {
-        /*
-            [
-                "location" => "GUADALAJARA"
-                "address" => "2"
-                "dimensions" => array:4 [
-                    "weight" => 55.6
-                    "length" => 227.9
-                    "width" => 104.8
-                    "height" => 7
-                ]
-            ]
-        */
-
         $carrier = 'estafeta';
         $shippingService = $this->shippingServiceFactory->make($carrier);
 
@@ -41,6 +28,8 @@ class ShippingController extends Controller
         $originPostalCode = $request->location === 'Nacional' ? $this->getNationalOriginPostalCode($customerLocationPostalCode) : $this->getLocalOriginPostalCode($request->location);
 
         $data = $this->prepareQuotationData($originPostalCode, $destinationPostalCode, $request->dimensions);
+
+        $data['quoteType'] = $request->location === 'Nacional'? 'Nacional': 'Local';
 
         return $request->location === 'Nacional' ?
             $this->getCheapestNationalQuote($shippingService, $data) :
@@ -81,7 +70,7 @@ class ShippingController extends Controller
         $quoteData = [
             "Origin" => $origin,
             "Destination" => [$destination],
-            "PackagingType" => "Paquete",
+            "PackagingType" => "Pallet",
             "Dimensions" => [
                 "Weight" => $effectiveWeight,
                 "Length" => $length,

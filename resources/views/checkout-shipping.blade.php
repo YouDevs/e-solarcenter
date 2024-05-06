@@ -23,8 +23,6 @@
 <div class="container pb-5 mb-2 mb-md-4">
     <div class="row">
         <section class="col-lg-8">
-            <form action="{{route('checkout.selected-address')}}" method="post" class="col-lg-12">
-                @csrf
                 <!-- Steps-->
                 <x-payment-steps step="3" />
 
@@ -70,7 +68,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Los datos dinámicos serán insertados aquí -->
+                                            <!-- Se pinta subtabla dinamicamente -->
                                         </tbody>
                                     </table>
                                 </td>
@@ -90,14 +88,14 @@
                         </a>
                     </div>
                     <div class="w-50 ps-2">
-                        <button type="submit" class="btn btn-primary d-block w-100" href="{{route('checkout.selected-address')}}">
-                            <span class="d-none d-sm-inline">Proceder al pago</span>
-                            <span class="d-inline d-sm-none">Siguiente</span>
-                            <i class="ci-arrow-right mt-sm-0 ms-1"></i>
-                        </button>
+                        <form id="shipping-form" action="{{ route('checkout.selected-address') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="local_shipping_data" id="localShippingData">
+                            <input type="hidden" name="national_shipping_data" id="nationalShippingData">
+                            <button type="submit" id="proceedToPayment">Proceder al Pago</button>
+                        </form>
                     </div>
                 </div>
-            </form>
         </section>
         <!-- Sidebar-->
         <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
@@ -194,28 +192,35 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                let subtableHtml = ''; // Aquí vamos a construir el HTML para la subtabla
+                let subtableHtml = ''; // Contenedor para subtabla
 
-                // Asumiendo que quieres mostrar el servicio más económico:
+                console.log(data);
+                const carrier = data.carrier;
+                const quoteType = data.quoteType;
+                console.log(`quoteType ${quoteType}`);
+                const dimensions = data.dimensions;
+                const origin = data.Quotation[0].Origin;
+                const destination = data.Quotation[0].Destination;
+
+                // Obteniendo servicio más economico:
                 const cheapestService = data.Quotation[0].Service.reduce((prev, curr) => {
                     return (prev.TotalAmount < curr.TotalAmount) ? prev : curr;
                 });
-                console.log("cheapestService")
+                console.log("cheapestService:")
                 console.log(cheapestService)
-
                 const totalAmount = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(cheapestService.TotalAmount,)
 
-                // Construir la fila para la subtabla con la información de Estafeta
+                // Construir la fila para la subtabla con la información de Estafeta (posteriormente se tendrá en cuenta que son varias paqueterías).
                 subtableHtml += `
                     <tr>
                         <td>
-                            <input type="radio" name="option-${location}" class="form-check-input" value="${cheapestService.ServiceCode}">
+                            <input
+                                type="radio" name="option-${location}" class="form-check-input" value="${carrier}">
                             Estafeta
                         </td>
                         <td> ${totalAmount} </td>
                         <td>
                             <input type="checkbox" ${cheapestService.CoversWarranty == "True" ? 'checked' : ''}>
-                            ${/* cheapestService.ListPrice */ ""}
                         </td>
                         <td> ${ cheapestService.ServiceName } </td>
                     </tr>
@@ -226,10 +231,56 @@ document.addEventListener('DOMContentLoaded', function () {
                 let subtableContainer = document.getElementById(`subtable-${location}`);
                 subtableContainer.querySelector('tbody').innerHTML = subtableHtml;
                 subtableContainer.classList.remove('d-none');
-            });
 
+
+                // Radio select de paquetería:
+                document.querySelectorAll('input[type="radio"][name^="option"]').forEach(radio => {
+                    console.log("radio");
+                    radio.addEventListener('change', function() {
+
+                        // Recopilar los datos relevantes de la opción seleccionada
+                        let selectedServiceData = {
+                            serviceCode: this.value,
+                            carrier: carrier,
+                            quoteType: quoteType,
+                            serviceName: cheapestService.ServiceName,
+                            shippingCost: cheapestService.TotalAmount,
+                            dimensions: dimensions,
+                            origin: origin.Postalcode,
+                            destination: destination.Postalcode,
+                            coversWarranty: cheapestService.CoversWarranty === "True"
+                        };
+
+                        // Guarda los datos en sessionStorage para acceder en el siguiente paso
+                        if(quoteType === 'Nacional') {
+                            sessionStorage.setItem('selectedNationalShippingService', JSON.stringify(selectedServiceData));
+                        } else {
+                            sessionStorage.setItem('selectedLocalShippingService', JSON.stringify(selectedServiceData));
+                        }
+
+                        // Opcional: Mostrar una confirmación o actualizar la UI para reflejar la selección
+                        console.log('Shipping service selected:', selectedServiceData);
+                    });
+                });
+            });
         });
     });
+});
+
+document.getElementById('proceedToPayment').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    let localShippingData = sessionStorage.getItem('selectedLocalShippingService');
+    let nationalShippingData = sessionStorage.getItem('selectedNationalShippingService');
+
+    if (localShippingData) {
+        document.getElementById('localShippingData').value = localShippingData;
+    }
+    if (nationalShippingData) {
+        document.getElementById('nationalShippingData').value = nationalShippingData;
+    }
+
+    document.getElementById('shipping-form').submit();
 });
 
 </script>

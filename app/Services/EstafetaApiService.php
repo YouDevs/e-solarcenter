@@ -74,6 +74,7 @@ class EstafetaApiService implements ShippingServiceInterface
 
     public function getQuote($data)
     {
+        Log::info($data['Dimensions']);
         $accessToken = $this->getAccessToken();
         if (!$accessToken) {
             return ['error' => 'Failed to authenticate with Estafeta'];
@@ -93,6 +94,10 @@ class EstafetaApiService implements ShippingServiceInterface
             ]);
             $statusCode = $response->getStatusCode();
             $result = json_decode($response->getBody(), true);
+            $result['dimensions'] = $data['Dimensions'];
+            $result['carrier'] = 'stafeta';
+            $result['quoteType'] = $data['quoteType'];
+
             return $result;
         } catch (GuzzleException $e) {
             $response = $e->getResponse();

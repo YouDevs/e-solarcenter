@@ -47,7 +47,7 @@
                     </li>
                     <li class="align-items-center">
                         <span class="me-2 h6 fw-bold">Concepto</span>
-                        <span class="h6"> {{$payment_concept}} </span>
+                        <span class="h6"> {{$paymentConcept}} </span>
                     </li>
                 </ul>
             </div>
@@ -65,7 +65,7 @@
                     <form action="{{ route('checkout.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="payment_submitted" value="1" >
-                        <input type="hidden" name="payment_concept" value="{{$payment_concept}}" >
+                        <input type="hidden" name="payment_concept" value="{{$paymentConcept}}" >
                         <button
                             type="submit"
                             class="btn btn-primary d-block w-100"
@@ -99,7 +99,7 @@
                 <div class="py-2 px-xl-2">
                     <div class="widget mb-3">
                         <h2 class="widget-title text-center">Resumen de orden</h2>
-                        @foreach ($cart_items as $item)
+                        @foreach ($cartItems as $item)
                             <div class="d-flex align-items-center pb-2 border-bottom">
                                 <a class="d-block flex-shrink-0" href="#">
                                     <img src="{{Storage::url($item->attributes->featured)}}" width="64" alt="Product">
@@ -115,6 +115,29 @@
                                 </div>
                             </div>
                         @endforeach
+                            <div class="d-flex align-items-center pb-2 border-bottom">
+                                {{--
+                                    totalWithShipping
+                                    localShippingDetails
+                                    nationalShippingDetails
+                                    cartItems
+                                    paymentConcept
+                                --}}
+                                <div class="ps-2">
+                                    <h6 class="widget-product-title my-2">
+                                        Envío local por {{$localShippingDetails['carrier']}}
+                                    </h6>
+                                    <x-amount-formatter :amount="$localShippingDetails['shippingCost']" />
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center pb-2 border-bottom">
+                                <div class="ps-2">
+                                    <h6 class="widget-product-title my-2">
+                                        Envío nacional por {{$nationalShippingDetails['carrier']}}
+                                    </h6>
+                                    <x-amount-formatter :amount="$nationalShippingDetails['shippingCost']" />
+                                </div>
+                            </div>
                     </div>
                     {{-- <ul class="list-unstyled fs-sm pb-2 border-bottom">
                         <li class="d-flex justify-content-between align-items-center">
@@ -130,7 +153,7 @@
                         </li>
                     </ul> --}}
                     <h3 class="fw-normal text-center my-4">
-                        <x-amount-formatter :amount="Cart::getTotal()" />
+                        <x-amount-formatter :amount="$totalWithShipping" />
                     </h3>
                 </div>
             </div>

@@ -56,44 +56,31 @@ class CheckoutController extends Controller
         ));
     }
 
-    // public function shipping()
-    // {
-    //     $cart_items = \Cart::getContent();
-    //     $locations = [];
-
-    //     foreach($cart_items as $item) {
-    //         $location = $item->attributes->location;
-
-    //         if(!array_key_exists($location, $locations)) {
-    //             $locations[$location] = [
-    //                 'items' => [],
-    //             ];
-    //         }
-    //         $locations[$location]['items'][] = $item;
-    //     }
-
-    //     dd($locations);
-    //     $customer = auth()->user()->customer;
-    //     $delivery_addresses = $customer->addresses;
-
-    //     return view('checkout-shipping', compact(
-    //         'cart_items',
-    //         'locations',
-    //         'customer',
-    //         'delivery_addresses'
-    //     ));
-    // }
-
     public function selectedAddress(Request $request)
     {
-        $validated = $request->validate([
-            'default_address' => 'required|numeric',
+        // Decodificar los datos JSON de envío
+        $localShippingData = json_decode($request->local_shipping_data, true);
+        $nationalShippingData = json_decode($request->national_shipping_data, true);
+
+        $totalCart = \Cart::getTotal();
+        $totalWithShipping = $totalCart + $localShippingData['shippingCost'] + $nationalShippingData['shippingCost'];
+
+        $cartItems = \Cart::getContent();
+        $customer = auth()->user()->customer;
+        $customerId = $customer->id;
+
+        // Generar Folio de Orden:
+        $lastFolio = Order::where('customer_id', $customerId)->max('folio');
+        $newFolio = $lastFolio ? $lastFolio + 1 : 1;
+        $paymentConcept = $this->generatePaymentConcept($newFolio, $customer->company_name);
+
+        return view('checkout-payment', [
+            'totalWithShipping' => $totalWithShipping,
+            'localShippingDetails' => $localShippingData,
+            'nationalShippingDetails' => $nationalShippingData,
+            'cartItems' => $cartItems,
+            'paymentConcept' => $paymentConcept,
         ]);
-
-        // Almacenar la selección en la sesión
-        session(['default_address' => $request->default_address + 1]);
-
-        return redirect()->route('checkout.payment');
     }
 
     public function payment()
