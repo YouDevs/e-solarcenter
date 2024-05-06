@@ -43,7 +43,14 @@
                             <tr>
                                 <td>{{$location}}</td>
                                 <td>
-                                    <select name="shipping_type[{{ $location }}]" class="form-select">
+                                    <select
+                                        name="shipping_type[{{ $location }}]"
+                                        class="form-select"
+                                        data-total_weight="{{ $data['total_weight'] }}"
+                                        data-total_length="{{ $data['total_length'] }}"
+                                        data-total_width="{{ $data['total_width'] }}"
+                                        data-total_height="{{ $data['total_height'] }}"
+                                    >
                                         <option value="">Elige una Dirección</option>
                                         @foreach ($delivery_addresses as $address)
                                             <option value="{{$address->id}}">{{$address->fullAddress}}</option>
@@ -72,44 +79,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                {{-- <div class="table-responsive">
-                    <table class="table table-hover fs-sm border-top">
-                        <thead>
-                            <tr>
-                                <th class="align-middle"></th>
-                                <th class="align-middle">Dirección de envío</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($delivery_addresses as $index => $address)
-                                <tr>
-                                    <td>
-                                        <div class="form-check mb-4">
-                                            <input
-                                                class="form-check-input @error('default_address') is-invalid @enderror"
-                                                type="radio"
-                                                id="default-address-{{$index}}"
-                                                name="default_address"
-                                                value="{{$index}}"
-                                                @checked($customer->default_address == $index + 1)
-                                                >
-                                            <label class="form-check-label" for="default-address-{{$index}}"></label>
-                                            @error('default_address')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <span class="text-muted">{{$address}} / {{$index + 1}}</span>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div> --}}
 
                 <!-- Navigation (desktop)-->
                 <div class="d-none d-lg-flex pt-4 mt-3">
@@ -207,13 +176,21 @@ document.addEventListener('DOMContentLoaded', function () {
             let addressId = this.value;
             let subtableContainer = document.getElementById(`subtable-${location}`);
 
+            let dimensions = {
+                totalWeight: parseFloat(this.dataset.total_weight),
+                totalLength: parseFloat(this.dataset.total_length),
+                totalWidth: parseFloat(this.dataset.total_width),
+                totalHeight: parseFloat(this.dataset.total_height)
+            };
+
+
             fetch('{{ route('estafeta.quoter') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ location: location, address: addressId })
+                body: JSON.stringify({ location: location, address: addressId, dimensions: dimensions })
             })
             .then(response => response.json())
             .then(data => {

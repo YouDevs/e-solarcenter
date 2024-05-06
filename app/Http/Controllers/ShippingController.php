@@ -20,6 +20,19 @@ class ShippingController extends Controller
 
     public function quoter(Request $request)
     {
+        /*
+            [
+                "location" => "GUADALAJARA"
+                "address" => "2"
+                "dimensions" => array:4 [
+                    "weight" => 55.6
+                    "length" => 227.9
+                    "width" => 104.8
+                    "height" => 7
+                ]
+            ]
+        */
+
         $carrier = 'estafeta';
         $shippingService = $this->shippingServiceFactory->make($carrier);
 
@@ -27,7 +40,7 @@ class ShippingController extends Controller
         $customerLocationPostalCode = auth()->user()->customer->location->postal_code;
         $originPostalCode = $request->location === 'Nacional' ? $this->getNationalOriginPostalCode($customerLocationPostalCode) : $this->getLocalOriginPostalCode($request->location);
 
-        $data = $this->prepareQuotationData($originPostalCode, $destinationPostalCode);
+        $data = $this->prepareQuotationData($originPostalCode, $destinationPostalCode, $request->dimensions);
 
         return $request->location === 'Nacional' ?
             $this->getCheapestNationalQuote($shippingService, $data) :
@@ -51,23 +64,38 @@ class ShippingController extends Controller
         return Location::where('name', $locationName)->first()->postal_code;
     }
 
-    protected function prepareQuotationData($origin, $destination)
+    public function prepareQuotationData($origin, $destination, $dimensions)
     {
-        return [
+        $weightPhysical = $dimensions['totalWeight'];
+        $length = $dimensions['totalLength'];
+        $width = $dimensions['totalWidth'];
+        $height = $dimensions['totalHeight'];
+
+        // Peso volumétrico = (Largo x Alto x Ancho) / 5000
+        $weightVolumetric = ($length * $height * $width) / 5000;
+
+        // Usar el mayor peso entre físico y volumétrico
+        $effectiveWeight = max($weightPhysical, $weightVolumetric);
+
+        // Preparar la data para la cotización
+        $quoteData = [
             "Origin" => $origin,
             "Destination" => [$destination],
             "PackagingType" => "Paquete",
             "Dimensions" => [
-                "Weight" => 15,
-                "Length" => 200,
-                "Width" => 110,
-                "Height" => 180,
+                "Weight" => $effectiveWeight,
+                "Length" => $length,
+                "Width" => $width,
+                "Height" => $height,
             ]
         ];
+
+        return $quoteData;
     }
 
     protected function getLocalQuote($shippingService, $data)
     {
+        Log::info("Local");
         try {
             return response()->json($shippingService->getQuote($data));
         } catch (\Exception $exception) {
@@ -78,6 +106,7 @@ class ShippingController extends Controller
 
     protected function getCheapestNationalQuote($shippingService, $data)
     {
+        Log::info("Nacional");
         $cheapestQuote = null;
 
         foreach ($data['Origin'] as $originPostalCode) {

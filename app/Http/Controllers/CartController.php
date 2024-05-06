@@ -49,7 +49,11 @@ class CartController extends Controller
                     'attributes' => array(
                         'location' => $location,
                         'brand' => $request->brand,
-                        'featured' => $request->featured
+                        'featured' => $request->featured,
+                        'weight' => $request->weight,
+                        'length' => $request->length,
+                        'width' => $request->width,
+                        'height' => $request->height,
                     )
                 ]);
             }
@@ -57,7 +61,6 @@ class CartController extends Controller
 
         session()->flash('success', 'Product is Added to Cart Successfully !');
 
-        // return redirect()->route('cart.list');
         return redirect()->route('index');
     }
 

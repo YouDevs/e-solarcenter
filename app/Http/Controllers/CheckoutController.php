@@ -29,13 +29,20 @@ class CheckoutController extends Controller
 
         foreach($cart_items as $item) {
             $location = $item->attributes->location;
-
-            if(!array_key_exists($location, $locations)) {
+            if (!isset($locations[$location])) {
                 $locations[$location] = [
                     'items' => [],
+                    'total_weight' => 0,
+                    'total_length' => 0,
+                    'total_width' => 0,
+                    'total_height' => 0,
                 ];
             }
             $locations[$location]['items'][] = $item;
+            $locations[$location]['total_weight'] += $item->attributes->weight * $item->quantity;
+            $locations[$location]['total_length'] = max($locations[$location]['total_length'], $item->attributes->length);
+            $locations[$location]['total_width'] = max($locations[$location]['total_width'], $item->attributes->width);
+            $locations[$location]['total_height'] += $item->attributes->height * $item->quantity;  // Suma acumulativa de alturas
         }
 
         $customer = auth()->user()->customer;
@@ -48,6 +55,34 @@ class CheckoutController extends Controller
             'delivery_addresses'
         ));
     }
+
+    // public function shipping()
+    // {
+    //     $cart_items = \Cart::getContent();
+    //     $locations = [];
+
+    //     foreach($cart_items as $item) {
+    //         $location = $item->attributes->location;
+
+    //         if(!array_key_exists($location, $locations)) {
+    //             $locations[$location] = [
+    //                 'items' => [],
+    //             ];
+    //         }
+    //         $locations[$location]['items'][] = $item;
+    //     }
+
+    //     dd($locations);
+    //     $customer = auth()->user()->customer;
+    //     $delivery_addresses = $customer->addresses;
+
+    //     return view('checkout-shipping', compact(
+    //         'cart_items',
+    //         'locations',
+    //         'customer',
+    //         'delivery_addresses'
+    //     ));
+    // }
 
     public function selectedAddress(Request $request)
     {

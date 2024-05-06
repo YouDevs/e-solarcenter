@@ -126,7 +126,7 @@
 
 <div class="container">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 mb-2">
+    {{-- <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 mb-2">
         <h2 class="h3 mb-0 pt-3 me-2">Productos</h2>
         <div class="pt-3">
             <a class="btn btn-outline-blue-gray btn-sm" href="{{route('product-filter')}}">
@@ -160,7 +160,7 @@
                 <div class="overlay-text fs-sm sc-gray">Estructuras</div>
             </div>
         </a>
-    </div>
+    </div> --}}
 
     <div class="row justify-content-center align-items-md-center" id="grid-products">
         @foreach ($products as $product)
@@ -435,92 +435,156 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
     window.ResizeObserver = ResizeObserver;
 
-    // Seleccionar cantidad por sucursal:
     document.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
 
-            const locationId = this.getAttribute('data-location-id');
-            const productId = this.getAttribute('data-product-id');
-            console.log(`productId ${productId}`);
+            const formElement = this.closest('form');
+            if (!formElement) {
+                console.error('Formulario no encontrado para el botón.');
+                return;
+            }
+
+            const productId = formElement.querySelector('input[name="id"]').value;
+            const modalElement = document.getElementById('selectQuantityModal');
+            let modalInstance = new bootstrap.Modal(modalElement); // Mover aquí
 
             fetch(`/cart/product/${productId}/stock`)
-                .then( response => response.json() )
-                .then( data => {
-                    // Llenar el modal:
-                    const modalBody = document.querySelector('#selectQuantityModal .modal-body');
+                .then(response => response.json())
+                .then(data => {
+                    const modalBody = modalElement.querySelector('.modal-body');
                     modalBody.innerHTML = '';
+                    const { localStock, nationalStock } = data;
 
-                    console.log("data: ")
-                    console.log(data)
-                    const localStock = data.localStock
+                    [localStock, nationalStock].forEach(stock => {
+                        if (stock) {
+                            const label = document.createElement('label');
+                            label.textContent = `${stock.name} (cantidad disponible: ${stock.quantity})`;
+                            const input = document.createElement('input');
+                            input.type = 'number';
+                            input.className = 'form-control';
+                            input.name = `${stock.name}`;
+                            input.min = 0;
+                            input.max = stock.quantity;
+                            input.value = 1;
+                            modalBody.appendChild(label);
+                            modalBody.appendChild(input);
+                        }
+                    });
 
-                    if (localStock) {
+                    modalInstance.show();
+                });
 
-                        let label = document.createElement('label');
-                        label.textContent = `${localStock.name} (cantidad ${localStock.quantity} )`;
-                        label.className = `mt-2`;
-                        label.htmlFor = `quantity-${localStock.id}`;
-                        let input = document.createElement('input');
-                        input.type = 'number';
-                        input.id = `quantity-${localStock.id}`;
-                        input.name = `quantity[${localStock.name}]`;
-                        input.min = 0;
-                        input.max = localStock.quantity;
-                        input.value = 1;
-                        input.className = 'form-control';
-                        modalBody.appendChild(label);
-                        modalBody.appendChild(input);
-                    }
+            // Manejo del evento de envío del formulario desde el modal
+            modalElement.querySelector('#quantitySelectionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const quantities = {};
+                modalElement.querySelectorAll('input[type="number"]').forEach(input => {
+                    quantities[input.name] = input.value;
+                });
 
-                    const nationalStock = data.nationalStock
-                    console.log(nationalStock)
-                    if (nationalStock) {
-                        let label2 = document.createElement('label');
-                        label2.textContent = `${nationalStock.name} (cantidad ${nationalStock.quantity} )`;
-                        label2.className = `mt-2`;
-                        label2.htmlFor = `quantity-${nationalStock.id}`;
-                        let input2 = document.createElement('input');
-                        input2.type = 'number';
-                        input2.id = `quantity-${nationalStock.id}`;
-                        input2.name = `quantity[${nationalStock.name}]`;
-                        input2.min = 0;
-                        input2.max = nationalStock.quantity;
-                        input2.value = 1;
-                        input2.className = 'form-control';
-                        modalBody.appendChild(label2);
-                        modalBody.appendChild(input2);
-                    }
-                })
+                const quantitiesInput = document.createElement('input');
+                quantitiesInput.type = 'hidden';
+                quantitiesInput.name = 'quantities';
+                quantitiesInput.value = JSON.stringify(quantities);
+                formElement.appendChild(quantitiesInput);
 
-            let modalElement = document.getElementById('selectQuantityModal');
-            let modalInstance = new bootstrap.Modal(modalElement);
-            modalInstance.show();
-
+                modalInstance.hide();
+                formElement.submit();
+            });
         });
     });
 
-    document.getElementById('quantitySelectionForm').addEventListener('submit', function(e) {
-        e.preventDefault();
 
-        const selectedQuantities = {};
-        document.querySelectorAll('#selectQuantityModal input[type="number"]').forEach(input => {
-            const locationName = input.name.replace('quantity[', '').replace(']', '');
-            selectedQuantities[locationName] = input.value;
-        });
 
-        // Agrega el objeto de cantidades seleccionadas al formulario como antes
-        const quantitiesInput = document.querySelector('input[name="quantities"]') || document.createElement('input');
-        quantitiesInput.type = 'hidden';
-        quantitiesInput.name = 'quantities';
-        quantitiesInput.value = JSON.stringify(selectedQuantities);
-        const form = document.querySelector('form[action="{{ route('cart.store') }}"]');
-        form.appendChild(quantitiesInput);
 
-        new bootstrap.Modal(document.getElementById('selectQuantityModal')).hide();
 
-        form.submit();
-    });
+    // Seleccionar cantidad por sucursal:
+    // document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    //     button.addEventListener('click', function(e) {
+    //         e.preventDefault();
+
+    //         const locationId = this.getAttribute('data-location-id');
+    //         const productId = this.getAttribute('data-product-id');
+    //         console.log(`productId ${productId}`);
+
+    //         fetch(`/cart/product/${productId}/stock`)
+    //             .then( response => response.json() )
+    //             .then( data => {
+    //                 // Llenar el modal:
+    //                 const modalBody = document.querySelector('#selectQuantityModal .modal-body');
+    //                 modalBody.innerHTML = '';
+
+    //                 console.log("data: ")
+    //                 console.log(data)
+    //                 const localStock = data.localStock
+
+    //                 if (localStock) {
+
+    //                     let label = document.createElement('label');
+    //                     label.textContent = `${localStock.name} (cantidad ${localStock.quantity} )`;
+    //                     label.className = `mt-2`;
+    //                     label.htmlFor = `quantity-${localStock.id}`;
+    //                     let input = document.createElement('input');
+    //                     input.type = 'number';
+    //                     input.id = `quantity-${localStock.id}`;
+    //                     input.name = `quantity[${localStock.name}]`;
+    //                     input.min = 0;
+    //                     input.max = localStock.quantity;
+    //                     input.value = 1;
+    //                     input.className = 'form-control';
+    //                     modalBody.appendChild(label);
+    //                     modalBody.appendChild(input);
+    //                 }
+
+    //                 const nationalStock = data.nationalStock
+    //                 console.log(nationalStock)
+    //                 if (nationalStock) {
+    //                     let label2 = document.createElement('label');
+    //                     label2.textContent = `${nationalStock.name} (cantidad ${nationalStock.quantity} )`;
+    //                     label2.className = `mt-2`;
+    //                     label2.htmlFor = `quantity-${nationalStock.id}`;
+    //                     let input2 = document.createElement('input');
+    //                     input2.type = 'number';
+    //                     input2.id = `quantity-${nationalStock.id}`;
+    //                     input2.name = `quantity[${nationalStock.name}]`;
+    //                     input2.min = 0;
+    //                     input2.max = nationalStock.quantity;
+    //                     input2.value = 1;
+    //                     input2.className = 'form-control';
+    //                     modalBody.appendChild(label2);
+    //                     modalBody.appendChild(input2);
+    //                 }
+    //             })
+
+    //         let modalElement = document.getElementById('selectQuantityModal');
+    //         let modalInstance = new bootstrap.Modal(modalElement);
+    //         modalInstance.show();
+
+    //     });
+    // });
+
+    // document.getElementById('quantitySelectionForm').addEventListener('submit', function(e) {
+    //     e.preventDefault();
+
+    //     const selectedQuantities = {};
+    //     document.querySelectorAll('#selectQuantityModal input[type="number"]').forEach(input => {
+    //         const locationName = input.name.replace('quantity[', '').replace(']', '');
+    //         selectedQuantities[locationName] = input.value;
+    //     });
+
+    //     // Agrega el objeto de cantidades seleccionadas al formulario como antes
+    //     const quantitiesInput = document.querySelector('input[name="quantities"]') || document.createElement('input');
+    //     quantitiesInput.type = 'hidden';
+    //     quantitiesInput.name = 'quantities';
+    //     quantitiesInput.value = JSON.stringify(selectedQuantities);
+    //     const form = document.querySelector('form[action="{{ route('cart.store') }}"]');
+    //     form.appendChild(quantitiesInput);
+
+    //     new bootstrap.Modal(document.getElementById('selectQuantityModal')).hide();
+
+    //     form.submit();
+    // });
 })
 </script>
 

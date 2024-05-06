@@ -55,6 +55,11 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->brand = $request->brand;
         $product->category_id = $request->category_id;
+        $product->weight = 21.5;
+        $product->length = 42.9;
+        $product->width = 62.7;
+        $product->height = 20.6;
+
         $product->save();
 
         return redirect()->route('admin.products.index');

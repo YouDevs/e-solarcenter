@@ -27,6 +27,7 @@ class ProductStockService
         return [
             'localStock' => $localStock,
             'nationalStock' => [
+                'id' => 0,
                 'name' => 'Nacional',
                 'quantity' => $nationalStockQuantity,
             ],
