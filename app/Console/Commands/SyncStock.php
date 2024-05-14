@@ -38,12 +38,11 @@ class SyncStock extends Command
         $this->info('Starting synchronization...');
         $start = microtime(true);
 
+        $netsuiteProductService = new NetsuiteProductsService();
+        $client = $netsuiteProductService->getNetsuiteClient();
+        $page = 1;
 
-        DB::beginTransaction();
         try {
-            $netsuiteProductService = new NetsuiteProductsService();
-            $client = $netsuiteProductService->getNetsuiteClient();
-            $page = 1;
             do {
                 $products = $netsuiteProductService->fetchProductsFromNetSuite($client, $page);
 
@@ -51,23 +50,28 @@ class SyncStock extends Command
                     break;
                 }
 
-                $this->processProducts($products);
+                DB::beginTransaction();
+                try {
+                    $this->processProducts($products);
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    throw $e;
+                }
+
                 $page++;
             } while (!empty($products));
 
-            DB::commit();
             $this->info('Synchronization completed successfully.');
-
         } catch (\Exception $e) {
-            DB::rollBack();
             $this->error("Synchronization failed: " . $e->getMessage());
         }
 
         $end = microtime(true);
         $time = $end - $start;
         $this->info("Sync duration: {$time} seconds");
-
     }
+
 
     private function processProducts($products)
     {

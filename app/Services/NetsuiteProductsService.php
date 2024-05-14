@@ -43,7 +43,6 @@ class NetsuiteProductsService
         } catch (RequestException $e) {
             $responseBody = json_decode($e->getResponse()->getBody()->getContents(), true);
             if (isset($responseBody['error']['code']) && $responseBody['error']['code'] === 'INVALID_PAGE_RANGE') {
-                Log::error($responseBody['error']['code']);
                 return []; // Retornar array vacío para detener la paginación
             }
             Log::error('Request to NetSuite failed: ' . $e->getMessage());
@@ -52,6 +51,5 @@ class NetsuiteProductsService
             Log::error('Error fetching products from NetSuite: ' . $e->getMessage());
             throw $e;
         }
-
     }
 }
