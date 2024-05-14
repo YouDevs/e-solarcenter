@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'netsuite_id',
+        'netsuite_name',
+        'street',
+        'postal_code',
+        'neighborhood',
+        'country',
+        'state',
+        'city',
+    ];
+
 }

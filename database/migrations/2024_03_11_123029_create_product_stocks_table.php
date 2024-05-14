@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('location_id');
-            $table->integer('quantity_on_hand')->nullable();
             $table->integer('quantity_available');
+            $table->integer('quantity_on_hand')->nullable();
             $table->integer('quantity_on_order')->default(0);
             $table->integer('quantity_in_transit')->default(0);
             $table->timestamps();

@@ -123,8 +123,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
 
     Route::middleware(['role:marketing|operator'])->group(function () {
         Route::resource('products', ProductController::class)->except(['show']);
-
-        Route::get('products/get-from-netsuite', [ProductController::class, 'getProductsFromNetsuite'])->name('products.get-from-netsuite');
     });
 
 });

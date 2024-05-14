@@ -14,22 +14,39 @@ class LocationsSeeder extends Seeder
     public function run(): void
     {
         $locations = [
-            [1, 'GUADALAJARA', 2, 'GUADALAJARA', '45645'],
-            [2, 'MONTERREY', 3, 'MONTERREY', '66359'],
-            [3, 'CIUDAD DE MEXICO', 6, 'CIUDAD DE MEXICO', '02300'],
-            [4, 'MERIDA', 7, 'MERIDA', '97300'],
-            [5, 'CHIHUAHUA', 8, 'CHIHUAHUA', '31450'],
-            [6, 'CENTRO LOGISTICO', 9, 'CENTRO LOGISTICO', '45645'],
-            [7, 'QUERETARO', 10, 'QUERETARO', '45645'],
-            [8, 'GDL SCRAP', 18, 'GDL SCRAP', '45645'],
+            ['CHIHUAHUA', 8],
+            ['CIUDAD DE MEXICO', 6],
+            ['GUADALAJARA', 2],
+            ['MONTERREY', 3],
+            ['QUERETARO', 10],
+            ['CENTRO LOGISTICO', 9, ],
+            ['MERIDA', 7],
+            //NOTA: RESTO DE SUCURSALES QUE TRAE NETSUITE QUE NO SE USAN PARA E-COMMERCE:
+            // ['GARANTIAS', 17],
+            // ['PREVENTA CL', 121],
+            // ['CONSIGNACION VENTAS', 11],
+            // ['GDL SCRAP', 18],
+            // ['GDL SHW', 16],
+            // ['AUDITORIA', 118],
+            // ['CL MID', 119],
+            // ['CL QRO', 116],
+            // ['CL GDL', 115],
+            // ['CL CUU', 120],
+            // ['CL MTY', 117],
+            // ['TRN', 28],
+            // ['OUT', 14],
+            // ['SH', 29],
+            // ['MTY SCRAP', 21],
+            // ['NOM', 13],
+            // ['QRO SHW', 23],
+            // ['REF', 15],
+            // ['CONS', 26],
         ];
         foreach ($locations as $location) {
             Location::create([
-                'id' => $location[0],
-                'name' => $location[1],
-                'netsuite_id' => $location[2],
-                'netsuite_name' => $location[3],
-                'postal_code' => $location[4],
+                'name' => $location[0],
+                'netsuite_id' => $location[1],
+                'netsuite_name' => $location[0]
             ]);
         }
     }

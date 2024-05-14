@@ -14,9 +14,14 @@ class Product extends Model
         'name',
         'brand',
         'category_id',
+        'netsuite_id',
         'netsuite_item',
-        'netsuite_item_txt',
         'data_sheet',
+        'featured',
+        'weight',
+        'length',
+        'width',
+        'height',
         'slug'
     ];
 

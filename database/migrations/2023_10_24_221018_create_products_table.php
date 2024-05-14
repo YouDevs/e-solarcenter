@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 120);
-            $table->string('brand', 40);
+            $table->string('name', 120); // NOMBRE_PARA_MOSTRAR_EN_LA_TIENDA_WEB || NOMBRE
+            $table->string('brand', 40)->nullable();
+            $table->text('description')->nullable(); // DESCRIPCION_DETALLADA
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('netsuite_item')->nullable();
-            $table->string('netsuite_item_txt')->nullable(); //NOTA: en netsuite está como: itemTxt
+            $table->string('netsuite_id')->nullable(); // ID
+            $table->string('netsuite_item')->nullable(); // ARTICULO
             $table->string('data_sheet', 100)->nullable();
-            $table->string('featured', 100)->nullable(); //TODO: quitar nullable cuando ya tengamos subida de imagenes.
+            $table->string('featured', 100)->nullable();
 
-            $table->float('weight', 8, 2);
-            $table->float('length', 8, 2);
-            $table->float('width', 8, 2);
-            $table->float('height', 8, 2);
+            $table->float('weight', 8, 2)->nullable();
+            $table->float('length', 8, 2)->nullable();
+            $table->float('width', 8, 2)->nullable();
+            $table->float('height', 8, 2)->nullable();
 
             $table->boolean('status')->default(1);
 

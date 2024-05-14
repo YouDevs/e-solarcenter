@@ -4,12 +4,18 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Product;
-use App\Traits\OAuth1ClientCreator;
-// use Illuminate\Support\Facades\Log;
+use App\Models\ProductStock;
+use App\Models\ProductPrice;
+use App\Models\Category;
+use App\Models\Location;
+use App\Traits\OAuth1NetsuiteClientCreator;
+use App\Services\NetsuiteProductsService;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class SyncStock extends Command
 {
-    use OAuth1ClientCreator;
+    use OAuth1NetsuiteClientCreator;
     /**
      * The name and signature of the console command.
      *
@@ -22,73 +28,134 @@ class SyncStock extends Command
      *
      * @var string
      */
-    protected $description = 'Sync products stock from all netsuite locations per item.';
+    protected $description = 'Sync products from netsuite';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
+        $this->info('Starting synchronization...');
         $start = microtime(true);
 
-        $this->syncStock();
+
+        DB::beginTransaction();
+        try {
+            $netsuiteProductService = new NetsuiteProductsService();
+            $client = $netsuiteProductService->getNetsuiteClient();
+            $page = 1;
+            do {
+                $products = $netsuiteProductService->fetchProductsFromNetSuite($client, $page);
+
+                if (empty($products)) {
+                    break;
+                }
+
+                $this->processProducts($products);
+                $page++;
+            } while (!empty($products));
+
+            DB::commit();
+            $this->info('Synchronization completed successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $this->error("Synchronization failed: " . $e->getMessage());
+        }
 
         $end = microtime(true);
-        $time = $end-$start;
-        // Log::info("----> sync stock duration: {$time}");
+        $time = $end - $start;
+        $this->info("Sync duration: {$time} seconds");
+
     }
 
-    private function syncStock()
+    private function processProducts($products)
     {
-        $endpoint = 'https://5874559-sb1.restlets.api.netsuite.com/app/';
+        $groupedProducts = $this->groupProduct($products);
 
-        $client = $this->createOAuth1Client(
-            $endpoint,
-            config('app.consumer_key'),
-            config('app.consumer_secret'),
-            config('app.token_secret'),
-            config('app.token'),
-            config('app.realm')
-        );
+        foreach ($groupedProducts as $product) {
+            $dbProduct = $this->updateOrCreateProduct($product);
+            $this->updateStock($product, $dbProduct);
+            $this->updatePrices($product, $dbProduct);
+            $this->updateFeatured($dbProduct);
+        }
+    }
 
-        $response = $client->get('site/hosting/restlet.nl', [
-            'query' => ['script' => '2375', 'deploy' => '1'],
-            'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json']
-        ]);
-
-        $products = json_decode($response->getBody(), true);
-
-        // Agrupa productos por ID
+    private function groupProduct($products)
+    {
         $groupedProducts = [];
         foreach ($products as $product) {
             $itemId = $product['ID'];
-
             if (!isset($groupedProducts[$itemId])) {
                 $groupedProducts[$itemId] = $product;
-                $groupedProducts[$itemId]['stock'] = 0;
-            }
-            $groupedProducts[$itemId]['stock'] += $product['EXISTENCIA'][0]['quantityavailable'];
-        }
-
-        // Actualiza el stock de cada producto si existe y si es diferente del stock de netsuite.
-        foreach ($groupedProducts as $product) {
-            $dbProduct = Product::firstWhere('netsuite_item', $product['ID']);
-
-            if ($dbProduct && $dbProduct->netsuite_stock != $product['stock']) {
-                $dbProduct->update([
-                    // 'name' => $product['NOMBRE'],
-                    // 'name' => $product['NOMBRE_PARA_MOSTRAR_EN_LA_TIENDA_WEB'],
-                    // 'netsuite_item_txt' => $product['DESCRIPCION_DETALLADA'],
-                    // 'price' => $product['PRECIOS'][0]['PRECIO'],
-                    'netsuite_stock' => $product['stock'],
-                    // 'data_sheet' => $product['FICHA_TECNICA_SOLAR_CENTER_URL'],
-                    'price_1' => $product['PRECIOS'][0]['PRECIO'],
-                    'price_2' => $product['PRECIOS'][1]['PRECIO'],
-                    'price_3' => $product['PRECIOS'][2]['PRECIO'],
-                ]);
             }
         }
 
-        return 0;
+        return $groupedProducts;
+    }
+
+    private function updateOrCreateProduct($product)
+    {
+        $productName = $product['NOMBRE_PARA_MOSTRAR_EN_LA_TIENDA_WEB'] ?: $product['NOMBRE'];
+        $dbProduct = Product::updateOrCreate(
+            ['netsuite_id' => $product['ID']],
+            [
+                'name' => $productName,
+                'description' => $product['DESCRIPCION_DETALLADA'],
+                'netsuite_id' => $product['ID'],
+                'netsuite_item' => $product['ARTICULO'],
+            ]
+        );
+
+        return $dbProduct;
+    }
+
+    private function updateStock($product, $dbProduct)
+    {
+        if (!empty($product['EXISTENCIA'])) {
+            foreach ($product['EXISTENCIA'] as $stock) {
+                $location = Location::firstOrCreate(
+                    ['netsuite_id' => $stock['location']],
+                    ['netsuite_name' => $stock['locationTxt']]
+                );
+
+                ProductStock::updateOrCreate(
+                    ['product_id' => $dbProduct->id, 'location_id' => $location->id],
+                    [
+                        'quantity_on_hand' => $stock['quantityonhand'],
+                        'quantity_available' => $stock['quantityavailable'],
+                        'quantity_on_order' => $stock['quantityonorder'],
+                        'quantity_in_transit' => $stock['quantityintransit'],
+                    ]
+                );
+            }
+        }
+    }
+
+    private function updatePrices($product, $dbProduct)
+    {
+        if (!empty($product['PRECIOS'])) {
+            foreach ($product['PRECIOS'] as $price) {
+                if (!empty($price['NIVEL']) && !empty($price['PRECIO'])) {
+                    ProductPrice::updateOrCreate(
+                        ['product_id' => $dbProduct->id, 'level' => $price['NIVEL']],
+                        ['price' => $price['PRECIO']]
+                    );
+                }
+            }
+        }
+    }
+
+
+    private function updateFeatured($dbProduct)
+    {
+        $name = $dbProduct->netsuite_item . '.webp';
+
+        if (Storage::disk('public')->exists('featured_images/'. $name)) {
+            $dbProduct->featured = 'featured_images/' . $name;
+            $dbProduct->save();
+        }
+
+        $this->info("Imagen actualizada...");
     }
 }
