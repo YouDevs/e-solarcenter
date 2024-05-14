@@ -75,9 +75,13 @@ class SyncStock extends Command
 
         foreach ($groupedProducts as $product) {
             $dbProduct = $this->updateOrCreateProduct($product);
+            $this->info("Productos actualizados o creados...");
             $this->updateStock($product, $dbProduct);
+            $this->info("Stock y Locaciones actualizadas o creadas...");
             $this->updatePrices($product, $dbProduct);
+            $this->info("Precios creados o actualizados...");
             $this->updateFeatured($dbProduct);
+            $this->info("Imagenes actualizadas...");
         }
     }
 
@@ -155,7 +159,5 @@ class SyncStock extends Command
             $dbProduct->featured = 'featured_images/' . $name;
             $dbProduct->save();
         }
-
-        $this->info("Imagen actualizada...");
     }
 }
