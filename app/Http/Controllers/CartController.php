@@ -35,29 +35,56 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        $quantities = json_decode($request->quantities, true);
+        // Validaciones en backend...
 
-        foreach ($quantities as $location => $quantity) {
-            if ( (int) $quantity !== 0 && (int) $quantity > 0) {
-                $uniqueId = $request->id . '-' . $location;
+        // Valido primero quantities porqué quantity siempre está.
+        if($request->quantities) {
+            $quantities = json_decode($request->quantities, true);
+            foreach ($quantities as $location => $quantity) {
+                if ( (int) $quantity !== 0 && (int) $quantity > 0) {
+                    $uniqueId = $request->id . '-' . $location;
 
-                \Cart::add([
-                    'id' => $uniqueId,
-                    'name' => $request->name,
-                    'price' => $request->price,
-                    'quantity' => $quantity,
-                    'attributes' => array(
-                        'location' => $location,
-                        'brand' => $request->brand,
-                        'featured' => $request->featured,
-                        'weight' => $request->weight,
-                        'length' => $request->length,
-                        'width' => $request->width,
-                        'height' => $request->height,
-                    )
-                ]);
+                    \Cart::add([
+                        'id' => $uniqueId,
+                        'name' => $request->name,
+                        'price' => $request->price,
+                        'quantity' => $quantity,
+                        'attributes' => array(
+                            'location' => $location,
+                            'brand' => $request->brand,
+                            'featured' => $request->featured,
+                            'weight' => $request->weight,
+                            'length' => $request->length,
+                            'width' => $request->width,
+                            'height' => $request->height,
+                        )
+                    ]);
+                }
             }
+
+        } else {
+            $location = auth()->user()->customer->location->name;
+            $uniqueId = $request->id . '-' . $location;
+            $quantity = $request->quantity;
+
+            \Cart::add([
+                'id' => $uniqueId,
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $quantity,
+                'attributes' => array(
+                    'location' => $location,
+                    'brand' => $request->brand,
+                    'featured' => $request->featured,
+                    'weight' => $request->weight,
+                    'length' => $request->length,
+                    'width' => $request->width,
+                    'height' => $request->height,
+                )
+            ]);
         }
+
+
 
         session()->flash('success', 'Product is Added to Cart Successfully !');
 

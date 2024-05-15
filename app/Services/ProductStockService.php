@@ -13,26 +13,35 @@ class ProductStockService
         $nationalStockQuantity = 0;
 
         foreach ($product->stocks as $stock) {
-            if ($stock->location->id == $locationId) {
-                $localStock = [
-                    'id' => $stock->location->id,
-                    'name' => $stock->location->name,
-                    'quantity' => $stock->quantity_available,
-                ];
-            } else {
-                $nationalStockQuantity += $stock->quantity_available;
+            if ($stock->quantity_available != 0) {
+                if ($stock->location->id == $locationId) {
+                    $localStock = [
+                        'id' => $stock->location->id,
+                        'name' => $stock->location->name,
+                        'quantity' => $stock->quantity_available,
+                    ];
+                } else {
+                    $nationalStockQuantity += $stock->quantity_available;
+                }
             }
+        }
+
+        $nationalStock = null;
+        if ($nationalStockQuantity > 0) {
+            $nationalStock = [
+                'id' => 0, // Este ID es un identificador genérico para el stock nacional.
+                'name' => 'Nacional',
+                'quantity' => $nationalStockQuantity,
+            ];
         }
 
         return [
             'localStock' => $localStock,
-            'nationalStock' => [
-                'id' => 0,
-                'name' => 'Nacional',
-                'quantity' => $nationalStockQuantity,
-            ],
+            'nationalStock' => $nationalStock,
         ];
     }
+
+
 
     // public function getProductStock($productId)
     // {

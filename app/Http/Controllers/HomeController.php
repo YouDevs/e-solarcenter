@@ -38,10 +38,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $locations = Location::orderBy('id', 'DESC')->get();
-        $products = Product::with('stocks.location')->orderBy('id', 'DESC')->paginate(8);
-
         if (auth()->check()) {
+            $products = Product::with('stocks')->whereNotNull('featured')->orderBy('id', 'DESC')->paginate(16);
             $locationId = auth()->user()->customer->location_id ?? null;
             $productStockService = new ProductStockService();
 
@@ -53,14 +51,19 @@ class HomeController extends Controller
                 $stock = $productStockService->getProductStockForProduct($product, $locationId);
                 $product->localStock = $stock['localStock'];
                 $product->nationalStock = $stock['nationalStock'];
-
+                return $product;
+            });
+        } else {
+            $products = Product::whereNotNull('featured')->orderBy('id', 'DESC')->paginate(16);
+            $products->getCollection()->transform(function ($product) {
+                $product->featured_url = Storage::url($product->featured);
+                $product->data_sheet_url = $product->data_sheet ? Storage::url($product->data_sheet) : null;
                 return $product;
             });
         }
 
         return view('index', [
             'products' => $products,
-            'locations' => $locations,
         ]);
     }
 
