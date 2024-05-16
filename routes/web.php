@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomerSupport\CustomerController;
 use App\Http\Controllers\CustomerSupport\OrderController;
 use App\Http\Controllers\Marketing\ProductController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\StockAssistanceRequestController;
 
 
 Route::get('/test', function() {
@@ -97,6 +98,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('cuenta/contacto', [CustomerAccountController::class, 'contact'])->name('account.contact');
     Route::post('cuenta/contacto', [CustomerAccountController::class, 'sendCustomerContact'])->name('account.send-contact');
+
+
+    Route::post('/customer-requests', [StockAssistanceRequestController::class, 'store']);
+
 });
 
 
