@@ -102,6 +102,7 @@ class UsersSeeder extends Seeder
 
         Customer::create([
             'user_id' => $user_customer->id,
+            'location_id' => 1,
             'company_name' => 'SUNE',
             'netsuite_key' => '1234567890',
             'rfc' => '0101010101011',
