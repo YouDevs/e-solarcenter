@@ -23,8 +23,7 @@
     data="https://cwkolob215.nuxiba.com/chatjs/?domain=solarcenter.com"
 > --}}
 
-<object  style="width: 300px;
-height: 100px;
+<object  style="
 margin-top: 0;
 margin-left: 0px;
 margin-right: 0px;"
