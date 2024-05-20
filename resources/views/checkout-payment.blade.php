@@ -66,6 +66,30 @@
                         @csrf
                         <input type="hidden" name="payment_submitted" value="1" >
                         <input type="hidden" name="payment_concept" value="{{$paymentConcept}}" >
+
+                        @if ($localShippingDetails)
+                            <input type="hidden" name="local_carrier" value="{{$localShippingDetails['carrier']}}" >
+                            <input type="hidden" name="local_shipping_cost" value="{{$localShippingDetails['shippingCost']}}" >
+                            <input type="hidden" name="local_weight" value="{{$localShippingDetails['dimensions']['Weight']}}" >
+                            <input type="hidden" name="local_length" value="{{$localShippingDetails['dimensions']['Length']}}" >
+                            <input type="hidden" name="local_width" value="{{$localShippingDetails['dimensions']['Width']}}" >
+                            <input type="hidden" name="local_height" value="{{$localShippingDetails['dimensions']['Height']}}" >
+                            <input type="hidden" name="local_origin_postal_code" value="{{$localShippingDetails['origin']}}" >
+                            <input type="hidden" name="local_destination_postal_code" value="{{$localShippingDetails['destination']}}" >
+                        @endif
+
+                        @if ($nationalShippingDetails)
+                            <input type="hidden" name="national_carrier" value="{{$nationalShippingDetails['carrier']}}" >
+                            <input type="hidden" name="national_shipping_cost" value="{{$nationalShippingDetails['shippingCost']}}" >
+                            <input type="hidden" name="national_weight" value="{{$nationalShippingDetails['dimensions']['Weight']}}" >
+                            <input type="hidden" name="national_length" value="{{$nationalShippingDetails['dimensions']['Length']}}" >
+                            <input type="hidden" name="national_width" value="{{$nationalShippingDetails['dimensions']['Width']}}" >
+                            <input type="hidden" name="national_height" value="{{$nationalShippingDetails['dimensions']['Height']}}" >
+                            <input type="hidden" name="national_origin_postal_code" value="{{$nationalShippingDetails['origin']}}" >
+                            <input type="hidden" name="national_destination_postal_code" value="{{$nationalShippingDetails['destination']}}" >
+                        @endif
+                        <input type="hidden" name="total_with_shipping" value="{{$totalWithShipping}}" >
+
                         <button
                             type="submit"
                             class="btn btn-primary d-block w-100"
