@@ -4,12 +4,12 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Customer;
-use App\Traits\OAuth1ClientCreator;
+use App\Traits\OAuth1NetsuiteClientCreator;
 use Illuminate\Support\Facades\Log;
 
 class UpdateNewCustomers extends Command
 {
-    use OAuth1ClientCreator;
+    use OAuth1NetsuiteClientCreator;
     /**
      * The name and signature of the console command.
      *
